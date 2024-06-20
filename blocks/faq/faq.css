@@ -1,30 +1,73 @@
-.faq-block {
-  border: 1px solid #ddd;
-  padding: 20px;
-}
-
 .faq-item {
-  margin-bottom: 15px;
+  transition: all 0.3s ease-in-out;
 }
 
 .faq-question {
   cursor: pointer;
   font-weight: bold;
-  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1em;
+  color: #fff;
+  padding: 10px 20px;
+  background: #333;
+  border-bottom: 1px solid #ccc;
+}
+
+.faq-question span {
+  flex: 1;
 }
 
 .faq-answer {
+  transition: max-height 0.3s ease-in-out;
+  color: #666;
+  background: #fff;
+  padding: 20px;
+  min-height: 100px;
+}
+
+/* エディタ内のスタイル */
+.editor-styles-wrapper .faq-answer {
+  display: block !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* フロントエンドのスタイル */
+.faq-answer {
   display: none;
-  margin-left: 20px;
+  max-height: 0;
+  overflow: hidden;
 }
 
 .faq-item.active .faq-answer {
   display: block;
+  max-height: 1000px; /* 大きな値に設定してスムーズなアニメーションを実現 */
 }
 
-/* 編集画面では常に回答を表示 */
-.wp-block {
-  .faq-answer {
-    display: block;
-  }
+.faq-item.active .faq-question:after {
+  content: "▲";
+  font-size: 0.8em;
+  color: #fff;
+}
+
+.faq-question:after {
+  content: "▼";
+  margin-left: 10px;
+  font-size: 0.8em;
+  color: #fff;
+}
+
+.faq-block .components-button {
+  margin-bottom: 20px;
+}
+
+.faq-block .components-button.has-icon {
+  padding: 0;
+}
+
+.faq-item.active {
+  background-color: #f0f8ff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

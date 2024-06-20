@@ -32,16 +32,11 @@ add_action('after_setup_theme', 'mytheme_setup');
 
 function mytheme_enqueue_styles()
 {
-
     // Swiper CSS
     wp_enqueue_style('swiper-style', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
 
     // Swiper JS
     wp_enqueue_script('swiper-script', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11', true);
-
-    // Font Awesome
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-
 
     // Font Awesome
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
@@ -60,44 +55,47 @@ function mytheme_enqueue_scripts()
 }
 add_action('wp_enqueue_scripts', 'mytheme_enqueue_scripts');
 
-
 function mytheme_enqueue_block_editor_assets()
 {
     // カスタムブロックのJavaScript
     wp_enqueue_script(
         'mytheme-custom-blocks',
-        get_template_directory_uri() . '/js/custom-blocks.js',
+        get_template_directory_uri() . '/dist/custom-blocks.bundle.js',
         array('wp-blocks', 'wp-element', 'wp-editor'),
-        '1.0.0',
+        filemtime(get_template_directory() . '/dist/custom-blocks.bundle.js'),
         true
     );
 
     // カスタムブロックのCSS
     wp_enqueue_style(
         'mytheme-custom-blocks-style',
-        get_template_directory_uri() . '/css/custom-blocks.css',
+        get_template_directory_uri() . '/blocks/editor-style.css', // 必要に応じてエディタ用のスタイルを追加
         array(),
-        '1.0.0'
+        filemtime(get_template_directory() . '/blocks/editor-style.css')
     );
 }
+add_action('enqueue_block_editor_assets', 'mytheme_enqueue_block_editor_assets');
 
-function mytheme_enqueue_faq_script()
+function mytheme_enqueue_frontend_assets()
 {
-    // フロントエンド用のスクリプトを読み込む
+    // フロントエンド用のスクリプトとスタイル
     wp_enqueue_script(
-        'faq-accordion',
-        get_template_directory_uri() . '/blocks/faq/faq-accordion.js',
+        'mytheme-blocks-frontend',
+        get_template_directory_uri() . '/dist/blocks.bundle.js',
         array(),
-        filemtime(get_template_directory() . '/blocks/faq/faq-accordion.js'),
+        filemtime(get_template_directory() . '/dist/blocks.bundle.js'),
         true
     );
+
+    wp_enqueue_style(
+        'mytheme-blocks-frontend-style',
+        get_template_directory_uri() . '/blocks/frontend-style.css', // 必要に応じてフロントエンド用のスタイルを追加
+        array(),
+        filemtime(get_template_directory() . '/blocks/frontend-style.css')
+    );
 }
-add_action('wp_enqueue_scripts', 'mytheme_enqueue_faq_script');
+add_action('wp_enqueue_scripts', 'mytheme_enqueue_frontend_assets');
 
-
-
-
-add_action('enqueue_block_editor_assets', 'mytheme_enqueue_block_editor_assets');
 
 function mytheme_widgets_init()
 {
@@ -142,9 +140,7 @@ add_action('widgets_init', 'mytheme_widgets_init');
 
 // カスタム投稿タイプ用のファイルをインクルード
 require get_template_directory() . '/inc/custom-post-types.php';
-
 require get_template_directory() . '/inc/customizer/class-customize-heading-control.php';
-
 
 // カスタマイザー設定ファイルの読み込み
 require get_template_directory() . '/inc/customizer/general.php';
@@ -156,7 +152,6 @@ require get_template_directory() . '/inc/customizer/pages.php';
 require get_template_directory() . '/inc/customizer/sidebar.php';
 require get_template_directory() . '/inc/customizer/footer-builder.php';
 require get_template_directory() . '/inc/customizer/cta-buttons.php';
-
 require get_template_directory() . '/blocks.php';
 
 // 選択的リフレッシュのサポートを追加

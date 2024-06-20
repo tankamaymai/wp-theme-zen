@@ -1,10 +1,13 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./js/custom-blocks.js", // ソースファイル
+  entry: {
+    "custom-blocks": "./js/custom-blocks.js", // エディタ用のエントリポイント
+    blocks: "./js/blocks.js", // フロントエンド用のエントリポイント
+  },
   output: {
-    path: path.resolve(__dirname, "js"), // 出力ディレクトリ
-    filename: "custom-blocks.js", // 出力ファイル名
+    path: path.resolve(__dirname, "dist"), // 出力ディレクトリ
+    filename: "[name].bundle.js", // 出力ファイル名
   },
   module: {
     rules: [
@@ -20,4 +23,6 @@ module.exports = {
       },
     ],
   },
+  mode: "production",
+  devtool: "source-map",
 };
