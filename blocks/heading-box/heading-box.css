@@ -1,0 +1,19 @@
+.heading-box {
+  border-left: 4px solid #007cba;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+.heading-box-title {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.heading-box-description {
+  font-size: 16px;
+}
+
+.heading-box:hover {
+  background-color: #f1f1f1;
+}

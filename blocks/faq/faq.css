@@ -1,0 +1,30 @@
+.faq-block {
+  border: 1px solid #ddd;
+  padding: 20px;
+}
+
+.faq-item {
+  margin-bottom: 15px;
+}
+
+.faq-question {
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.faq-answer {
+  display: none;
+  margin-left: 20px;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+/* 編集画面では常に回答を表示 */
+.wp-block {
+  .faq-answer {
+    display: block;
+  }
+}

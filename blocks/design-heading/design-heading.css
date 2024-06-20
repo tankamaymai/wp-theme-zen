@@ -1,0 +1,35 @@
+h2 {
+  font-size: 24px;
+  color: #333;
+  /* text-align: center; */
+  padding: 10px 0;
+}
+
+.style-preview {
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+}
+
+.style-preview:hover {
+  opacity: 0.7;
+}
+
+.default-style {
+  /* デフォルトのスタイル */
+  font-weight: normal;
+  font-style: normal;
+}
+.solid-style {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+.underline-style {
+  border-bottom: 1px solid black;
+}
+.lines-style {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
