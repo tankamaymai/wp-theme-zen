@@ -1,4 +1,9 @@
-<?php get_header(); ?>
+<?php
+get_header();
+
+// 固定ページのサイドバー表示設定を取得
+$display_sidebar = get_theme_mod('mytheme_display_sidebar_page', true);
+?>
 
 <div id="primary" class="content-area">
     <main id="main" class="site-main">
@@ -55,5 +60,10 @@
     </main><!-- #main -->
 </div><!-- #primary -->
 
-<?php get_sidebar(); ?>
+<?php if ($display_sidebar) : ?>
+    <aside id="secondary" class="widget-area">
+        <?php dynamic_sidebar('sidebar-1'); ?>
+    </aside><!-- #secondary -->
+<?php endif; ?>
+
 <?php get_footer(); ?>

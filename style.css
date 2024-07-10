@@ -1,3 +1,16 @@
+/*
+Theme Name: ZEN
+Theme URI: https://wpzen.jp
+Author: YOSHIZUMI LLC
+Author URI: https://yoshizumi.tech
+Description: ウェブ制作の頼れるパートナーとして、お客様のビジネスをサポートするWordPressテーマです。
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: zen
+Tags: light, dark, two-columns, right-sidebar, responsive-layout
+*/
+
 /* 全体に border-box を適用 */
 *,
 *::before,
@@ -10,6 +23,8 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
   overflow-x: hidden; /* 追加: 横スクロールを防ぐ */
+  box-sizing: border-box;
+  line-height: 1.6;
 }
 
 .customize-partial-edit-shortcut button,
@@ -24,17 +39,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
+  padding: 5px 15px 8px;
   flex-wrap: wrap;
-}
-
-.site-branding {
-  flex: 1;
 }
 
 .site-title {
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .site-title a {
@@ -46,6 +57,13 @@ body {
 .site-description {
   margin: 0;
   font-size: 14px;
+}
+
+.site-menu {
+  display: flex;
+  flex: 1;
+  justify-content: end;
+  gap: 40px;
 }
 
 /* ナビゲーションスタイル */
@@ -103,8 +121,8 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px;
   font-size: 20px;
+  padding: 0;
   position: relative;
   z-index: 1001; /* メニューの上に表示するために追加 */
 }
@@ -162,23 +180,13 @@ body {
   display: flex; /* 子要素を横並びに */
   padding: 0;
   margin: 0;
-}
-
-.pc-menu li {
-  margin-left: 20px; /* アイテム間のスペース */
+  gap: 40px;
 }
 
 .pc-menu a {
   text-decoration: none;
   color: #333; /* カスタマイザーの設定に応じて変更 */
-  padding: 10px 15px;
   font-size: 16px;
-}
-
-.pc-menu a:hover,
-.pc-menu a:focus {
-  background-color: #ddd;
-  color: #000;
 }
 
 /* レスポンシブ対応：ビューポートのサイズに応じてスタイルを調整 */
@@ -345,54 +353,69 @@ body {
 .header-cta-buttons .cta-button {
   padding: 10px 20px;
   text-decoration: none;
-  border-radius: 5px;
   display: flex;
   align-items: center;
   gap: 5px;
-}
-
-.header-cta-buttons .cta-button i {
-  font-size: 1.2em;
-}
-
-.header-cta-buttons .cta-button:hover {
-  opacity: 0.8;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 /* スマホ用レイアウト */
 @media (max-width: 768px) {
+  .site-header {
+    gap: 10px;
+    padding: 0 10px;
+  }
+  .site-menu {
+    gap: 10px;
+  }
+  .site-branding {
+    flex: initial;
+  }
+  .site-title a {
+    font-size: 20px;
+  }
+
   .header-cta-buttons {
-    flex-wrap: nowrap; /* 折り返しを防止 */
-    justify-content: space-between; /* ボタンを均等に配置 */
+    justify-content: end;
+    gap: 0px;
+  }
+
+  .header-cta-buttons[data-count="2"] {
+    flex: 1 1 50%;
+  }
+
+  .header-cta-buttons[data-count="3"] {
+    flex: 1 1 33.333%;
   }
 
   .header-cta-buttons .cta-button {
-    flex: 1; /* ボタンの幅を均等に */
-    flex-direction: column; /* アイコンとテキストを縦に並べる */
-    align-items: center; /* 中央揃え */
+    flex: 1 1 100%;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     padding: 10px;
-    max-width: calc(33.33% - 20px); /* 3つのボタンが均等に並ぶように */
-    box-sizing: border-box; /* パディングやボーダーを含めて幅を計算 */
+    font-size: 14px;
   }
 
   .header-cta-buttons .cta-button i {
-    margin-bottom: 5px; /* アイコンとテキストの間のスペース */
+    margin-bottom: 5px;
   }
 }
 
 #content {
   display: flex;
-  padding: 40px;
+  /* padding: 40px; */
   width: 100%;
   gap: 40px;
+  justify-content: center;
 }
 
 #primary {
   flex: 1;
   min-width: 0;
   background: #fff;
-  padding: 40px;
+  padding: 60px;
 }
 
 #primary h1 {
@@ -427,14 +450,27 @@ body {
   width: 18px;
 }
 
-#sidebar {
+#secondary {
   flex: 0 0 25%;
   min-width: 250px;
   padding: 20px;
 }
 
-#sidebar ul {
+#secondary ul {
   padding: 0px;
+}
+
+#secondary li {
+  margin-bottom: 10px;
+}
+
+#secondary li:last-child {
+  margin-bottom: 0px;
+}
+
+#secondary .wp-block-archives-list,
+#secondary .wp-block-categories-list {
+  padding-left: 1em;
 }
 
 .site-content {
@@ -449,7 +485,7 @@ body {
   }
 
   #primary,
-  #sidebar {
+  #secondary {
     min-width: 100%;
   }
 }

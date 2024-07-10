@@ -84,7 +84,6 @@ function mytheme_customize_color_settings($wp_customize)
         'settings' => 'mytheme_link_color',
     )));
 }
-
 function mytheme_customize_container_settings($wp_customize)
 {
     // コンテナ設定セクション
@@ -92,16 +91,86 @@ function mytheme_customize_container_settings($wp_customize)
         'title' => __('コンテナ', 'mytheme'),
         'panel' => 'mytheme_general_panel',
     ));
+
+    // 全体のコンテナ幅設定
     $wp_customize->add_setting('mytheme_container_width', array(
-        'default' => '1200px',
+        'default' => '1200',
         'transport' => 'refresh',
+        'sanitize_callback' => 'mytheme_sanitize_container_width',
     ));
     $wp_customize->add_control('mytheme_container_width', array(
-        'label' => __('コンテナ幅', 'mytheme'),
+        'label' => __('コンテナ幅 (px または 100%)', 'mytheme'),
         'section' => 'mytheme_container_settings',
-        'type' => 'text',
+        'type' => 'select',
+        'choices' => array(
+            '100%' => '100%',
+            '1200' => '1200px',
+            '1400' => '1400px',
+            '1600' => '1600px',
+        ),
+    ));
+
+    // トップページのコンテナ幅設定
+    $wp_customize->add_setting('mytheme_front_page_container_width', array(
+        'default' => '1200',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'mytheme_sanitize_container_width',
+    ));
+    $wp_customize->add_control('mytheme_front_page_container_width', array(
+        'label' => __('トップページのコンテナ幅 (px または 100%)', 'mytheme'),
+        'section' => 'mytheme_container_settings',
+        'type' => 'select',
+        'choices' => array(
+            '100%' => '100%',
+            '1200' => '1200px',
+            '1400' => '1400px',
+            '1600' => '1600px',
+        ),
     ));
 }
+
+function mytheme_sanitize_container_width($input)
+{
+    $valid = array(
+        '100%' => '100%',
+        '1200' => '1200px',
+        '1400' => '1400px',
+        '1600' => '1600px',
+    );
+
+    if (array_key_exists($input, $valid)) {
+        return $input;
+    }
+
+    return '1200';
+}
+
+function mytheme_customize_container_width()
+{
+    $container_width = get_theme_mod('mytheme_container_width', '1200');
+    $front_page_container_width = get_theme_mod('mytheme_front_page_container_width', '1200');
+
+    if ($container_width !== '100%') {
+        $container_width .= 'px'; // 単位を追加
+    }
+    if ($front_page_container_width !== '100%') {
+        $front_page_container_width .= 'px'; // 単位を追加
+    }
+
+    $custom_css = "
+        .site-content {
+            max-width: {$container_width};
+            margin: 0 auto;
+        }
+        body.home .site-content {
+            max-width: {$front_page_container_width};
+        }
+    ";
+
+    wp_add_inline_style('mytheme-style', $custom_css);
+}
+add_action('wp_enqueue_scripts', 'mytheme_customize_container_width');
+
 
 function mytheme_customize_button_settings($wp_customize)
 {

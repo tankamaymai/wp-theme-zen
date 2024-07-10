@@ -1,9 +1,10 @@
-(function (blocks, element, blockEditor) {
+(function (blocks, element, blockEditor, components) {
   var el = element.createElement;
   var RichText = blockEditor.RichText;
   var Fragment = element.Fragment;
-  var Button = wp.components.Button;
-  var IconButton = wp.components.IconButton;
+  var Button = components.Button;
+  var IconButton = components.IconButton;
+  var ToggleControl = components.ToggleControl;
 
   blocks.registerBlockType("mytheme/faq", {
     title: "FAQ",
@@ -28,9 +29,14 @@
           },
         },
       },
+      alwaysOpen: {
+        type: "boolean",
+        default: false,
+      },
     },
     edit: function (props) {
       var questions = props.attributes.questions;
+      var alwaysOpen = props.attributes.alwaysOpen;
 
       var updateQuestion = function (value, index) {
         var newQuestions = questions.slice();
@@ -55,12 +61,21 @@
         props.setAttributes({ questions: newQuestions });
       };
 
+      var toggleAlwaysOpen = function () {
+        props.setAttributes({ alwaysOpen: !alwaysOpen });
+      };
+
       return el(
         Fragment,
         {},
         el(
           "div",
           { className: "faq-block" },
+          el(ToggleControl, {
+            label: "常に回答を表示",
+            checked: alwaysOpen,
+            onChange: toggleAlwaysOpen,
+          }),
           questions.map(function (item, index) {
             return el(
               "div",
@@ -105,10 +120,11 @@
     },
     save: function (props) {
       var questions = props.attributes.questions;
+      var alwaysOpen = props.attributes.alwaysOpen;
 
       return el(
         "div",
-        { className: "faq-block" },
+        { className: "faq-block", "data-always-open": alwaysOpen },
         questions.map(function (item, index) {
           return el(
             "div",
@@ -120,4 +136,9 @@
       );
     },
   });
-})(window.wp.blocks, window.wp.element, window.wp.blockEditor);
+})(
+  window.wp.blocks,
+  window.wp.element,
+  window.wp.blockEditor,
+  window.wp.components
+);

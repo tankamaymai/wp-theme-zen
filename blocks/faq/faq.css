@@ -41,12 +41,14 @@
   overflow: hidden;
 }
 
-.faq-item.active .faq-answer {
+.faq-item.active .faq-answer,
+.faq-block[data-always-open="true"] .faq-answer {
   display: block;
   max-height: 1000px; /* 大きな値に設定してスムーズなアニメーションを実現 */
 }
 
-.faq-item.active .faq-question:after {
+.faq-item.active .faq-question:after,
+.faq-block[data-always-open="true"] .faq-question:after {
   content: "▲";
   font-size: 0.8em;
   color: #fff;
@@ -67,7 +69,8 @@
   padding: 0;
 }
 
-.faq-item.active {
+.faq-item.active,
+.faq-block[data-always-open="true"] .faq-item {
   background-color: #f0f8ff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

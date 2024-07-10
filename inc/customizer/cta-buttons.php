@@ -136,3 +136,20 @@ function mytheme_customize_register_cta($wp_customize)
 }
 
 add_action('customize_register', 'mytheme_customize_register_cta');
+
+function mytheme_customizer_defaults()
+{
+    $defaults = array(
+        'mytheme_cta_button_count' => 1,
+        'mytheme_cta_button_icon_1' => 'fas fa-envelope',
+        'mytheme_cta_button_icon_2' => 'fas fa-phone',
+        'mytheme_cta_button_icon_3' => 'fas fa-comment',
+    );
+
+    foreach ($defaults as $key => $value) {
+        if (get_theme_mod($key) === false) {
+            set_theme_mod($key, $value);
+        }
+    }
+}
+add_action('after_setup_theme', 'mytheme_customizer_defaults');

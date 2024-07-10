@@ -73,6 +73,9 @@ function mytheme_enqueue_block_editor_assets()
         array(),
         filemtime(get_template_directory() . '/blocks/editor-style.css')
     );
+
+    // Font Awesome
+    wp_enqueue_style('font-awesome-editor', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
 }
 add_action('enqueue_block_editor_assets', 'mytheme_enqueue_block_editor_assets');
 
@@ -152,6 +155,9 @@ require get_template_directory() . '/inc/customizer/pages.php';
 require get_template_directory() . '/inc/customizer/sidebar.php';
 require get_template_directory() . '/inc/customizer/footer-builder.php';
 require get_template_directory() . '/inc/customizer/cta-buttons.php';
+require get_template_directory() . '/inc/customizer/floating-button.php';
+
+
 require get_template_directory() . '/blocks.php';
 
 // 選択的リフレッシュのサポートを追加

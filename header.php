@@ -48,61 +48,66 @@
             <?php } ?>
             <p class="site-description"><?php bloginfo('description'); ?></p>
         </div>
+        <div class="site-menu">
 
-        <!-- PC用ナビゲーション -->
-        <nav class="pc-navigation" id="pc-nav">
-            <?php wp_nav_menu(array(
-                'theme_location' => 'global_menu',
-                'container' => 'div', // コンテナをdivに設定
-                'container_class' => 'pc-menu-container', // コンテナのクラスを設定
-                'menu_class' => 'pc-menu',
-                'fallback_cb' => false,
-                'link_before' => '<span style="' . (get_theme_mod('mytheme_main_header_section_text_color') ? 'color: ' . get_theme_mod('mytheme_main_header_section_text_color') . ';' : '') . '">',
-                'link_after' => '</span>'
-            )); ?>
-        </nav>
+            <!-- PC用ナビゲーション -->
+            <nav class="pc-navigation" id="pc-nav">
+                <?php wp_nav_menu(array(
+                    'theme_location' => 'global_menu',
+                    'container' => 'div', // コンテナをdivに設定
+                    'container_class' => 'pc-menu-container', // コンテナのクラスを設定
+                    'menu_class' => 'pc-menu',
+                    'fallback_cb' => false,
+                    'link_before' => '<span style="' . (get_theme_mod('mytheme_main_header_section_text_color') ? 'color: ' . get_theme_mod('mytheme_main_header_section_text_color') . ';' : '') . '">',
+                    'link_after' => '</span>'
+                )); ?>
+            </nav>
+            <div class="header-cta-buttons" data-count="<?php echo esc_attr(get_theme_mod('mytheme_cta_button_count', 1)); ?>">
+                <?php
+                $cta_button_count = get_theme_mod('mytheme_cta_button_count', 1);
+                for ($i = 1; $i <= $cta_button_count; $i++) :
+                    $button_text = get_theme_mod("mytheme_cta_button_text_$i");
+                    $button_link = get_theme_mod("mytheme_cta_button_link_$i");
+                    $button_background_color = get_theme_mod("mytheme_cta_button_background_color_$i", '#ff6600');
+                    $button_text_color = get_theme_mod("mytheme_cta_button_text_color_$i", '#ffffff');
+                    $button_icon = get_theme_mod("mytheme_cta_button_icon_$i");
 
-        <!-- スマホ用ナビゲーション -->
-        <button id="menu-toggle" class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-            <span class="menu-icon"></span>
-            <span class="screen-reader-text"><?php _e('メニュー', 'mytheme'); ?></span>
-        </button>
-
-        <nav class="mobile-navigation" id="mobile-nav">
-            <?php wp_nav_menu(array(
-                'theme_location' => 'global_menu',
-                'container' => 'div',
-                'container_class' => 'mobile-menu-container',
-                'menu_class' => 'mobile-menu',
-                'fallback_cb' => false,
-                'link_before' => '<span style="' . esc_attr(get_theme_mod('mytheme_hamburger_menu_text_color', '#333333')) . '">',
-                'link_after' => '</span>'
-            )); ?>
-        </nav>
+                    if ($button_text && $button_link) : ?>
+                        <a href="<?php echo esc_url($button_link); ?>" class="cta-button" style="
+                background-color: <?php echo esc_attr($button_background_color); ?>;
+                color: <?php echo esc_attr($button_text_color); ?>;">
+                            <?php if ($button_icon) : ?>
+                                <i class="<?php echo esc_attr($button_icon); ?>" aria-hidden="true"></i>
+                            <?php endif; ?>
+                            <?php echo esc_html($button_text); ?>
+                        </a>
+                <?php endif;
+                endfor; ?>
+            </div>
 
 
 
-        <div class="header-cta-buttons">
-            <?php
-            $cta_button_count = get_theme_mod('mytheme_cta_button_count', 1);
-            for ($i = 1; $i <= $cta_button_count; $i++) :
-                $button_text = get_theme_mod("mytheme_cta_button_text_$i");
-                $button_link = get_theme_mod("mytheme_cta_button_link_$i");
-                $button_background_color = get_theme_mod("mytheme_cta_button_background_color_$i", '#ff6600');
-                $button_text_color = get_theme_mod("mytheme_cta_button_text_color_$i", '#ffffff');
-                $button_icon = get_theme_mod("mytheme_cta_button_icon_$i");
-                if ($button_text && $button_link) : ?>
-                    <a href="<?php echo esc_url($button_link); ?>" class="cta-button" style="
-                    background-color: <?php echo esc_attr($button_background_color); ?>;
-                    color: <?php echo esc_attr($button_text_color); ?>;">
-                        <?php if ($button_icon) : ?>
-                            <i class="<?php echo esc_attr($button_icon); ?>" aria-hidden="true"></i>
-                        <?php endif; ?>
-                        <?php echo esc_html($button_text); ?>
-                    </a>
-            <?php endif;
-            endfor; ?>
+            <!-- スマホ用ナビゲーション -->
+            <button id="menu-toggle" class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                <span class="menu-icon"></span>
+                <span class="screen-reader-text"><?php _e('メニュー', 'mytheme'); ?></span>
+            </button>
+
+            <nav class="mobile-navigation" id="mobile-nav">
+                <?php wp_nav_menu(array(
+                    'theme_location' => 'global_menu',
+                    'container' => 'div',
+                    'container_class' => 'mobile-menu-container',
+                    'menu_class' => 'mobile-menu',
+                    'fallback_cb' => false,
+                    'link_before' => '<span style="' . esc_attr(get_theme_mod('mytheme_hamburger_menu_text_color', '#333333')) . '">',
+                    'link_after' => '</span>'
+                )); ?>
+            </nav>
         </div>
+
+
+
     </header>
 
     <!-- ヘッダー下 -->
