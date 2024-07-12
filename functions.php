@@ -1,5 +1,37 @@
 <?php
 
+function my_custom_theme_update_check($checked_data)
+{
+    if (empty($checked_data->checked)) {
+        return $checked_data;
+    }
+
+    $theme_data = wp_get_theme();
+    $theme_slug = $theme_data->get_stylesheet();
+    $theme_version = $theme_data->get('Version');
+
+    $request = wp_remote_get('https://wpzen.jp/assets/update-info.json');
+
+    if (is_wp_error($request) || wp_remote_retrieve_response_code($request) != 200) {
+        return $checked_data;
+    }
+
+    $response = json_decode(wp_remote_retrieve_body($request), true);
+
+    if (version_compare($theme_version, $response['version'], '<')) {
+        $checked_data->response[$theme_slug] = array(
+            'theme'       => $theme_slug,
+            'new_version' => $response['version'],
+            'url'         => $response['url'],
+            'package'     => $response['download_link'],
+        );
+    }
+
+    return $checked_data;
+}
+add_filter('pre_set_site_transient_update_themes', 'my_custom_theme_update_check');
+
+
 function mytheme_secure_headers()
 {
     remove_action('wp_head', 'wp_generator'); // WordPressバージョンの非表示
@@ -243,3 +275,118 @@ function mytheme_customizer_styles()
     wp_enqueue_style('customizer-css', get_template_directory_uri() . '/css/admin-customizer.css');
 }
 add_action('customize_controls_enqueue_scripts', 'mytheme_customizer_styles');
+
+
+function my_theme_seo_meta_tags()
+{
+    if (is_single() || is_page()) {
+        global $post;
+        $meta_title = get_post_meta($post->ID, 'meta_title', true);
+        $meta_description = get_post_meta($post->ID, 'meta_description', true);
+
+        // タイトルタグ
+        if ($meta_title) {
+            echo "<title>$meta_title</title>\n";
+        } else {
+            // メタタイトルが設定されていない場合、デフォルトのタイトルを使用
+            echo "<title>" . get_the_title($post->ID) . "</title>\n";
+        }
+
+        // メタディスクリプション
+        if ($meta_description) {
+            echo "<meta name='description' content='$meta_description'>\n";
+        }
+    }
+}
+add_action('wp_head', 'my_theme_seo_meta_tags');
+
+function add_seo_meta_box()
+{
+    add_meta_box(
+        'seo_meta_box',
+        'SEO設定',
+        'display_seo_meta_box',
+        ['post', 'page'],  // 'post'と'page'の両方にメタボックスを追加
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'add_seo_meta_box');
+
+function display_seo_meta_box($post)
+{
+    $meta_title = get_post_meta($post->ID, 'meta_title', true);
+    $meta_description = get_post_meta($post->ID, 'meta_description', true);
+    echo 'メタタイトル: <input type="text" name="meta_title" value="' . esc_attr($meta_title) . '" /><br>';
+    echo 'メタディスクリプション: <input type="text" name="meta_description" value="' . esc_attr($meta_description) . '" />';
+}
+
+function save_seo_meta_box($post_id)
+{
+    if (isset($_POST['meta_title'])) {
+        update_post_meta($post_id, 'meta_title', sanitize_text_field($_POST['meta_title']));
+    }
+    if (isset($_POST['meta_description'])) {
+        update_post_meta($post_id, 'meta_description', sanitize_text_field($_POST['meta_description']));
+    }
+}
+add_action('save_post', 'save_seo_meta_box');
+
+
+function my_theme_structured_data()
+{
+    if (is_single()) {
+        global $post;
+        $structured_data = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BlogPosting',
+            'headline' => get_the_title(),
+            'author' => [
+                '@type' => 'Person',
+                'name' => get_the_author()
+            ],
+            'datePublished' => get_the_date('c'),
+            'image' => get_the_post_thumbnail_url()
+        ];
+        echo '<script type="application/ld+json">' . json_encode($structured_data) . '</script>';
+    }
+}
+add_action('wp_head', 'my_theme_structured_data');
+
+
+function generate_sitemap()
+{
+    $posts = get_posts(['numberposts' => -1, 'post_type' => 'post', 'post_status' => 'publish']);
+    $sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
+    $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+    foreach ($posts as $post) {
+        $sitemap .= '<url>';
+        $sitemap .= '<loc>' . get_permalink($post->ID) . '</loc>';
+        $sitemap .= '<lastmod>' . get_the_modified_date('c', $post->ID) . '</lastmod>';
+        $sitemap .= '</url>';
+    }
+    $sitemap .= '</urlset>';
+    file_put_contents(ABSPATH . 'sitemap.xml', $sitemap);
+}
+add_action('publish_post', 'generate_sitemap');
+
+function my_theme_social_meta_tags()
+{
+    if (is_single() || is_page()) {
+        global $post;
+        $meta_title = get_post_meta($post->ID, 'meta_title', true);
+        $meta_description = get_post_meta($post->ID, 'meta_description', true);
+        $title = $meta_title ? $meta_title : get_the_title($post->ID);
+        $description = $meta_description ? $meta_description : get_the_excerpt($post->ID);
+        $image = get_the_post_thumbnail_url($post->ID);
+
+        echo "<meta property='og:title' content='$title'>\n";
+        echo "<meta property='og:description' content='$description'>\n";
+        echo "<meta property='og:image' content='$image'>\n";
+        echo "<meta name='twitter:card' content='summary_large_image'>\n";
+        echo "<meta name='twitter:title' content='$title'>\n";
+        echo "<meta name='twitter:description' content='$description'>\n";
+        echo "<meta name='twitter:image' content='$image'>\n";
+    }
+}
+add_action('wp_head', 'my_theme_social_meta_tags');

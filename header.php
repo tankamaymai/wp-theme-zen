@@ -22,7 +22,7 @@
     <?php endif; ?>
 
     <!-- ヘッダー上 -->
-    <?php if (get_theme_mod('mytheme_header_top_visible', true)) : ?>
+    <?php if (get_theme_mod('mytheme_header_top_visible', false)) : ?>
         <div id="header-top" class="header-widgets" style="
             <?php echo get_theme_mod('mytheme_header_top_section_background_color') ? 'background-color: ' . get_theme_mod('mytheme_header_top_section_background_color') . ';' : ''; ?>
             <?php echo get_theme_mod('mytheme_header_top_section_text_color') ? 'color: ' . get_theme_mod('mytheme_header_top_section_text_color') . ';' : ''; ?>">
@@ -111,7 +111,7 @@
     </header>
 
     <!-- ヘッダー下 -->
-    <?php if (get_theme_mod('mytheme_header_bottom_visible', true)) : ?>
+    <?php if (get_theme_mod('mytheme_header_bottom_visible', false)) : ?>
         <div id="header-bottom" class="header-widgets" style="
             <?php echo get_theme_mod('mytheme_header_bottom_section_background_color') ? 'background-color: ' . get_theme_mod('mytheme_header_bottom_section_background_color') . ';' : ''; ?>
             <?php echo get_theme_mod('mytheme_header_bottom_section_text_color') ? 'color: ' . get_theme_mod('mytheme_header_bottom_section_text_color') . ';' : ''; ?>">

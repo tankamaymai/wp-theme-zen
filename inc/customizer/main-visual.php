@@ -20,10 +20,18 @@ function mytheme_customize_main_visual($wp_customize)
         'type'     => 'checkbox',  // チェックボックスとして表示
     )));
 
+
     // スライダー画像の設定
+    $default_images = array(
+        'https://wpzen.jp/assets/images/sample01.jpg',
+        'https://wpzen.jp/assets/images/sample02.jpg',
+        'https://wpzen.jp/assets/images/sample03.jpg',
+        'https://wpzen.jp/assets/images/sample04.jpg',
+        'https://wpzen.jp/assets/images/sample05.jpg',
+    );
     for ($i = 1; $i <= 5; $i++) {
         $wp_customize->add_setting("mytheme_slider_image_$i", array(
-            'default'   => '',
+            'default'   => $default_images[$i - 1],
             'transport' => 'refresh',
         ));
         $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, "mytheme_slider_image_$i", array(
@@ -44,14 +52,23 @@ function mytheme_display_swiper()
     if (!get_theme_mod('mytheme_display_slider', true)) {
         return;
     }
+
+    $default_images = array(
+        'https://wpzen.jp/assets/images/sample01.jpg',
+        'https://wpzen.jp/assets/images/sample02.jpg',
+        'https://wpzen.jp/assets/images/sample03.jpg',
+        'https://wpzen.jp/assets/images/sample04.jpg',
+        'https://wpzen.jp/assets/images/sample05.jpg',
+    );
+
 ?>
-    <div class="swiper-container">
+    <div class="swiper swiper-container">
         <div class="swiper-wrapper">
             <?php for ($i = 1; $i <= 5; $i++) : ?>
-                <?php $img_url = get_theme_mod("mytheme_slider_image_$i");
+                <?php $img_url = get_theme_mod("mytheme_slider_image_$i", $default_images[$i - 1]);
                 if ($img_url) : ?>
                     <div class="swiper-slide">
-                        <img src="<?php echo esc_url($img_url); ?>" alt="Slide <?php echo $i; ?>">
+                        <img src="<?php echo esc_url($img_url); ?>" alt="Slide <?php echo $i; ?>" loading="lazy">
                     </div>
                 <?php endif; ?>
             <?php endfor; ?>
