@@ -4,7 +4,7 @@ Theme URI: https://wpzen.jp
 Author: YOSHIZUMI LLC
 Author URI: https://yoshizumi.tech
 Description: ウェブ制作の頼れるパートナーとして、お客様のビジネスをサポートするWordPressテーマです。
-Version: 1.1.5
+Version: 1.1.6
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: zen
@@ -290,10 +290,66 @@ body {
   position: relative;
 }
 
+.swiper-slide {
+  position: relative;
+}
+
 .swiper-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.slider-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.slider-text-left {
+  left: 0;
+  text-align: left;
+}
+
+.slider-text-center {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.slider-text-right {
+  right: 0;
+  text-align: right;
+}
+
+.font-size-small {
+  font-size: 1em;
+}
+
+.font-size-medium {
+  font-size: 1.2em;
+}
+
+.font-size-large {
+  font-size: 2.5em;
+}
+
+.font-size-x-large {
+  font-size: 3em;
+}
+
+.slider-catchphrase {
+  margin: 0;
+  padding: 0;
+}
+
+.slider-bodycopy {
+  margin: 0.5em 0 0;
+  padding: 0;
 }
 
 .background-media video {
