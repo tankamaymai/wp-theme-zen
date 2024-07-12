@@ -19,6 +19,22 @@ function mytheme_customize_floating_button($wp_customize)
         'description' => __('チェックすると、フローティングボタンが表示されます。', 'mytheme'),
     ));
 
+    // フローティングボタンのタイプ設定
+    $wp_customize->add_setting('mytheme_floating_button_type', array(
+        'default'   => 'text',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('mytheme_floating_button_type', array(
+        'label'    => __('フローティングボタンのタイプ', 'mytheme'),
+        'section'  => 'mytheme_floating_button_settings',
+        'type'     => 'select',
+        'choices'  => array(
+            'text'  => __('テキスト', 'mytheme'),
+            'image' => __('画像', 'mytheme'),
+        ),
+    ));
+
     // フローティングボタンの背景色設定
     $wp_customize->add_setting('mytheme_floating_button_background_color', array(
         'default'   => '#ff0000',
@@ -66,6 +82,35 @@ function mytheme_customize_floating_button($wp_customize)
         'section'  => 'mytheme_floating_button_settings',
         'type'     => 'url',
     ));
+
+    // フローティングボタンの位置設定
+    $wp_customize->add_setting('mytheme_floating_button_position', array(
+        'default'   => 'right',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('mytheme_floating_button_position', array(
+        'label'    => __('フローティングボタンの位置', 'mytheme'),
+        'section'  => 'mytheme_floating_button_settings',
+        'type'     => 'select',
+        'choices'  => array(
+            'left'   => __('左', 'mytheme'),
+            'center' => __('中央', 'mytheme'),
+            'right'  => __('右', 'mytheme'),
+        ),
+    ));
+
+    // フローティングボタンの画像設定
+    $wp_customize->add_setting('mytheme_floating_button_image', array(
+        'default'   => '',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'mytheme_floating_button_image', array(
+        'label'    => __('フローティングボタンの画像', 'mytheme'),
+        'section'  => 'mytheme_floating_button_settings',
+        'settings' => 'mytheme_floating_button_image',
+    )));
 }
 add_action('customize_register', 'mytheme_customize_floating_button');
 
@@ -73,34 +118,62 @@ function mytheme_floating_button_styles()
 {
     $display_button = get_theme_mod('mytheme_display_floating_button', false);
     if ($display_button) {
+        $button_type = get_theme_mod('mytheme_floating_button_type', 'text');
         $button_bg_color = get_theme_mod('mytheme_floating_button_background_color', '#ff0000');
         $button_text_color = get_theme_mod('mytheme_floating_button_text_color', '#ffffff');
         $button_text = get_theme_mod('mytheme_floating_button_text', __('お問い合わせ', 'mytheme'));
         $button_link = get_theme_mod('mytheme_floating_button_link', '#');
+        $button_position = get_theme_mod('mytheme_floating_button_position', 'right');
+        $button_image = get_theme_mod('mytheme_floating_button_image', '');
+
+        $position_css = '';
+        switch ($button_position) {
+            case 'left':
+                $position_css = 'left: 20px;';
+                break;
+            case 'center':
+                $position_css = 'left: 50%; transform: translateX(-50%);';
+                break;
+            case 'right':
+                $position_css = 'right: 20px;';
+                break;
+        }
 
         $custom_css = "
             .floating-button {
-                background-color: {$button_bg_color};
-                color: {$button_text_color};
                 position: fixed;
                 bottom: 20px;
-                right: 20px;
-                padding: 10px 20px;
-                border-radius: 50px;
+                {$position_css}
                 z-index: 9999;
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
             }
-            .floating-button:hover {
-                opacity: 0.8;
+
+            .floating-button.text {
+                background-color: {$button_bg_color};
+                color: {$button_text_color};
+                padding: 10px 20px;
+                border-radius: 50px;
             }
+
+            .floating-button.image img {
+                max-width: 200px;
+                height: auto;
+                width: 100%;
+            }
+
+           
         ";
         wp_add_inline_style('mytheme-style', $custom_css);
 
         // フローティングボタンのHTMLを追加
-        add_action('wp_footer', function () use ($button_text, $button_link) {
-            echo '<a href="' . esc_url($button_link) . '" class="floating-button">' . esc_html($button_text) . '</a>';
+        add_action('wp_footer', function () use ($button_type, $button_text, $button_link, $button_image) {
+            if ($button_type === 'image' && $button_image) {
+                echo '<a href="' . esc_url($button_link) . '" class="floating-button image"><img src="' . esc_url($button_image) . '" alt="Floating Button"></a>';
+            } else {
+                echo '<a href="' . esc_url($button_link) . '" class="floating-button text">' . esc_html($button_text) . '</a>';
+            }
         });
     }
 }

@@ -39,6 +39,30 @@ function mytheme_customize_main_visual($wp_customize)
             'section'  => 'mytheme_slider_settings',
             'settings' => "mytheme_slider_image_$i",
         )));
+
+        // キャッチコピーの設定
+        $wp_customize->add_setting("mytheme_slider_catchphrase_$i", array(
+            'default'   => '',
+            'transport' => 'refresh',
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+        $wp_customize->add_control("mytheme_slider_catchphrase_$i", array(
+            'label'    => __("キャッチコピー $i", 'mytheme'),
+            'section'  => 'mytheme_slider_settings',
+            'type'     => 'text',
+        ));
+
+        // ボディコピーの設定
+        $wp_customize->add_setting("mytheme_slider_bodycopy_$i", array(
+            'default'   => '',
+            'transport' => 'refresh',
+            'sanitize_callback' => 'sanitize_textarea_field',
+        ));
+        $wp_customize->add_control("mytheme_slider_bodycopy_$i", array(
+            'label'    => __("ボディコピー $i", 'mytheme'),
+            'section'  => 'mytheme_slider_settings',
+            'type'     => 'textarea',
+        ));
     }
 }
 

@@ -4,7 +4,7 @@ Theme URI: https://wpzen.jp
 Author: YOSHIZUMI LLC
 Author URI: https://yoshizumi.tech
 Description: ウェブ制作の頼れるパートナーとして、お客様のビジネスをサポートするWordPressテーマです。
-Version: 1.1.3
+Version: 1.1.5
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: zen
@@ -361,49 +361,6 @@ body {
   box-sizing: border-box;
 }
 
-/* スマホ用レイアウト */
-@media (max-width: 768px) {
-  .site-header {
-    gap: 10px;
-    padding: 0 10px;
-  }
-  .site-menu {
-    gap: 10px;
-  }
-  .site-branding {
-    flex: initial;
-  }
-  .site-title a {
-    font-size: 20px;
-  }
-
-  .header-cta-buttons {
-    justify-content: end;
-    gap: 0px;
-  }
-
-  .header-cta-buttons[data-count="2"] {
-    flex: 1 1 50%;
-  }
-
-  .header-cta-buttons[data-count="3"] {
-    flex: 1 1 33.333%;
-  }
-
-  .header-cta-buttons .cta-button {
-    flex: 1 1 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    font-size: 14px;
-  }
-
-  .header-cta-buttons .cta-button i {
-    margin-bottom: 5px;
-  }
-}
-
 #content {
   display: flex;
   padding: 60px;
@@ -480,6 +437,7 @@ body {
   width: 100%;
 }
 
+/* スマホ用レイアウト */
 @media (max-width: 768px) {
   #content {
     flex-direction: column;
@@ -493,5 +451,44 @@ body {
 
   #primary {
     padding: 40px 20px;
+  }
+  .site-header {
+    gap: 10px;
+    padding: 0 10px;
+  }
+  .site-menu {
+    gap: 10px;
+  }
+  .site-branding {
+    flex: initial;
+  }
+  .site-title a {
+    font-size: 20px;
+  }
+
+  .header-cta-buttons {
+    justify-content: end;
+    gap: 0px;
+  }
+
+  .header-cta-buttons[data-count="2"] {
+    flex: 1 1 50%;
+  }
+
+  .header-cta-buttons[data-count="3"] {
+    flex: 1 1 33.333%;
+  }
+
+  .header-cta-buttons .cta-button {
+    flex: 1 1 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .header-cta-buttons .cta-button i {
+    margin-bottom: 5px;
   }
 }
