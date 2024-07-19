@@ -317,9 +317,10 @@ function display_seo_meta_box($post)
 {
     $meta_title = get_post_meta($post->ID, 'meta_title', true);
     $meta_description = get_post_meta($post->ID, 'meta_description', true);
-    echo 'メタタイトル: <input type="text" name="meta_title" value="' . esc_attr($meta_title) . '" /><br>';
-    echo 'メタディスクリプション: <input type="text" name="meta_description" value="' . esc_attr($meta_description) . '" />';
+    echo 'メタタイトル:<br> <input type="text" name="meta_title" value="' . esc_attr($meta_title) . '" size="100" /><br><br>';
+    echo 'メタディスクリプション:<br> <textarea name="meta_description" rows="5" cols="80" style="width:100%;">' . esc_textarea($meta_description) . '</textarea>';
 }
+
 
 function save_seo_meta_box($post_id)
 {
@@ -390,3 +391,77 @@ function my_theme_social_meta_tags()
     }
 }
 add_action('wp_head', 'my_theme_social_meta_tags');
+
+
+function add_custom_css_js_meta_box()
+{
+    add_meta_box(
+        'custom_css_js_meta_box', // ID
+        'カスタムCSSとJS', // タイトル
+        'show_custom_css_js_meta_box', // コールバック関数
+        array('post', 'page'), // 投稿タイプ
+        'normal', // コンテキスト
+        'high' // 優先度
+    );
+}
+add_action('add_meta_boxes', 'add_custom_css_js_meta_box');
+
+function show_custom_css_js_meta_box($post)
+{
+    $custom_css = get_post_meta($post->ID, '_custom_css', true);
+    $custom_js = get_post_meta($post->ID, '_custom_js', true);
+
+    wp_nonce_field('save_custom_css_js_meta_box', 'custom_css_js_nonce');
+?>
+    <p>
+        <label for="custom_css">カスタムCSS:</label>
+        <textarea id="custom_css" name="custom_css" rows="10" cols="30" style="width:100%;"><?php echo esc_textarea($custom_css); ?></textarea>
+    </p>
+    <p>
+        <label for="custom_js">カスタムJS:</label>
+        <textarea id="custom_js" name="custom_js" rows="10" cols="30" style="width:100%;"><?php echo esc_textarea($custom_js); ?></textarea>
+    </p>
+<?php
+}
+
+function save_custom_css_js_meta_box($post_id)
+{
+    if (!isset($_POST['custom_css_js_nonce']) || !wp_verify_nonce($_POST['custom_css_js_nonce'], 'save_custom_css_js_meta_box')) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    if (isset($_POST['custom_css'])) {
+        update_post_meta($post_id, '_custom_css', sanitize_text_field($_POST['custom_css']));
+    }
+
+    if (isset($_POST['custom_js'])) {
+        update_post_meta($post_id, '_custom_js', sanitize_text_field($_POST['custom_js']));
+    }
+}
+add_action('save_post', 'save_custom_css_js_meta_box');
+
+function enqueue_custom_css_js()
+{
+    if (is_singular()) {
+        global $post;
+        $custom_css = get_post_meta($post->ID, '_custom_css', true);
+        $custom_js = get_post_meta($post->ID, '_custom_js', true);
+
+        if (!empty($custom_css)) {
+            wp_add_inline_style('mytheme-style', $custom_css); // テーマのスタイルハンドルを使用
+        }
+
+        if (!empty($custom_js)) {
+            wp_add_inline_script('mytheme-script', $custom_js); // テーマのスクリプトハンドルを使用
+        }
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_css_js');

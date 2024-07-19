@@ -73,9 +73,9 @@
                     $button_icon = get_theme_mod("mytheme_cta_button_icon_$i");
 
                     if ($button_text && $button_link) : ?>
-                        <a href="<?php echo esc_url($button_link); ?>" class="cta-button" style="
-                background-color: <?php echo esc_attr($button_background_color); ?>;
-                color: <?php echo esc_attr($button_text_color); ?>;">
+                        <a href="<?php echo esc_url($button_link); ?>" class="cta-button cta-button-<?php echo $i; ?>" style="
+        background-color: <?php echo esc_attr($button_background_color); ?>;
+        color: <?php echo esc_attr($button_text_color); ?>;">
                             <?php if ($button_icon) : ?>
                                 <i class="<?php echo esc_attr($button_icon); ?>" aria-hidden="true"></i>
                             <?php endif; ?>
@@ -84,6 +84,7 @@
                 <?php endif;
                 endfor; ?>
             </div>
+
 
 
 

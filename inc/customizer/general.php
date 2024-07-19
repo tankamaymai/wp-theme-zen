@@ -127,7 +127,80 @@ function mytheme_customize_container_settings($wp_customize)
             '1600' => '1600px',
         ),
     ));
+
+    // 全体のコンテナ内側余白設定
+    $wp_customize->add_setting('mytheme_container_padding', array(
+        'default' => 'none',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('mytheme_container_padding', array(
+        'label' => __('コンテナ内側余白', 'mytheme'),
+        'section' => 'mytheme_container_settings',
+        'type' => 'select',
+        'choices' => array(
+            'none' => __('なし', 'mytheme'),
+            'small' => __('小', 'mytheme'),
+            'medium' => __('中', 'mytheme'),
+            'large' => __('大', 'mytheme'),
+        ),
+    ));
+
+    // 全体のコンテナ外側余白設定
+    $wp_customize->add_setting('mytheme_container_margin', array(
+        'default' => 'none',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('mytheme_container_margin', array(
+        'label' => __('コンテナ外側余白', 'mytheme'),
+        'section' => 'mytheme_container_settings',
+        'type' => 'select',
+        'choices' => array(
+            'none' => __('なし', 'mytheme'),
+            'small' => __('小', 'mytheme'),
+            'medium' => __('中', 'mytheme'),
+            'large' => __('大', 'mytheme'),
+        ),
+    ));
+
+    // トップページのコンテナ内側余白設定
+    $wp_customize->add_setting('mytheme_front_page_container_padding', array(
+        'default' => 'none',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('mytheme_front_page_container_padding', array(
+        'label' => __('トップページのコンテナ内側余白', 'mytheme'),
+        'section' => 'mytheme_container_settings',
+        'type' => 'select',
+        'choices' => array(
+            'none' => __('なし', 'mytheme'),
+            'small' => __('小', 'mytheme'),
+            'medium' => __('中', 'mytheme'),
+            'large' => __('大', 'mytheme'),
+        ),
+    ));
+
+    // トップページのコンテナ外側余白設定
+    $wp_customize->add_setting('mytheme_front_page_container_margin', array(
+        'default' => 'none',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('mytheme_front_page_container_margin', array(
+        'label' => __('トップページのコンテナ外側余白', 'mytheme'),
+        'section' => 'mytheme_container_settings',
+        'type' => 'select',
+        'choices' => array(
+            'none' => __('なし', 'mytheme'),
+            'small' => __('小', 'mytheme'),
+            'medium' => __('中', 'mytheme'),
+            'large' => __('大', 'mytheme'),
+        ),
+    ));
 }
+
 
 function mytheme_sanitize_container_width($input)
 {
@@ -149,6 +222,10 @@ function mytheme_customize_container_width()
 {
     $container_width = get_theme_mod('mytheme_container_width', '1200');
     $front_page_container_width = get_theme_mod('mytheme_front_page_container_width', '1200');
+    $container_padding = get_theme_mod('mytheme_container_padding', 'none');
+    $container_margin = get_theme_mod('mytheme_container_margin', 'none');
+    $front_page_container_padding = get_theme_mod('mytheme_front_page_container_padding', 'none');
+    $front_page_container_margin = get_theme_mod('mytheme_front_page_container_margin', 'none');
 
     if ($container_width !== '100%') {
         $container_width .= 'px'; // 単位を追加
@@ -157,13 +234,59 @@ function mytheme_customize_container_width()
         $front_page_container_width .= 'px'; // 単位を追加
     }
 
+    // 各設定に対するCSSクラス
+    $padding_css = array(
+        'none' => 'padding: 0;',
+        'small' => 'padding: 40px 40px;',
+        'medium' => 'padding: 60px 40px;',
+        'large' => 'padding: 80px 40px;',
+    );
+
+    $margin_css = array(
+        'none' => 'margin: 0;',
+        'small' => 'margin: 40px;',
+        'medium' => 'margin: 60px;',
+        'large' => 'margin: 80px;',
+    );
+
+    // 存在チェックとデフォルト値の設定
+    $container_padding_css = isset($padding_css[$container_padding]) ? $padding_css[$container_padding] : $padding_css['medium'];
+    $container_margin_css = isset($margin_css[$container_margin]) ? $margin_css[$container_margin] : $margin_css['none'];
+    $front_page_container_padding_css = isset($padding_css[$front_page_container_padding]) ? $padding_css[$front_page_container_padding] : $padding_css['medium'];
+    $front_page_container_margin_css = isset($margin_css[$front_page_container_margin]) ? $margin_css[$front_page_container_margin] : $margin_css['none'];
+
     $custom_css = "
-        .site-content {
+        #primary {
             max-width: {$container_width};
-            margin: 0 auto;
+            {$container_padding_css}
+            {$container_margin_css}
         }
-        body.home .site-content {
+        body.home #primary {
             max-width: {$front_page_container_width};
+            {$front_page_container_padding_css}
+            {$front_page_container_margin_css}
+        }
+
+        @media (max-width: 768px) {
+            #primary {
+                {$container_padding_css}
+                {$container_margin_css}
+            }
+            body.home #primary {
+                {$front_page_container_padding_css}
+                {$front_page_container_margin_css}
+            }
+        }
+
+        @media (max-width: 480px) {
+            #primary {
+                {$container_padding_css}
+                {$container_margin_css}
+            }
+            body.home #primary {
+                {$front_page_container_padding_css}
+                {$front_page_container_margin_css}
+            }
         }
     ";
 

@@ -29,12 +29,30 @@ function mytheme_customize_header($wp_customize)
     ));
 
     // ヘッダー上表示設定
-    $wp_customize->add_setting('mytheme_header_top_visible', array(
+    $wp_customize->add_setting('mytheme_header_top_visible_pc', array(
+        'default'   => true,
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_setting('mytheme_header_top_visible_tablet', array(
         'default'   => false,
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control('mytheme_header_top_visible', array(
-        'label'    => __('ヘッダー上を表示', 'mytheme'),
+    $wp_customize->add_setting('mytheme_header_top_visible_mobile', array(
+        'default'   => false,
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control('mytheme_header_top_visible_pc', array(
+        'label'    => __('PCで表示', 'mytheme'),
+        'section'  => 'mytheme_header_top_section',
+        'type'     => 'checkbox',
+    ));
+    $wp_customize->add_control('mytheme_header_top_visible_tablet', array(
+        'label'    => __('タブレットで表示', 'mytheme'),
+        'section'  => 'mytheme_header_top_section',
+        'type'     => 'checkbox',
+    ));
+    $wp_customize->add_control('mytheme_header_top_visible_mobile', array(
+        'label'    => __('スマホで表示', 'mytheme'),
         'section'  => 'mytheme_header_top_section',
         'type'     => 'checkbox',
     ));
@@ -49,24 +67,33 @@ function mytheme_customize_header($wp_customize)
     )));
 
     // ヘッダー下表示設定
-    $wp_customize->add_setting('mytheme_header_bottom_visible', array(
+    $wp_customize->add_setting('mytheme_header_bottom_visible_pc', array(
+        'default'   => true,
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_setting('mytheme_header_bottom_visible_tablet', array(
         'default'   => false,
         'transport' => 'refresh',
     ));
-    $wp_customize->add_control('mytheme_header_bottom_visible', array(
-        'label'    => __('ヘッダー下を表示', 'mytheme'),
+    $wp_customize->add_setting('mytheme_header_bottom_visible_mobile', array(
+        'default'   => false,
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control('mytheme_header_bottom_visible_pc', array(
+        'label'    => __('PCで表示', 'mytheme'),
         'section'  => 'mytheme_header_bottom_section',
         'type'     => 'checkbox',
     ));
-
-    // ヘッダー下ウィジェットエリアリンク
-    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'header_bottom_widgets_link', array(
-        'label'    => '', // ボタンのラベルを空にする
+    $wp_customize->add_control('mytheme_header_bottom_visible_tablet', array(
+        'label'    => __('タブレットで表示', 'mytheme'),
         'section'  => 'mytheme_header_bottom_section',
-        'settings' => array(),
-        'type'     => 'hidden',
-        'description' => '<a href="#" onclick="wp.customize.panel(\'widgets\').focus(); return false;">' . __('ウィジェットを編集', 'mytheme') . '</a>',
-    )));
+        'type'     => 'checkbox',
+    ));
+    $wp_customize->add_control('mytheme_header_bottom_visible_mobile', array(
+        'label'    => __('スマホで表示', 'mytheme'),
+        'section'  => 'mytheme_header_bottom_section',
+        'type'     => 'checkbox',
+    ));
 
     // メインヘッダーの背景色と文字色設定
     $wp_customize->add_setting('mytheme_main_header_section_background_color', array(
@@ -176,6 +203,12 @@ function mytheme_customize_header_styles()
     $hamburger_menu_background_color = get_theme_mod('mytheme_hamburger_menu_background_color', '#ffffff');
     $hamburger_menu_text_color = get_theme_mod('mytheme_hamburger_menu_text_color', '#333333');
 
+    $header_top_visible_pc = get_theme_mod('mytheme_header_top_visible_pc', true);
+    $header_top_visible_tablet = get_theme_mod('mytheme_header_top_visible_tablet', false);
+    $header_top_visible_mobile = get_theme_mod('mytheme_header_top_visible_mobile', false);
+    $header_bottom_visible_pc = get_theme_mod('mytheme_header_bottom_visible_pc', true);
+    $header_bottom_visible_tablet = get_theme_mod('mytheme_header_bottom_visible_tablet', false);
+    $header_bottom_visible_mobile = get_theme_mod('mytheme_header_bottom_visible_mobile', false);
 
     $custom_css = "
         #masthead {
@@ -210,7 +243,38 @@ function mytheme_customize_header_styles()
         .mobile-navigation .mobile-menu a {
             color: {$hamburger_menu_text_color} !important;
         }
+
+        /* ヘッダー上表示設定 */
+        #header-top {
+            display: " . ($header_top_visible_pc ? 'block' : 'none') . ";
+        }
+        @media (max-width: 1024px) {
+            #header-top {
+                display: " . ($header_top_visible_tablet ? 'block' : 'none') . ";
+            }
+        }
+        @media (max-width: 768px) {
+            #header-top {
+                display: " . ($header_top_visible_mobile ? 'block' : 'none') . ";
+            }
+        }
+
+        /* ヘッダー下表示設定 */
+        #header-bottom {
+            display: " . ($header_bottom_visible_pc ? 'block' : 'none') . ";
+        }
+        @media (max-width: 1024px) {
+            #header-bottom {
+                display: " . ($header_bottom_visible_tablet ? 'block' : 'none') . ";
+            }
+        }
+        @media (max-width: 768px) {
+            #header-bottom {
+                display: " . ($header_bottom_visible_mobile ? 'block' : 'none') . ";
+            }
+        }
     ";
+
     wp_add_inline_style('mytheme-style', $custom_css);
 }
 add_action('wp_enqueue_scripts', 'mytheme_customize_header_styles');
