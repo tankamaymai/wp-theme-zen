@@ -3,114 +3,132 @@ function mytheme_customize_floating_button($wp_customize)
 {
     // フローティングボタン設定セクションの追加
     $wp_customize->add_section('mytheme_floating_button_settings', array(
-        'title'    => __('フローティングボタン設定', 'mytheme'),
+        'title' => __('フローティングボタン設定', 'mytheme'),
         'priority' => 35
-    ));
+    )
+    );
 
     // フローティングボタンの表示設定
     $wp_customize->add_setting('mytheme_display_floating_button', array(
-        'default'   => false,
+        'default' => false,
         'transport' => 'refresh',
-    ));
+    )
+    );
     $wp_customize->add_control('mytheme_display_floating_button', array(
-        'type'     => 'checkbox',
-        'section'  => 'mytheme_floating_button_settings',
-        'label'    => __('フローティングボタンを表示する', 'mytheme'),
+        'type' => 'checkbox',
+        'section' => 'mytheme_floating_button_settings',
+        'label' => __('フローティングボタンを表示する', 'mytheme'),
         'description' => __('チェックすると、フローティングボタンが表示されます。', 'mytheme'),
-    ));
+    )
+    );
 
     // フローティングボタンのタイプ設定
     $wp_customize->add_setting('mytheme_floating_button_type', array(
-        'default'   => 'text',
+        'default' => 'text',
         'transport' => 'refresh',
         'sanitize_callback' => 'sanitize_text_field',
-    ));
+    )
+    );
     $wp_customize->add_control('mytheme_floating_button_type', array(
-        'label'    => __('フローティングボタンのタイプ', 'mytheme'),
-        'section'  => 'mytheme_floating_button_settings',
-        'type'     => 'select',
-        'choices'  => array(
-            'text'  => __('テキスト', 'mytheme'),
+        'label' => __('フローティングボタンのタイプ', 'mytheme'),
+        'section' => 'mytheme_floating_button_settings',
+        'type' => 'select',
+        'choices' => array(
+            'text' => __('テキスト', 'mytheme'),
             'image' => __('画像', 'mytheme'),
+            'fullwidth_image' => __('画像(全幅スマホサイズのみ)', 'mytheme'), // 追加
         ),
-    ));
+    )
+    );
 
     // フローティングボタンの背景色設定
     $wp_customize->add_setting('mytheme_floating_button_background_color', array(
-        'default'   => '#ff0000',
+        'default' => '#ff0000',
         'transport' => 'refresh',
         'sanitize_callback' => 'sanitize_hex_color',
-    ));
+    )
+    );
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'mytheme_floating_button_background_color', array(
-        'label'    => __('フローティングボタンの背景色', 'mytheme'),
-        'section'  => 'mytheme_floating_button_settings',
+        'label' => __('フローティングボタンの背景色', 'mytheme'),
+        'section' => 'mytheme_floating_button_settings',
         'settings' => 'mytheme_floating_button_background_color',
-    )));
+    )
+    ));
 
     // フローティングボタンの文字色設定
     $wp_customize->add_setting('mytheme_floating_button_text_color', array(
-        'default'   => '#ffffff',
+        'default' => '#ffffff',
         'transport' => 'refresh',
         'sanitize_callback' => 'sanitize_hex_color',
-    ));
+    )
+    );
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'mytheme_floating_button_text_color', array(
-        'label'    => __('フローティングボタンの文字色', 'mytheme'),
-        'section'  => 'mytheme_floating_button_settings',
+        'label' => __('フローティングボタンの文字色', 'mytheme'),
+        'section' => 'mytheme_floating_button_settings',
         'settings' => 'mytheme_floating_button_text_color',
-    )));
+    )
+    ));
 
     // フローティングボタンのテキスト設定
     $wp_customize->add_setting('mytheme_floating_button_text', array(
-        'default'   => __('お問い合わせ', 'mytheme'),
+        'default' => __('お問い合わせ', 'mytheme'),
         'transport' => 'refresh',
         'sanitize_callback' => 'sanitize_text_field',
-    ));
+    )
+    );
     $wp_customize->add_control('mytheme_floating_button_text', array(
-        'label'    => __('フローティングボタンのテキスト', 'mytheme'),
-        'section'  => 'mytheme_floating_button_settings',
-        'type'     => 'text',
-    ));
+        'label' => __('フローティングボタンのテキスト', 'mytheme'),
+        'section' => 'mytheme_floating_button_settings',
+        'type' => 'text',
+    )
+    );
 
     // フローティングボタンのリンク先設定
     $wp_customize->add_setting('mytheme_floating_button_link', array(
-        'default'   => '#',
+        'default' => '#',
         'transport' => 'refresh',
         'sanitize_callback' => 'esc_url_raw',
-    ));
+    )
+    );
     $wp_customize->add_control('mytheme_floating_button_link', array(
-        'label'    => __('フローティングボタンのリンク先', 'mytheme'),
-        'section'  => 'mytheme_floating_button_settings',
-        'type'     => 'url',
-    ));
+        'label' => __('フローティングボタンのリンク先', 'mytheme'),
+        'section' => 'mytheme_floating_button_settings',
+        'type' => 'url',
+    )
+    );
 
     // フローティングボタンの位置設定
     $wp_customize->add_setting('mytheme_floating_button_position', array(
-        'default'   => 'right',
+        'default' => 'right',
         'transport' => 'refresh',
         'sanitize_callback' => 'sanitize_text_field',
-    ));
+    )
+    );
     $wp_customize->add_control('mytheme_floating_button_position', array(
-        'label'    => __('フローティングボタンの位置', 'mytheme'),
-        'section'  => 'mytheme_floating_button_settings',
-        'type'     => 'select',
-        'choices'  => array(
-            'left'   => __('左', 'mytheme'),
+        'label' => __('フローティングボタンの位置', 'mytheme'),
+        'section' => 'mytheme_floating_button_settings',
+        'type' => 'select',
+        'choices' => array(
+            'left' => __('左', 'mytheme'),
             'center' => __('中央', 'mytheme'),
-            'right'  => __('右', 'mytheme'),
+            'right' => __('右', 'mytheme'),
         ),
-    ));
+    )
+    );
 
     // フローティングボタンの画像設定
     $wp_customize->add_setting('mytheme_floating_button_image', array(
-        'default'   => '',
+        'default' => '',
         'transport' => 'refresh',
         'sanitize_callback' => 'esc_url_raw',
-    ));
+    )
+    );
     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'mytheme_floating_button_image', array(
-        'label'    => __('フローティングボタンの画像', 'mytheme'),
-        'section'  => 'mytheme_floating_button_settings',
+        'label' => __('フローティングボタンの画像', 'mytheme'),
+        'section' => 'mytheme_floating_button_settings',
         'settings' => 'mytheme_floating_button_image',
-    )));
+    )
+    ));
 }
 add_action('customize_register', 'mytheme_customize_floating_button');
 
@@ -163,7 +181,19 @@ function mytheme_floating_button_styles()
                 width: 100%;
             }
 
-           
+            .floating-button.fullwidth_image img {
+                width: 100%;
+                height: auto;
+            }
+
+            @media (max-width: 768px) {
+                .floating-button.fullwidth_image {
+                    width: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    text-align: center;
+                }
+            }
         ";
         wp_add_inline_style('mytheme-style', $custom_css);
 
@@ -171,6 +201,8 @@ function mytheme_floating_button_styles()
         add_action('wp_footer', function () use ($button_type, $button_text, $button_link, $button_image) {
             if ($button_type === 'image' && $button_image) {
                 echo '<a href="' . esc_url($button_link) . '" class="floating-button image"><img src="' . esc_url($button_image) . '" alt="Floating Button"></a>';
+            } elseif ($button_type === 'fullwidth_image' && $button_image) {
+                echo '<a href="' . esc_url($button_link) . '" class="floating-button fullwidth_image"><img src="' . esc_url($button_image) . '" alt="Floating Button"></a>';
             } else {
                 echo '<a href="' . esc_url($button_link) . '" class="floating-button text">' . esc_html($button_text) . '</a>';
             }
