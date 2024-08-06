@@ -1,7 +1,11 @@
 <?php
-
 function my_custom_theme_update_check($checked_data)
 {
+    // 子テーマの場合は実行しない
+    if (get_template_directory() !== get_stylesheet_directory()) {
+        return $checked_data;
+    }
+
     if (empty($checked_data->checked)) {
         return $checked_data;
     }
