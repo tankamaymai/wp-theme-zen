@@ -60,9 +60,19 @@ function mytheme_customize_floating_button($wp_customize)
         'choices'  => array(
             'text'  => __('テキスト', 'mytheme'),
             'image' => __('画像', 'mytheme'),
-            'fullwidth_image' => __('画像(全幅)', 'mytheme'), // 追加
+            'fullwidth_image' => __('バナー(全幅)', 'mytheme'), // 追加
         ),
     ));
+       // 画像（全幅）の推奨サイズ説明
+       $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_floating_button_fullwidth_image_description', array(
+        'section'  => 'mytheme_floating_button_settings',
+        'settings' => array(),
+        'type'     => 'hidden',
+        'description' => __('バナー（全幅）の推奨サイズ：468 × 60px', 'mytheme'),
+        'active_callback' => function() use ($wp_customize) {
+            return $wp_customize->get_setting('mytheme_floating_button_type')->value() === 'fullwidth_image';
+        },
+    )));
 
     // フローティングボタンの背景色設定
     $wp_customize->add_setting('mytheme_floating_button_background_color', array(
@@ -215,12 +225,18 @@ function mytheme_floating_button_styles()
             }") . "
 
             @media (max-width: 768px) {
-                .floating-button.fullwidth_image {
-                    width: 100%;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    text-align: center;
-                }
+            .floating-button.fullwidth_image {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .floating-button.fullwidth_image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
             }
         ";
         wp_add_inline_style('mytheme-style', $custom_css);
