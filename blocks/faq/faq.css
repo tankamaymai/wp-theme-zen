@@ -74,3 +74,24 @@
   background-color: #f0f8ff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
+
+/* デスクトップ（1024px以上）で非表示 */
+@media (min-width: 1024px) {
+  .hide-on-desktop {
+    display: none;
+  }
+}
+
+/* タブレット（768px～1024px）で非表示 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hide-on-tablet {
+    display: none;
+  }
+}
+
+/* モバイル（768px以下）で非表示 */
+@media (max-width: 767px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}

@@ -5,7 +5,11 @@
   var Button = components.Button;
   var IconButton = components.IconButton;
   var ToggleControl = components.ToggleControl;
+  var InspectorControls = blockEditor.InspectorControls;
+  var PanelBody = components.PanelBody;
+  var SelectControl = components.SelectControl;
 
+  // FAQブロックの登録
   blocks.registerBlockType("mytheme/faq", {
     title: "FAQ",
     icon: "editor-help",
@@ -32,6 +36,18 @@
       alwaysOpen: {
         type: "boolean",
         default: false,
+      },
+      displayOnDesktop: {
+        type: "string",
+        default: "show",
+      },
+      displayOnTablet: {
+        type: "string",
+        default: "show",
+      },
+      displayOnMobile: {
+        type: "string",
+        default: "show",
       },
     },
     edit: function (props) {
@@ -69,13 +85,58 @@
         Fragment,
         {},
         el(
+          InspectorControls,
+          null,
+          el(
+            PanelBody,
+            { title: "設定", initialOpen: true },
+            el(ToggleControl, {
+              label: "常に回答を表示",
+              checked: alwaysOpen,
+              onChange: toggleAlwaysOpen,
+            })
+          ),
+          el(
+            PanelBody,
+            { title: "レスポンシブ設定", initialOpen: false },
+            el(SelectControl, {
+              label: "デスクトップで表示",
+              value: props.attributes.displayOnDesktop,
+              options: [
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
+              ],
+              onChange: (value) => {
+                props.setAttributes({ displayOnDesktop: value });
+              },
+            }),
+            el(SelectControl, {
+              label: "タブレットで表示",
+              value: props.attributes.displayOnTablet,
+              options: [
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
+              ],
+              onChange: (value) => {
+                props.setAttributes({ displayOnTablet: value });
+              },
+            }),
+            el(SelectControl, {
+              label: "モバイルで表示",
+              value: props.attributes.displayOnMobile,
+              options: [
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
+              ],
+              onChange: (value) => {
+                props.setAttributes({ displayOnMobile: value });
+              },
+            })
+          )
+        ),
+        el(
           "div",
           { className: "faq-block" },
-          el(ToggleControl, {
-            label: "常に回答を表示",
-            checked: alwaysOpen,
-            onChange: toggleAlwaysOpen,
-          }),
           questions.map(function (item, index) {
             return el(
               "div",
@@ -122,9 +183,18 @@
       var questions = props.attributes.questions;
       var alwaysOpen = props.attributes.alwaysOpen;
 
+      const classes = [
+        "faq-block",
+        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
+        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
+        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
+      ]
+        .filter(Boolean)
+        .join(" ");
+
       return el(
         "div",
-        { className: "faq-block", "data-always-open": alwaysOpen },
+        { className: classes, "data-always-open": alwaysOpen },
         questions.map(function (item, index) {
           return el(
             "div",

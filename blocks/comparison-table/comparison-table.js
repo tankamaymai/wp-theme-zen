@@ -23,6 +23,18 @@
         type: "string",
         default: "default-style",
       },
+      displayOnDesktop: {
+        type: "string",
+        default: "show",
+      },
+      displayOnTablet: {
+        type: "string",
+        default: "show",
+      },
+      displayOnMobile: {
+        type: "string",
+        default: "show",
+      },
     },
     edit: function (props) {
       var tableData = props.attributes.tableData;
@@ -91,11 +103,64 @@
               ],
               onChange: onStyleChange,
             })
+          ),
+          el(
+            PanelBody,
+            { title: "レスポンシブ設定", initialOpen: false },
+            el(SelectControl, {
+              label: "デスクトップで表示",
+              value: props.attributes.displayOnDesktop,
+              options: [
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
+              ],
+              onChange: (value) => {
+                props.setAttributes({ displayOnDesktop: value });
+              },
+            }),
+            el(SelectControl, {
+              label: "タブレットで表示",
+              value: props.attributes.displayOnTablet,
+              options: [
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
+              ],
+              onChange: (value) => {
+                props.setAttributes({ displayOnTablet: value });
+              },
+            }),
+            el(SelectControl, {
+              label: "モバイルで表示",
+              value: props.attributes.displayOnMobile,
+              options: [
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
+              ],
+              onChange: (value) => {
+                props.setAttributes({ displayOnMobile: value });
+              },
+            })
           )
         ),
         el(
           "div",
-          { className: "comparison-table " + styleClass },
+          {
+            className: [
+              "comparison-table",
+              styleClass,
+              props.attributes.displayOnDesktop === "hide"
+                ? "hide-on-desktop"
+                : "",
+              props.attributes.displayOnTablet === "hide"
+                ? "hide-on-tablet"
+                : "",
+              props.attributes.displayOnMobile === "hide"
+                ? "hide-on-mobile"
+                : "",
+            ]
+              .filter(Boolean)
+              .join(" "),
+          },
           el(
             "table",
             null,
@@ -195,9 +260,19 @@
       var tableData = props.attributes.tableData;
       var styleClass = props.attributes.styleClass;
 
+      const classes = [
+        "comparison-table",
+        styleClass,
+        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
+        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
+        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
+      ]
+        .filter(Boolean)
+        .join(" ");
+
       return el(
         "div",
-        { className: "comparison-table " + styleClass },
+        { className: classes },
         el(
           "table",
           null,

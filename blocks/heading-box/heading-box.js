@@ -49,6 +49,18 @@
         type: "string",
         default: "#333333", // デフォルトのボーダー色（スタイル1とスタイル2で使用）
       },
+      displayOnDesktop: {
+        type: "string",
+        default: "show",
+      },
+      displayOnTablet: {
+        type: "string",
+        default: "show",
+      },
+      displayOnMobile: {
+        type: "string",
+        default: "show",
+      },
     },
 
     edit: function (props) {
@@ -78,7 +90,16 @@
         props.setAttributes({ borderColor: newColor });
       }
 
-      const boxStyleClasses = `heading-box ${boxStyle}`;
+      const boxStyleClasses = [
+        `heading-box`,
+        boxStyle,
+        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
+        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
+        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
+      ]
+        .filter(Boolean)
+        .join(" ");
+
       const boxStyleInline = {
         "--background-color": backgroundColor,
         "--title-color": titleColor,
@@ -129,6 +150,43 @@
               value: borderColor,
               onChange: onChangeBorderColor,
             })
+          ),
+          el(
+            PanelBody,
+            { title: "レスポンシブ設定", initialOpen: false },
+            el(SelectControl, {
+              label: "デスクトップで表示",
+              value: props.attributes.displayOnDesktop,
+              options: [
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
+              ],
+              onChange: (value) => {
+                props.setAttributes({ displayOnDesktop: value });
+              },
+            }),
+            el(SelectControl, {
+              label: "タブレットで表示",
+              value: props.attributes.displayOnTablet,
+              options: [
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
+              ],
+              onChange: (value) => {
+                props.setAttributes({ displayOnTablet: value });
+              },
+            }),
+            el(SelectControl, {
+              label: "モバイルで表示",
+              value: props.attributes.displayOnMobile,
+              options: [
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
+              ],
+              onChange: (value) => {
+                props.setAttributes({ displayOnMobile: value });
+              },
+            })
           )
         ),
         el(RichText, {
@@ -167,7 +225,16 @@
       var descriptionColor = props.attributes.descriptionColor;
       var borderColor = props.attributes.borderColor;
 
-      const boxStyleClasses = `heading-box ${boxStyle}`;
+      const boxStyleClasses = [
+        `heading-box`,
+        boxStyle,
+        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
+        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
+        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
+      ]
+        .filter(Boolean)
+        .join(" ");
+
       const boxStyleInline = {
         "--background-color": backgroundColor,
         "--title-color": titleColor,
