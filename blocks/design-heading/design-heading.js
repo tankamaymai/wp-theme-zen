@@ -32,16 +32,16 @@
         default: "default-style",
       },
       displayOnDesktop: {
-        type: "boolean",
-        default: true,
+        type: "string",
+        default: "show",
       },
       displayOnTablet: {
-        type: "boolean",
-        default: true,
+        type: "string",
+        default: "show",
       },
       displayOnMobile: {
-        type: "boolean",
-        default: true,
+        type: "string",
+        default: "show",
       },
     },
 
@@ -64,7 +64,6 @@
         el(
           InspectorControls,
           null,
-
           el(
             PanelBody,
             { title: "設定", initialOpen: true },
@@ -108,31 +107,34 @@
               label: "デスクトップで表示",
               value: props.attributes.displayOnDesktop,
               options: [
-                { label: "表示", value: true },
-                { label: "非表示", value: false },
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
               ],
-              onChange: (value) =>
-                props.setAttributes({ displayOnDesktop: value === true }),
+              onChange: (value) => {
+                props.setAttributes({ displayOnDesktop: value });
+              },
             }),
             el(SelectControl, {
               label: "タブレットで表示",
               value: props.attributes.displayOnTablet,
               options: [
-                { label: "表示", value: true },
-                { label: "非表示", value: false },
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
               ],
-              onChange: (value) =>
-                props.setAttributes({ displayOnTablet: value === true }),
+              onChange: (value) => {
+                props.setAttributes({ displayOnTablet: value });
+              },
             }),
             el(SelectControl, {
               label: "モバイルで表示",
               value: props.attributes.displayOnMobile,
               options: [
-                { label: "表示", value: true },
-                { label: "非表示", value: false },
+                { label: "表示", value: "show" },
+                { label: "非表示", value: "hide" },
               ],
-              onChange: (value) =>
-                props.setAttributes({ displayOnMobile: value === true }),
+              onChange: (value) => {
+                props.setAttributes({ displayOnMobile: value });
+              },
             })
           )
         ),
@@ -159,9 +161,9 @@
       const classes = [
         props.className,
         props.attributes.styleClass,
-        props.attributes.displayOnDesktop === false ? "hide-on-desktop" : "",
-        props.attributes.displayOnTablet === false ? "hide-on-tablet" : "",
-        props.attributes.displayOnMobile === false ? "hide-on-mobile" : "",
+        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
+        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
+        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
       ]
         .filter(Boolean)
         .join(" ");
