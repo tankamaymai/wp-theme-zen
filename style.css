@@ -123,9 +123,11 @@ body {
   border: none;
   cursor: pointer;
   font-size: 20px;
-  padding: 0;
+  padding: 0 22px;
   position: relative;
   z-index: 1001; /* メニューの上に表示するために追加 */
+  max-width: 70px;
+  width: 100%;
 }
 
 .menu-toggle .menu-icon {
@@ -412,7 +414,6 @@ body {
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 5px;
   text-align: center;
   box-sizing: border-box;
 }
@@ -508,10 +509,10 @@ body {
   }
   .site-header {
     gap: 10px;
-    padding: 0 10px;
+    padding: 0 0 0 10px;
   }
   .site-menu {
-    gap: 10px;
+    gap: 0;
   }
   .site-branding {
     flex: initial;
@@ -539,12 +540,12 @@ body {
     align-items: center;
     justify-content: center;
     padding: 10px;
-    font-size: 14px;
+    font-size: 12px;
     max-width: 70px;
     box-sizing: border-box;
   }
 
   .header-cta-buttons .cta-button i {
-    margin-bottom: 5px;
+    font-size: 30px;
   }
 }
