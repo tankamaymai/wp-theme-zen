@@ -123,16 +123,23 @@ function mytheme_customize_register_cta($wp_customize)
             'sanitize_callback' => 'sanitize_text_field',
         ));
 
-        $wp_customize->add_control("mytheme_cta_button_icon_$i", array(
-            'label' => __("CTAボタン $i のアイコン (Font Awesomeクラス名)", 'mytheme'),
-            'section' => 'mytheme_cta_buttons',
-            'type' => 'text',
-            'description' => __('例: fas fa-envelope', 'mytheme'),
-            'active_callback' => function () use ($i) {
-                return get_theme_mod('mytheme_cta_button_count', 1) >= $i;
-            },
+        $wp_customize->add_control(new WP_Customize_Control(
+            $wp_customize,
+            "mytheme_cta_button_icon_$i",
+            array(
+                'label' => __("CTAボタン $i のアイコン", 'mytheme'),
+                'section' => 'mytheme_cta_buttons',
+                'type' => 'text',
+                'input_attrs' => array(
+                    'class' => 'icon-picker',
+                    'data-target' => "mytheme_cta_button_icon_$i",
+                ),
+                'description' => '<a href="#" class="button icon-picker-button">' . __('アイコン一覧はこちら', 'mytheme') . '</a>',
+                'active_callback' => function () use ($i) {
+                    return get_theme_mod('mytheme_cta_button_count', 1) >= $i;
+                },
+            )
         ));
-
         // ボタンの表示設定（PC、タブレット、モバイル）
         $wp_customize->add_setting("mytheme_cta_button_visible_pc_$i", array(
             'default' => true,

@@ -493,3 +493,11 @@ function enqueue_custom_css_js()
     }
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_css_js');
+
+// アイコンピッカーの読み込み
+function mytheme_enqueue_icon_picker_scripts() {
+    wp_enqueue_style('fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+    wp_enqueue_script('icon-picker', get_template_directory_uri() . '/js/icon-picker.js', array('jquery', 'customize-controls'), '1.0', true);
+    wp_enqueue_style('icon-picker', get_template_directory_uri() . '/css/icon-picker.css');
+}
+add_action('customize_controls_enqueue_scripts', 'mytheme_enqueue_icon_picker_scripts');
