@@ -148,7 +148,8 @@ function mytheme_widgets_init()
         'after_title'   => '</h2>',
     ));
 
-    // ウィジェットエリアのラベル
+
+    // c
     $labels = [
         'header-top-widget-area-1' => __('ヘッダー上ウィジェットエリア 左', 'mytheme'),
         'header-top-widget-area-2' => __('ヘッダー上ウィジェットエリア 中央', 'mytheme'),
@@ -174,6 +175,29 @@ function mytheme_widgets_init()
         ));
     }
 }
+function mytheme_custom_header_widget_styles() {
+    $custom_css = "
+        #header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #header-top .header-widget-column {
+            flex: 1;
+        }
+        #header-top .header-widget-column-1 {
+            text-align: left;
+        }
+        #header-top .header-widget-column-2 {
+            text-align: center;
+        }
+        #header-top .header-widget-column-3 {
+            text-align: right;
+        }
+    ";
+    wp_add_inline_style('mytheme-style', $custom_css);
+}
+add_action('wp_enqueue_scripts', 'mytheme_custom_header_widget_styles');
 
 add_action('widgets_init', 'mytheme_widgets_init');
 

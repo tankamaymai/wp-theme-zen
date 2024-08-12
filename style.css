@@ -192,6 +192,7 @@ body {
   font-size: 16px;
 }
 
+
 /* レスポンシブ対応：ビューポートのサイズに応じてスタイルを調整 */
 @media (max-width: 768px) {
   .menu-toggle {
@@ -385,7 +386,6 @@ body {
 
 .header-widget-column,
 .footer-widget-column {
-  width: 33.333%;
   padding: 0 15px;
   box-sizing: border-box;
 }
@@ -416,6 +416,7 @@ body {
   align-items: center;
   text-align: center;
   box-sizing: border-box;
+  gap: 5px;
 }
 
 #content {
