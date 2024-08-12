@@ -94,6 +94,14 @@ function mytheme_customize_header($wp_customize)
         'section'  => 'mytheme_header_bottom_section',
         'type'     => 'checkbox',
     ));
+        // ヘッダー下ウィジェットエリアリンク
+        $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'header_bottom_widgets_link', array(
+            'label'    => '', // ボタンのラベルを空にする
+            'section'  => 'mytheme_header_bottom_section',
+            'settings' => array(),
+            'type'     => 'hidden',
+            'description' => '<a href="#" onclick="wp.customize.panel(\'widgets\').focus(); return false;">' . __('ウィジェットを編集', 'mytheme') . '</a>',
+        )));
 
     // メインヘッダーの背景色と文字色設定
     $wp_customize->add_setting('mytheme_main_header_section_background_color', array(
@@ -159,7 +167,7 @@ function mytheme_customize_header($wp_customize)
         'settings' => 'mytheme_header_top_section_background_color',
     )));
     $wp_customize->add_setting('mytheme_header_top_section_text_color', array(
-        'default'   => '#eeeeee',
+        'default'   => '#ffffff',
         'transport' => 'refresh',
     ));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'mytheme_header_top_section_text_color', array(

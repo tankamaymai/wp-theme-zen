@@ -22,19 +22,31 @@
     <?php endif; ?>
 
     <!-- ヘッダー上 -->
-    <?php if (get_theme_mod('mytheme_header_top_visible', false)) : ?>
-        <div id="header-top" class="header-widgets" style="
-            <?php echo get_theme_mod('mytheme_header_top_section_background_color') ? 'background-color: ' . get_theme_mod('mytheme_header_top_section_background_color') . ';' : ''; ?>
-            <?php echo get_theme_mod('mytheme_header_top_section_text_color') ? 'color: ' . get_theme_mod('mytheme_header_top_section_text_color') . ';' : ''; ?>">
-            <?php for ($i = 1; $i <= 3; $i++) : ?>
-                <div class="header-widget-column header-widget-column-<?php echo $i; ?>">
-                    <?php if (is_active_sidebar('header-top-widget-area-' . $i)) : ?>
-                        <?php dynamic_sidebar('header-top-widget-area-' . $i); ?>
-                    <?php endif; ?>
-                </div>
-            <?php endfor; ?>
-        </div>
-    <?php endif; ?>
+    <?php 
+$has_active_widgets = false;
+
+// ウィジェットエリアを確認
+for ($i = 1; $i <= 3; $i++) {
+    if (is_active_sidebar('header-top-widget-area-' . $i)) {
+        $has_active_widgets = true;
+        break;
+    }
+}
+
+// ウィジェットが登録されている場合のみ表示
+if ($has_active_widgets) : ?>
+    <div id="header-top" class="header-widgets" style="
+        <?php echo get_theme_mod('mytheme_header_top_section_background_color') ? 'background-color: ' . get_theme_mod('mytheme_header_top_section_background_color') . ';' : ''; ?>
+        <?php echo get_theme_mod('mytheme_header_top_section_text_color') ? 'color: ' . get_theme_mod('mytheme_header_top_section_text_color') . ';' : ''; ?>">
+        <?php for ($i = 1; $i <= 3; $i++) : ?>
+            <div class="header-widget-column header-widget-column-<?php echo $i; ?>">
+                <?php if (is_active_sidebar('header-top-widget-area-' . $i)) : ?>
+                    <?php dynamic_sidebar('header-top-widget-area-' . $i); ?>
+                <?php endif; ?>
+            </div>
+        <?php endfor; ?>
+    </div>
+<?php endif; ?>
 
     <!-- メインヘッダー -->
     <header id="masthead" class="site-header" style="
@@ -112,19 +124,31 @@
     </header>
 
     <!-- ヘッダー下 -->
-    <?php if (get_theme_mod('mytheme_header_bottom_visible', false)) : ?>
-        <div id="header-bottom" class="header-widgets" style="
-            <?php echo get_theme_mod('mytheme_header_bottom_section_background_color') ? 'background-color: ' . get_theme_mod('mytheme_header_bottom_section_background_color') . ';' : ''; ?>
-            <?php echo get_theme_mod('mytheme_header_bottom_section_text_color') ? 'color: ' . get_theme_mod('mytheme_header_bottom_section_text_color') . ';' : ''; ?>">
-            <?php for ($i = 1; $i <= 3; $i++) : ?>
-                <div class="header-widget-column header-widget-column-<?php echo $i; ?>">
-                    <?php if (is_active_sidebar('header-bottom-widget-area-' . $i)) : ?>
-                        <?php dynamic_sidebar('header-bottom-widget-area-' . $i); ?>
-                    <?php endif; ?>
-                </div>
-            <?php endfor; ?>
-        </div>
-    <?php endif; ?>
+    <?php 
+$has_active_widgets = false;
+
+// ウィジェットエリアを確認
+for ($i = 1; $i <= 3; $i++) {
+    if (is_active_sidebar('header-bottom-widget-area-' . $i)) {
+        $has_active_widgets = true;
+        break;
+    }
+}
+
+// ウィジェットが登録されている場合のみ表示
+if ($has_active_widgets) : ?>
+    <div id="header-bottom" class="header-widgets" style="
+        <?php echo get_theme_mod('mytheme_header_bottom_section_background_color') ? 'background-color: ' . get_theme_mod('mytheme_header_bottom_section_background_color') . ';' : ''; ?>
+        <?php echo get_theme_mod('mytheme_header_bottom_section_text_color') ? 'color: ' . get_theme_mod('mytheme_header_bottom_section_text_color') . ';' : ''; ?>">
+        <?php for ($i = 1; $i <= 3; $i++) : ?>
+            <div class="header-widget-column header-widget-column-<?php echo $i; ?>">
+                <?php if (is_active_sidebar('header-bottom-widget-area-' . $i)) : ?>
+                    <?php dynamic_sidebar('header-bottom-widget-area-' . $i); ?>
+                <?php endif; ?>
+            </div>
+        <?php endfor; ?>
+    </div>
+<?php endif; ?>
 
     <?php wp_footer(); ?>
 </body>
