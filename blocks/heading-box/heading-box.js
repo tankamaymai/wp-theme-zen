@@ -61,6 +61,10 @@
         type: "string",
         default: "show",
       },
+      contentWidth: {
+        type: "string",
+        default: "100%",
+      },
     },
 
     edit: function (props) {
@@ -187,7 +191,21 @@
                 props.setAttributes({ displayOnMobile: value });
               },
             })
-          )
+          ),
+          el(
+            PanelBody,
+            { title: "コンテンツ設定", initialOpen: false },
+            el(SelectControl, {
+              label: "コンテンツ幅",
+              value: props.attributes.contentWidth,
+              options: [
+                { label: "デフォルト (1100px)", value: "1100px" },
+                { label: "幅広 (1400px)", value: "1400px" },
+                { label: "全幅 (100%)", value: "100%" },
+              ],
+              onChange: (value) => props.setAttributes({ contentWidth: value }),
+            })
+          ),
         ),
         el(RichText, {
           tagName: "h2",
@@ -203,6 +221,8 @@
               boxStyle === "style2" || boxStyle === "style3"
                 ? borderColor
                 : "transparent",
+            maxWidth: props.attributes.contentWidth,
+            margin: "0 auto",
           },
         }),
         el(RichText, {
@@ -213,7 +233,11 @@
             props.setAttributes({ description: newDescription });
           },
           placeholder: "説明を入力",
-          style: { color: descriptionColor },
+          style: {
+            color: descriptionColor,
+            maxWidth: props.attributes.contentWidth,
+            margin: "0 auto",
+          },
         })
       );
     },
@@ -255,13 +279,19 @@
               boxStyle === "style2" || boxStyle === "style3"
                 ? borderColor
                 : "transparent",
+            maxWidth: props.attributes.contentWidth,
+            margin: "0 auto",
           },
         }),
         el(RichText.Content, {
           tagName: "p",
           className: "heading-box-description",
           value: props.attributes.description,
-          style: { color: descriptionColor },
+          style: {
+            color: descriptionColor,
+            maxWidth: props.attributes.contentWidth,
+            margin: "0 auto",
+          },
         })
       );
     },

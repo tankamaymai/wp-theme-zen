@@ -48,6 +48,7 @@
         type: "string",
         default: "show",
       },
+      
     },
     edit: function (props) {
       var direction = props.attributes.direction;
