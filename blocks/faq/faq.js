@@ -49,7 +49,12 @@
         type: "string",
         default: "show",
       },
+      contentWidth: {
+        type: "string",
+        default: "100%",
+      },
     },
+
     edit: function (props) {
       var questions = props.attributes.questions;
       var alwaysOpen = props.attributes.alwaysOpen;
@@ -132,11 +137,27 @@
                 props.setAttributes({ displayOnMobile: value });
               },
             })
-          )
+          ),
+          el(
+            PanelBody,
+            { title: "コンテンツ設定", initialOpen: false },
+            el(SelectControl, {
+              label: "コンテンツ幅",
+              value: props.attributes.contentWidth,
+              options: [
+                { label: "デフォルト (1100px)", value: "1100px" },
+                { label: "幅広 (1400px)", value: "1400px" },
+                { label: "全幅 (100%)", value: "100%" },
+              ],
+              onChange: (value) => props.setAttributes({ contentWidth: value }),
+            })
+          ),
         ),
         el(
           "div",
-          { className: "faq-block" },
+          { className: "faq-block",
+            style: { maxWidth: props.attributes.contentWidth, margin: "0 auto" } 
+          },
           questions.map(function (item, index) {
             return el(
               "div",
@@ -194,7 +215,8 @@
 
       return el(
         "div",
-        { className: classes, "data-always-open": alwaysOpen },
+        { className: classes, "data-always-open": alwaysOpen,
+          style: { maxWidth: props.attributes.contentWidth, margin: "0 auto" } },
         questions.map(function (item, index) {
           return el(
             "div",

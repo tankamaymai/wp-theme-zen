@@ -1,9 +1,9 @@
 jQuery(document).ready(function($) {
     $('.icon-picker-button').on('click', function(e) {
         e.preventDefault();
-        var button = $(this);
-        var picker = $('<div class="icon-picker-container"></div>');
-        var icons = [
+        const button = $(this);
+        const picker = $('<div class="icon-picker-container"></div>');
+        const icons = [
             // SNS Icons
             'fab fa-instagram', 'fab fa-twitter', 'fab fa-facebook', 'fab fa-line',
             // Commonly Used Icons
