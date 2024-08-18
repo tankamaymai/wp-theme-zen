@@ -336,7 +336,7 @@ function add_seo_meta_box()
         'display_seo_meta_box',
         ['post', 'page'],  // 'post'と'page'の両方にメタボックスを追加
         'normal',
-        'high'
+        'default'
     );
 }
 add_action('add_meta_boxes', 'add_seo_meta_box');
@@ -429,7 +429,7 @@ function add_custom_css_js_meta_box()
         'show_custom_css_js_meta_box', // コールバック関数
         array('post', 'page'), // 投稿タイプ
         'normal', // コンテキスト
-        'high' // 優先度
+        'default' // 優先度を'high'から'default'に変更
     );
 }
 add_action('add_meta_boxes', 'add_custom_css_js_meta_box');
@@ -501,3 +501,70 @@ function mytheme_enqueue_icon_picker_scripts() {
     wp_enqueue_style('icon-picker', get_template_directory_uri() . '/css/icon-picker.css');
 }
 add_action('customize_controls_enqueue_scripts', 'mytheme_enqueue_icon_picker_scripts');
+
+
+
+// カスタムメタボックスを追加 固定ページのタイトルの表示、非表示設定
+function mytheme_add_page_title_meta_box() {
+    add_meta_box(
+        'mytheme_page_title_display',
+        __('ページタイトル表示設定', 'mytheme'),
+        'mytheme_page_title_meta_box_callback',
+        'page',
+        'side',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'mytheme_add_page_title_meta_box');
+
+// メタボックスの内容
+function mytheme_page_title_meta_box_callback($post) {
+    wp_nonce_field('mytheme_page_title_meta_box', 'mytheme_page_title_meta_box_nonce');
+    $value = get_post_meta($post->ID, '_mytheme_show_page_title', true);
+    ?>
+    <p>
+        <input type="checkbox" id="mytheme_show_page_title" name="mytheme_show_page_title" value="on" <?php checked($value, 'on'); ?> />
+        <label for="mytheme_show_page_title"><?php _e('ページタイトルを表示する', 'mytheme'); ?></label>
+    </p>
+    <?php
+}
+
+// メタボックスの値を保存
+function mytheme_save_page_title_meta_box_data($post_id) {
+    if (!isset($_POST['mytheme_page_title_meta_box_nonce']) || 
+        !wp_verify_nonce($_POST['mytheme_page_title_meta_box_nonce'], 'mytheme_page_title_meta_box') ||
+        defined('DOING_AUTOSAVE') && DOING_AUTOSAVE || 
+        !current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    $show_title = isset($_POST['mytheme_show_page_title']) ? 'on' : 'off';
+    update_post_meta($post_id, '_mytheme_show_page_title', $show_title);
+}
+add_action('save_post', 'mytheme_save_page_title_meta_box_data');
+
+// CSSを追加してタイトルの表示・非表示を制御
+function mytheme_page_title_visibility_css() {
+    if (is_page()) {
+        $post_id = get_the_ID();
+        $show_title = get_post_meta($post_id, '_mytheme_show_page_title', true);
+        if ($show_title === 'off') {
+            echo '<style>.entry-header { display: none; }</style>';
+        }
+    }
+}
+add_action('wp_head', 'mytheme_page_title_visibility_css');
+
+
+// JavaScriptを使ってメタボックスをデフォルトで閉じる
+function close_meta_box_by_default()
+{
+    ?>
+    <script>
+        jQuery(document).ready(function($) {
+            $('#custom_css_js_meta_box').addClass('closed'); // メタボックスのIDを使用して閉じる
+        });
+    </script>
+    <?php
+}
+add_action('admin_footer', 'close_meta_box_by_default');
