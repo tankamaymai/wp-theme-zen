@@ -7,6 +7,10 @@
   var FontSizePicker = blockEditor.FontSizePicker;
   var withColors = blockEditor.withColors;
   var PanelColorSettings = blockEditor.PanelColorSettings;
+  var AlignmentToolbar = blockEditor.AlignmentToolbar;
+var BlockControls = blockEditor.BlockControls;
+
+  
 
   blocks.registerBlockType("mytheme/design-heading", {
     title: "デザイン見出し",
@@ -47,6 +51,10 @@
         type: "string",
         default: "1100px",
       },
+      alignment: {
+        type: "string",
+        default: "center",
+      },
     },
 
     edit: withColors(
@@ -59,12 +67,23 @@
       function onStyleChange(newStyle) {
         props.setAttributes({ styleClass: newStyle });
       }
+      function onChangeAlignment(newAlignment) {
+        props.setAttributes({ alignment: newAlignment === undefined ? "none" : newAlignment });
+      }
       // エディタ内では非表示クラスを適用しない
       const classes = [props.className, props.attributes.styleClass]
         .filter(Boolean)
         .join(" ");
 
       return [
+        el(
+          BlockControls,
+          null,
+          el(AlignmentToolbar, {
+            value: props.attributes.alignment,
+            onChange: onChangeAlignment,
+          })
+        ),
         el(
           InspectorControls,
           null,
@@ -166,6 +185,7 @@
               backgroundColor: props.attributes.backgroundColor,
               maxWidth: props.attributes.contentWidth,
               margin: "0 auto", // 中央揃えにするため
+              textAlign: props.attributes.alignment,
             },
           },
           el(RichText, {
@@ -201,6 +221,7 @@
             backgroundColor: props.attributes.backgroundColor,
             maxWidth: props.attributes.contentWidth,
             margin: "0 auto",
+            textAlign: props.attributes.alignment,
           },
         },
         props.attributes.content
