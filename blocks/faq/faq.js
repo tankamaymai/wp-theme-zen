@@ -8,6 +8,8 @@
   var InspectorControls = blockEditor.InspectorControls;
   var PanelBody = components.PanelBody;
   var SelectControl = components.SelectControl;
+  var AlignmentToolbar = blockEditor.AlignmentToolbar;
+  var BlockControls = blockEditor.BlockControls;
 
   // FAQブロックの登録
   blocks.registerBlockType("mytheme/faq", {
@@ -53,11 +55,19 @@
         type: "string",
         default: "100%",
       },
+      alignment: {
+        type: "string",
+        default: "center",
+      },
     },
 
     edit: function (props) {
       var questions = props.attributes.questions;
       var alwaysOpen = props.attributes.alwaysOpen;
+
+      function onChangeAlignment(newAlignment) {
+        props.setAttributes({ alignment: newAlignment === undefined ? "center" : newAlignment });
+      }
 
       var updateQuestion = function (value, index) {
         var newQuestions = questions.slice();
@@ -89,6 +99,14 @@
       return el(
         Fragment,
         {},
+        el(
+          BlockControls,
+          null,
+          el(AlignmentToolbar, {
+            value: props.attributes.alignment,
+            onChange: onChangeAlignment,
+          })
+        ),
         el(
           InspectorControls,
           null,
@@ -155,13 +173,22 @@
         ),
         el(
           "div",
-          { className: "faq-block",
-            style: { maxWidth: props.attributes.contentWidth, margin: "0 auto" } 
+          {
+            className: "faq-block",
+            style: {
+              maxWidth: props.attributes.contentWidth,
+              textAlign: props.attributes.alignment
+            }
           },
           questions.map(function (item, index) {
             return el(
               "div",
-              { className: "faq-item", key: index },
+              { className: "faq-item", key: index,
+                style: {
+                  maxWidth: props.attributes.contentWidth,
+                  textAlign: props.attributes.alignment
+                }
+              },
               el(RichText, {
                 tagName: "div",
                 className: "faq-question",
@@ -215,12 +242,22 @@
 
       return el(
         "div",
-        { className: classes, "data-always-open": alwaysOpen,
-          style: { maxWidth: props.attributes.contentWidth, margin: "0 auto" } },
+        {
+          className: classes, "data-always-open": alwaysOpen,
+          style: {
+            maxWidth: props.attributes.contentWidth,
+            textAlign: props.attributes.alignment
+          }
+        },
         questions.map(function (item, index) {
           return el(
             "div",
-            { className: "faq-item", key: index },
+            { className: "faq-item", key: index,
+              style: {
+                maxWidth: props.attributes.contentWidth,
+                textAlign: props.attributes.alignment
+              }
+             },
             el("div", { className: "faq-question" }, item.question),
             el("div", { className: "faq-answer" }, item.answer)
           );

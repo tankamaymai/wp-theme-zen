@@ -6,6 +6,8 @@
   var SelectControl = components.SelectControl;
   var Button = components.Button;
   var Fragment = element.Fragment;
+  var AlignmentToolbar = blockEditor.AlignmentToolbar;
+  var BlockControls = blockEditor.BlockControls;
 
   blocks.registerBlockType("mytheme/comparison-table", {
     title: "比較表",
@@ -39,10 +41,18 @@
         type: "string",
         default: "100%",
       },
+      alignment: {
+        type: "string",
+        default: "center",
+      },
     },
     edit: function (props) {
       var tableData = props.attributes.tableData;
       var styleClass = props.attributes.styleClass;
+
+      function onChangeAlignment(newAlignment) {
+        props.setAttributes({ alignment: newAlignment === undefined ? "center" : newAlignment });
+      }
 
       function updateFeature(index, value) {
         var newData = tableData.slice();
@@ -91,6 +101,14 @@
       return el(
         Fragment,
         {},
+        el(
+          BlockControls,
+          null,
+          el(AlignmentToolbar, {
+            value: props.attributes.alignment,
+            onChange: onChangeAlignment,
+          })
+        ),
         el(
           InspectorControls,
           null,
@@ -181,6 +199,7 @@
               style: {
                 maxWidth: props.attributes.contentWidth,
                 margin: "0 auto",
+                textAlign: props.attributes.alignment,
               },
           },
           el(
@@ -281,7 +300,7 @@
     save: function (props) {
       var tableData = props.attributes.tableData;
       var styleClass = props.attributes.styleClass;
-
+    
       const classes = [
         "comparison-table",
         styleClass,
@@ -292,12 +311,16 @@
         .filter(Boolean)
         .join(" ");
 
+      console.log("Saved attributes:", props.attributes); // デバッグ用ログ
+
       return el(
         "div",
-        { className: classes,
+        {
+          className: classes,
           style: {
             maxWidth: props.attributes.contentWidth,
             margin: "0 auto",
+            textAlign: props.attributes.alignment,
           },
         },
         el(
@@ -322,10 +345,10 @@
               return el(
                 "tr",
                 { key: index },
-                el("td", null, el(RichText.Content, { value: row.feature })),
-                el("td", null, el(RichText.Content, { value: row.product1 })),
-                el("td", null, el(RichText.Content, { value: row.product2 })),
-                el("td", null, el(RichText.Content, { value: row.product3 }))
+                el("td", null, el(RichText.Content, { tagName: "span", value: row.feature })),
+                el("td", null, el(RichText.Content, { tagName: "span", value: row.product1 })),
+                el("td", null, el(RichText.Content, { tagName: "span", value: row.product2 })),
+                el("td", null, el(RichText.Content, { tagName: "span", value: row.product3 }))
               );
             })
           )

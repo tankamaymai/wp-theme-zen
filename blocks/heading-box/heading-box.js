@@ -5,6 +5,8 @@
   var PanelBody = components.PanelBody;
   var SelectControl = components.SelectControl;
   var ColorPalette = components.ColorPalette;
+  var AlignmentToolbar = blockEditor.AlignmentToolbar;
+var BlockControls = blockEditor.BlockControls;
 
   const colors = [
     { name: "ZEN Black", color: "#333333" },
@@ -65,6 +67,10 @@
         type: "string",
         default: "100%",
       },
+      alignment: {
+        type: "string",
+        default: "center",
+      },
     },
 
     edit: function (props) {
@@ -73,6 +79,9 @@
       var titleColor = props.attributes.titleColor;
       var descriptionColor = props.attributes.descriptionColor;
       var borderColor = props.attributes.borderColor;
+      function onChangeAlignment(newAlignment) {
+        props.setAttributes({ alignment: newAlignment === undefined ? "none" : newAlignment });
+      }
 
       function onChangeBoxStyle(newStyle) {
         props.setAttributes({ boxStyle: newStyle });
@@ -114,6 +123,14 @@
       return el(
         "div",
         { className: boxStyleClasses, style: boxStyleInline },
+        el(
+          BlockControls,
+          null,
+          el(AlignmentToolbar, {
+            value: props.attributes.alignment,
+            onChange: onChangeAlignment,
+          })
+        ),
         el(
           InspectorControls,
           {},
@@ -223,6 +240,7 @@
                 : "transparent",
             maxWidth: props.attributes.contentWidth,
             margin: "0 auto",
+            textAlign: props.attributes.alignment,
           },
         }),
         el(RichText, {
@@ -236,6 +254,7 @@
           style: {
             color: descriptionColor,
             maxWidth: props.attributes.contentWidth,
+            textAlign: props.attributes.alignment,
             margin: "0 auto",
           },
         })
@@ -281,6 +300,7 @@
                 : "transparent",
             maxWidth: props.attributes.contentWidth,
             margin: "0 auto",
+            textAlign: props.attributes.alignment,
           },
         }),
         el(RichText.Content, {
@@ -291,6 +311,7 @@
             color: descriptionColor,
             maxWidth: props.attributes.contentWidth,
             margin: "0 auto",
+            textAlign: props.attributes.alignment,
           },
         })
       );
