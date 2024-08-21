@@ -7,6 +7,10 @@
   var FontSizePicker = blockEditor.FontSizePicker;
   var withColors = blockEditor.withColors;
   var PanelColorSettings = blockEditor.PanelColorSettings;
+  var AlignmentToolbar = blockEditor.AlignmentToolbar;
+var BlockControls = blockEditor.BlockControls;
+
+  
 
   blocks.registerBlockType("mytheme/design-heading", {
     title: "デザイン見出し",
@@ -43,6 +47,14 @@
         type: "string",
         default: "show",
       },
+      contentWidth: {
+        type: "string",
+        default: "1100px",
+      },
+      alignment: {
+        type: "string",
+        default: "center",
+      },
     },
 
     edit: withColors(
@@ -55,12 +67,23 @@
       function onStyleChange(newStyle) {
         props.setAttributes({ styleClass: newStyle });
       }
+      function onChangeAlignment(newAlignment) {
+        props.setAttributes({ alignment: newAlignment === undefined ? "none" : newAlignment });
+      }
       // エディタ内では非表示クラスを適用しない
       const classes = [props.className, props.attributes.styleClass]
         .filter(Boolean)
         .join(" ");
 
       return [
+        el(
+          BlockControls,
+          null,
+          el(AlignmentToolbar, {
+            value: props.attributes.alignment,
+            onChange: onChangeAlignment,
+          })
+        ),
         el(
           InspectorControls,
           null,
@@ -136,7 +159,21 @@
                 props.setAttributes({ displayOnMobile: value });
               },
             })
-          )
+          ),
+          el(
+            PanelBody,
+            { title: "コンテンツ設定", initialOpen: false },
+            el(SelectControl, {
+              label: "コンテンツ幅",
+              value: props.attributes.contentWidth,
+              options: [
+                { label: "デフォルト (1100px)", value: "1100px" },
+                { label: "幅広 (1400px)", value: "1400px" },
+                { label: "全幅 (100%)", value: "100%" },
+              ],
+              onChange: (value) => props.setAttributes({ contentWidth: value }),
+            })
+          ),
         ),
         el(
           "h2",
@@ -146,6 +183,9 @@
               fontSize: props.attributes.fontSize,
               color: props.attributes.textColor,
               backgroundColor: props.attributes.backgroundColor,
+              maxWidth: props.attributes.contentWidth,
+              margin: "0 auto", // 中央揃えにするため
+              textAlign: props.attributes.alignment,
             },
           },
           el(RichText, {
@@ -154,6 +194,7 @@
             placeholder: "見出しテキストを入力",
           })
         ),
+        
       ];
     }),
 
@@ -178,6 +219,9 @@
             fontSize: props.attributes.fontSize,
             color: props.attributes.textColor,
             backgroundColor: props.attributes.backgroundColor,
+            maxWidth: props.attributes.contentWidth,
+            margin: "0 auto",
+            textAlign: props.attributes.alignment,
           },
         },
         props.attributes.content

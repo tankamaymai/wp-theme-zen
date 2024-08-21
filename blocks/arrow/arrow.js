@@ -6,6 +6,9 @@
   var SelectControl = components.SelectControl;
   var ColorPalette = components.ColorPalette;
   var RangeControl = components.RangeControl;
+  var AlignmentToolbar = blockEditor.AlignmentToolbar;
+  var BlockControls = blockEditor.BlockControls;
+  var useBlockProps = blockEditor.useBlockProps;
 
   blocks.registerBlockType("zen/arrow", {
     title: "矢印",
@@ -48,14 +51,25 @@
         type: "string",
         default: "show",
       },
+      alignment: {
+        type: "string",
+        default: "center",
+      },
     },
     edit: function (props) {
+      var blockProps = useBlockProps({
+        className: "arrow-block",
+        style: {
+          textAlign: props.attributes.alignment,
+        },
+      });
       var direction = props.attributes.direction;
       var type = props.attributes.type;
       var color = props.attributes.color;
       var width = props.attributes.width;
       var height = props.attributes.height;
       var strokeWidth = props.attributes.strokeWidth;
+
 
       function onChangeDirection(newDirection) {
         props.setAttributes({ direction: newDirection });
@@ -79,6 +93,9 @@
 
       function onChangeStrokeWidth(newStrokeWidth) {
         props.setAttributes({ strokeWidth: Number(newStrokeWidth) });
+      }
+      function onChangeAlignment(newAlignment) {
+        props.setAttributes({ alignment: newAlignment === undefined ? "center" : newAlignment });
       }
 
       var arrowSVG = function () {
@@ -111,6 +128,7 @@
             pathData =
               "M12 2L10.59 3.41 18.17 11H2V13H18.17L10.59 20.59L12 22L22 12Z";
         }
+
 
         return el(
           "svg",
@@ -146,6 +164,14 @@
       return el(
         Fragment,
         {},
+        el(
+          BlockControls,
+          null,
+          el(AlignmentToolbar, {
+            value: props.attributes.alignment,
+            onChange: onChangeAlignment,
+          })
+        ),
         el(
           InspectorControls,
           {},
@@ -241,14 +267,29 @@
         ),
         el(
           "div",
+          blockProps,
           {
             className: "arrow-block",
+            style: {
+              textAlign: props.attributes.alignment,
+            },
           },
           arrowSVG()
         )
       );
     },
     save: function (props) {
+      var saveProps = useBlockProps.save({
+        className: [
+          "arrow-block",
+          props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
+          props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
+          props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
+        ].filter(Boolean).join(" "),
+        style: {
+          textAlign: props.attributes.alignment,
+        },
+      });
       var direction = props.attributes.direction;
       var type = props.attributes.type;
       var color = props.attributes.color;
@@ -297,8 +338,12 @@
 
       return el(
         "div",
+        saveProps,
         {
           className: classes,
+          style: {
+            textAlign: props.attributes.alignment,
+          },
         },
         el(
           "svg",

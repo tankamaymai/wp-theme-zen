@@ -8,6 +8,8 @@
   var InspectorControls = blockEditor.InspectorControls;
   var PanelBody = components.PanelBody;
   var SelectControl = components.SelectControl;
+  var AlignmentToolbar = blockEditor.AlignmentToolbar;
+  var BlockControls = blockEditor.BlockControls;
 
   // FAQブロックの登録
   blocks.registerBlockType("mytheme/faq", {
@@ -49,10 +51,23 @@
         type: "string",
         default: "show",
       },
+      contentWidth: {
+        type: "string",
+        default: "100%",
+      },
+      alignment: {
+        type: "string",
+        default: "center",
+      },
     },
+
     edit: function (props) {
       var questions = props.attributes.questions;
       var alwaysOpen = props.attributes.alwaysOpen;
+
+      function onChangeAlignment(newAlignment) {
+        props.setAttributes({ alignment: newAlignment === undefined ? "center" : newAlignment });
+      }
 
       var updateQuestion = function (value, index) {
         var newQuestions = questions.slice();
@@ -84,6 +99,14 @@
       return el(
         Fragment,
         {},
+        el(
+          BlockControls,
+          null,
+          el(AlignmentToolbar, {
+            value: props.attributes.alignment,
+            onChange: onChangeAlignment,
+          })
+        ),
         el(
           InspectorControls,
           null,
@@ -132,15 +155,40 @@
                 props.setAttributes({ displayOnMobile: value });
               },
             })
-          )
+          ),
+          el(
+            PanelBody,
+            { title: "コンテンツ設定", initialOpen: false },
+            el(SelectControl, {
+              label: "コンテンツ幅",
+              value: props.attributes.contentWidth,
+              options: [
+                { label: "デフォルト (1100px)", value: "1100px" },
+                { label: "幅広 (1400px)", value: "1400px" },
+                { label: "全幅 (100%)", value: "100%" },
+              ],
+              onChange: (value) => props.setAttributes({ contentWidth: value }),
+            })
+          ),
         ),
         el(
           "div",
-          { className: "faq-block" },
+          {
+            className: "faq-block",
+            style: {
+              maxWidth: props.attributes.contentWidth,
+              textAlign: props.attributes.alignment
+            }
+          },
           questions.map(function (item, index) {
             return el(
               "div",
-              { className: "faq-item", key: index },
+              { className: "faq-item", key: index,
+                style: {
+                  maxWidth: props.attributes.contentWidth,
+                  textAlign: props.attributes.alignment
+                }
+              },
               el(RichText, {
                 tagName: "div",
                 className: "faq-question",
@@ -194,11 +242,22 @@
 
       return el(
         "div",
-        { className: classes, "data-always-open": alwaysOpen },
+        {
+          className: classes, "data-always-open": alwaysOpen,
+          style: {
+            maxWidth: props.attributes.contentWidth,
+            textAlign: props.attributes.alignment
+          }
+        },
         questions.map(function (item, index) {
           return el(
             "div",
-            { className: "faq-item", key: index },
+            { className: "faq-item", key: index,
+              style: {
+                maxWidth: props.attributes.contentWidth,
+                textAlign: props.attributes.alignment
+              }
+             },
             el("div", { className: "faq-question" }, item.question),
             el("div", { className: "faq-answer" }, item.answer)
           );

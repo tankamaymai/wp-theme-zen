@@ -5,6 +5,8 @@
   var PanelBody = components.PanelBody;
   var SelectControl = components.SelectControl;
   var ColorPalette = components.ColorPalette;
+  var AlignmentToolbar = blockEditor.AlignmentToolbar;
+var BlockControls = blockEditor.BlockControls;
 
   const colors = [
     { name: "ZEN Black", color: "#333333" },
@@ -61,6 +63,14 @@
         type: "string",
         default: "show",
       },
+      contentWidth: {
+        type: "string",
+        default: "100%",
+      },
+      alignment: {
+        type: "string",
+        default: "center",
+      },
     },
 
     edit: function (props) {
@@ -69,6 +79,9 @@
       var titleColor = props.attributes.titleColor;
       var descriptionColor = props.attributes.descriptionColor;
       var borderColor = props.attributes.borderColor;
+      function onChangeAlignment(newAlignment) {
+        props.setAttributes({ alignment: newAlignment === undefined ? "none" : newAlignment });
+      }
 
       function onChangeBoxStyle(newStyle) {
         props.setAttributes({ boxStyle: newStyle });
@@ -110,6 +123,14 @@
       return el(
         "div",
         { className: boxStyleClasses, style: boxStyleInline },
+        el(
+          BlockControls,
+          null,
+          el(AlignmentToolbar, {
+            value: props.attributes.alignment,
+            onChange: onChangeAlignment,
+          })
+        ),
         el(
           InspectorControls,
           {},
@@ -187,7 +208,21 @@
                 props.setAttributes({ displayOnMobile: value });
               },
             })
-          )
+          ),
+          el(
+            PanelBody,
+            { title: "コンテンツ設定", initialOpen: false },
+            el(SelectControl, {
+              label: "コンテンツ幅",
+              value: props.attributes.contentWidth,
+              options: [
+                { label: "デフォルト (1100px)", value: "1100px" },
+                { label: "幅広 (1400px)", value: "1400px" },
+                { label: "全幅 (100%)", value: "100%" },
+              ],
+              onChange: (value) => props.setAttributes({ contentWidth: value }),
+            })
+          ),
         ),
         el(RichText, {
           tagName: "h2",
@@ -203,6 +238,9 @@
               boxStyle === "style2" || boxStyle === "style3"
                 ? borderColor
                 : "transparent",
+            maxWidth: props.attributes.contentWidth,
+            margin: "0 auto",
+            textAlign: props.attributes.alignment,
           },
         }),
         el(RichText, {
@@ -213,7 +251,12 @@
             props.setAttributes({ description: newDescription });
           },
           placeholder: "説明を入力",
-          style: { color: descriptionColor },
+          style: {
+            color: descriptionColor,
+            maxWidth: props.attributes.contentWidth,
+            textAlign: props.attributes.alignment,
+            margin: "0 auto",
+          },
         })
       );
     },
@@ -255,13 +298,21 @@
               boxStyle === "style2" || boxStyle === "style3"
                 ? borderColor
                 : "transparent",
+            maxWidth: props.attributes.contentWidth,
+            margin: "0 auto",
+            textAlign: props.attributes.alignment,
           },
         }),
         el(RichText.Content, {
           tagName: "p",
           className: "heading-box-description",
           value: props.attributes.description,
-          style: { color: descriptionColor },
+          style: {
+            color: descriptionColor,
+            maxWidth: props.attributes.contentWidth,
+            margin: "0 auto",
+            textAlign: props.attributes.alignment,
+          },
         })
       );
     },
