@@ -1,16 +1,8 @@
 <?php
 function my_custom_theme_update_check($checked_data)
 {
-    // 子テーマの場合は実行しない
-    if (get_template_directory() !== get_stylesheet_directory()) {
-        return $checked_data;
-    }
-
-    if (empty($checked_data->checked)) {
-        return $checked_data;
-    }
-
-    $theme_data = wp_get_theme();
+    // 現在有効なテーマが子テーマであっても親テーマの更新をチェック
+    $theme_data = wp_get_theme(get_template());  // 親テーマの情報を取得
     $theme_slug = $theme_data->get_stylesheet();
     $theme_version = $theme_data->get('Version');
 
@@ -496,7 +488,8 @@ function enqueue_custom_css_js()
 add_action('wp_enqueue_scripts', 'enqueue_custom_css_js');
 
 // アイコンピッカーの読み込み
-function mytheme_enqueue_icon_picker_scripts() {
+function mytheme_enqueue_icon_picker_scripts()
+{
     wp_enqueue_style('fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
     wp_enqueue_script('icon-picker', get_template_directory_uri() . '/js/icon-picker.js', array('jquery', 'customize-controls'), '1.0', true);
     wp_enqueue_style('icon-picker', get_template_directory_uri() . '/css/icon-picker.css');
@@ -506,7 +499,8 @@ add_action('customize_controls_enqueue_scripts', 'mytheme_enqueue_icon_picker_sc
 
 
 // カスタムメタボックスを追加 固定ページのタイトルの表示、非表示設定
-function mytheme_add_page_title_meta_box() {
+function mytheme_add_page_title_meta_box()
+{
     add_meta_box(
         'mytheme_page_title_display',
         __('ページタイトル表示設定', 'mytheme'),
@@ -519,23 +513,27 @@ function mytheme_add_page_title_meta_box() {
 add_action('add_meta_boxes', 'mytheme_add_page_title_meta_box');
 
 // メタボックスの内容
-function mytheme_page_title_meta_box_callback($post) {
+function mytheme_page_title_meta_box_callback($post)
+{
     wp_nonce_field('mytheme_page_title_meta_box', 'mytheme_page_title_meta_box_nonce');
     $value = get_post_meta($post->ID, '_mytheme_show_page_title', true);
-    ?>
+?>
     <p>
         <input type="checkbox" id="mytheme_show_page_title" name="mytheme_show_page_title" value="on" <?php checked($value, 'on'); ?> />
         <label for="mytheme_show_page_title"><?php _e('ページタイトルを表示する', 'mytheme'); ?></label>
     </p>
-    <?php
+<?php
 }
 
 // メタボックスの値を保存
-function mytheme_save_page_title_meta_box_data($post_id) {
-    if (!isset($_POST['mytheme_page_title_meta_box_nonce']) || 
+function mytheme_save_page_title_meta_box_data($post_id)
+{
+    if (
+        !isset($_POST['mytheme_page_title_meta_box_nonce']) ||
         !wp_verify_nonce($_POST['mytheme_page_title_meta_box_nonce'], 'mytheme_page_title_meta_box') ||
-        defined('DOING_AUTOSAVE') && DOING_AUTOSAVE || 
-        !current_user_can('edit_post', $post_id)) {
+        defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ||
+        !current_user_can('edit_post', $post_id)
+    ) {
         return;
     }
 
@@ -545,7 +543,8 @@ function mytheme_save_page_title_meta_box_data($post_id) {
 add_action('save_post', 'mytheme_save_page_title_meta_box_data');
 
 // CSSを追加してタイトルの表示・非表示を制御
-function mytheme_page_title_visibility_css() {
+function mytheme_page_title_visibility_css()
+{
     if (is_page()) {
         $post_id = get_the_ID();
         $show_title = get_post_meta($post_id, '_mytheme_show_page_title', true);
@@ -560,12 +559,12 @@ add_action('wp_head', 'mytheme_page_title_visibility_css');
 // JavaScriptを使ってメタボックスをデフォルトで閉じる
 function close_meta_box_by_default()
 {
-    ?>
+?>
     <script>
         jQuery(document).ready(function($) {
             $('#custom_css_js_meta_box').addClass('closed'); // メタボックスのIDを使用して閉じる
         });
     </script>
-    <?php
+<?php
 }
 add_action('admin_footer', 'close_meta_box_by_default');
