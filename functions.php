@@ -175,7 +175,8 @@ function mytheme_widgets_init()
         ));
     }
 }
-function mytheme_custom_header_widget_styles() {
+function mytheme_custom_header_widget_styles()
+{
     $custom_css = "
         #header-top {
             display: flex;
