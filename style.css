@@ -525,15 +525,11 @@ body {
     justify-content: end;
     gap: 0px;
   }
-
-  .header-cta-buttons[data-count="2"] {
-    flex: 1 1 50%;
-  }
-
+  .header-cta-buttons[data-count="1"],
+  .header-cta-buttons[data-count="2"],
   .header-cta-buttons[data-count="3"] {
-    flex: 1 1 33.333%;
+    flex: 1 1 auto;
   }
-
   .header-cta-buttons .cta-button {
     flex: 1;
     flex-direction: column;
