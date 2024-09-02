@@ -1,0 +1,134 @@
+/* カスタムリストスタイル1 */
+.is-style-custom-style-1 {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.is-style-custom-style-1 li {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.is-style-custom-style-1 li:before {
+  content: "\f058"; /* Font Awesomeのチェックサークルアイコン */
+  font-family: "Font Awesome 6 Free"; /* Font Awesome 6のフォントファミリー */
+  font-weight: 900; /* Font Awesome 6のウェイト */
+  position: absolute;
+  left: -20px;
+}
+
+/* カスタムリストスタイル2 */
+.is-style-custom-style-2 {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.is-style-custom-style-2 li {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.is-style-custom-style-2 li:before {
+  content: "\f005"; /* Font Awesomeの星アイコン */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  left: -20px;
+}
+
+/* カスタムリストスタイル3 */
+.is-style-custom-style-3 {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.is-style-custom-style-3 li {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.is-style-custom-style-3 li:before {
+  content: "\f061"; /* Font Awesomeの右矢印アイコン */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  left: -20px;
+}
+
+/* カスタムリストスタイル4 */
+.is-style-custom-style-4 {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.is-style-custom-style-4 li {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.is-style-custom-style-4 li:before {
+  content: "\f0da";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  left: -20px;
+}
+
+/* カスタムリストスタイル5 */
+.is-style-custom-style-5 {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.is-style-custom-style-5 li {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.is-style-custom-style-5 li:before {
+  content: "\f054"; /* Font Awesomeの右向きシェブロンアイコン */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  left: -20px;
+}
+
+/* カスタムリストスタイル6 */
+.is-style-custom-style-6 {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.is-style-custom-style-6 li {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.is-style-custom-style-6 li:before {
+  content: "\f0a4"; /* Font Awesomeの右手ポイントアイコン */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  left: -20px;
+}
+
+/* デスクトップ（1024px以上）で非表示 */
+@media (min-width: 1024px) {
+  .hide-on-desktop {
+    display: none;
+  }
+}
+
+/* タブレット（768px～1024px）で非表示 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hide-on-tablet {
+    display: none;
+  }
+}
+
+/* モバイル（768px以下）で非表示 */
+@media (max-width: 767px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}
