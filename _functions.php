@@ -141,7 +141,7 @@ function mytheme_widgets_init()
     ));
 
 
-    // ウィジェットエリアのラベル
+    // c
     $labels = [
         'header-top-widget-area-1' => __('ヘッダー上ウィジェットエリア 左', 'mytheme'),
         'header-top-widget-area-2' => __('ヘッダー上ウィジェットエリア 中央', 'mytheme'),
@@ -170,7 +170,6 @@ function mytheme_widgets_init()
 function mytheme_custom_header_widget_styles()
 {
     $custom_css = "
-    
         #header-top {
             display: flex;
             justify-content: space-between;
@@ -178,7 +177,6 @@ function mytheme_custom_header_widget_styles()
         }
         #header-top .header-widget-column {
             flex: 1;
-            min-width: 200px;
         }
         #header-top .header-widget-column-1 {
             text-align: left;
@@ -189,26 +187,6 @@ function mytheme_custom_header_widget_styles()
         #header-top .header-widget-column-3 {
             text-align: right;
         }
-
-          #header-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #header-bottom .header-widget-column {
-            flex: 1;
-            min-width: 200px;
-        }
-        #header-bottom .header-widget-column-1 {
-            text-align: left;
-        }
-        #header-bottom .header-widget-column-2 {
-            text-align: center;
-        }
-        #header-bottom .header-widget-column-3 {
-            text-align: right;
-        }
-            
     ";
     wp_add_inline_style('mytheme-style', $custom_css);
 }

@@ -94,14 +94,6 @@ function mytheme_customize_header($wp_customize)
         'section'  => 'mytheme_header_bottom_section',
         'type'     => 'checkbox',
     ));
-    // ヘッダー下ウィジェットエリアリンク
-    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'header_bottom_widgets_link', array(
-        'label'    => '', // ボタンのラベルを空にする
-        'section'  => 'mytheme_header_bottom_section',
-            'settings' => array(),
-            'type'     => 'hidden',
-        'description' => '<a href="#" onclick="wp.customize.panel(\'widgets\').focus(); return false;">' . __('ウィジェットを編集', 'mytheme') . '</a>',
-    )));
 
     // メインヘッダーの背景色と文字色設定
     $wp_customize->add_setting('mytheme_main_header_section_background_color', array(
@@ -254,31 +246,31 @@ function mytheme_customize_header_styles()
 
         /* ヘッダー上表示設定 */
         #header-top {
-            display: " . ($header_top_visible_pc ? 'flex' : 'none') . ";
+            display: " . ($header_top_visible_pc ? 'block' : 'none') . ";
         }
         @media (max-width: 1024px) {
             #header-top {
-                display: " . ($header_top_visible_tablet ? 'flex' : 'none') . ";
+                display: " . ($header_top_visible_tablet ? 'block' : 'none') . ";
             }
         }
         @media (max-width: 768px) {
             #header-top {
-                display: " . ($header_top_visible_mobile ? 'flex' : 'none') . ";
+                display: " . ($header_top_visible_mobile ? 'block' : 'none') . ";
             }
         }
 
         /* ヘッダー下表示設定 */
         #header-bottom {
-            display: " . ($header_bottom_visible_pc ? 'flex' : 'none') . ";
+            display: " . ($header_bottom_visible_pc ? 'block' : 'none') . ";
         }
         @media (max-width: 1024px) {
             #header-bottom {
-                display: " . ($header_bottom_visible_tablet ? 'flex' : 'none') . ";
+                display: " . ($header_bottom_visible_tablet ? 'block' : 'none') . ";
             }
         }
         @media (max-width: 768px) {
             #header-bottom {
-                display: " . ($header_bottom_visible_mobile ? 'flex' : 'none') . ";
+                display: " . ($header_bottom_visible_mobile ? 'block' : 'none') . ";
             }
         }
     ";

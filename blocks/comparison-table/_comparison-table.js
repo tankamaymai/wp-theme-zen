@@ -43,7 +43,7 @@
       },
       alignment: {
         type: "string",
-        default: "left",
+        default: "center",
       },
     },
     edit: function (props) {
