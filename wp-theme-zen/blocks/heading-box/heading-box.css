@@ -1,0 +1,91 @@
+.heading-box {
+  margin: 0;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.heading-box-title {
+  font-size: 20px;
+  margin-bottom: 5px;
+  padding: 10px 15px;
+  margin: 0;
+}
+
+.heading-box-description {
+  font-size: 16px;
+  padding: 15px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.heading-box.style1 {
+  border-left: 4px solid var(--border-color);
+  background-color: var(--background-color);
+}
+
+.heading-box.style1 .heading-box-title {
+  padding: 20px 15px 0px;
+}
+
+.heading-box.style2 .heading-box-title {
+  background-color: var(--border-color);
+  color: var(--title-color);
+}
+
+.heading-box.style2 .heading-box-description {
+  background-color: var(--background-color);
+  border: 2px solid var(--border-color);
+  margin: 0;
+  border-top: none;
+}
+
+.heading-box.style3 {
+  border: 2px solid var(--border-color);
+  background-color: var(--background-color);
+  position: relative;
+  margin-top: 55px;
+}
+
+.heading-box.style3 .heading-box-title {
+  background-color: var(--border-color);
+  color: var(--title-color);
+  position: absolute;
+  top: -35px;
+  left: -2px;
+  padding: 5px 10px;
+  border-radius: 5px 5px 0 0;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.heading-box.style3 .heading-box-description {
+  background-color: var(--background-color);
+  border: none;
+  padding: 15px;
+  border-radius: 0 0 5px 5px;
+}
+
+.heading-box.style3:hover .heading-box-description {
+  background-color: var(--background-color);
+}
+
+/* デスクトップ（1024px以上）で非表示 */
+@media (min-width: 1024px) {
+  .hide-on-desktop {
+    display: none;
+  }
+}
+
+/* タブレット（768px～1024px）で非表示 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hide-on-tablet {
+    display: none;
+  }
+}
+
+/* モバイル（768px以下）で非表示 */
+@media (max-width: 767px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}

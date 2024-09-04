@@ -1,0 +1,83 @@
+/* デフォルトスタイル */
+.comparison-table.default-style table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.comparison-table.default-style th,
+.comparison-table.default-style td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.comparison-table.default-style th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* シンプルスタイル */
+.comparison-table.simple-style table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.comparison-table.simple-style th,
+.comparison-table.simple-style td {
+  border: none;
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.comparison-table.simple-style th {
+  background-color: #ffffff;
+  font-weight: bold;
+}
+
+/* カラー付きスタイル */
+.comparison-table.colored-style table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.comparison-table.colored-style th,
+.comparison-table.colored-style td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.comparison-table.colored-style th {
+  background-color: #ffeb3b; /* 黄色 */
+  font-weight: bold;
+}
+
+.comparison-table.colored-style tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* デスクトップ（1024px以上）で非表示 */
+@media (min-width: 1024px) {
+  .hide-on-desktop {
+    display: none;
+  }
+}
+
+/* タブレット（768px～1024px）で非表示 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hide-on-tablet {
+    display: none;
+  }
+}
+
+/* モバイル（768px以下）で非表示 */
+@media (max-width: 767px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}
+
