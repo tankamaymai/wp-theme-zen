@@ -57,7 +57,7 @@
       },
       alignment: {
         type: "string",
-        default: "left",
+        default: "center",
       },
     },
 

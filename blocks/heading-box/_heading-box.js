@@ -69,7 +69,7 @@ var BlockControls = blockEditor.BlockControls;
       },
       alignment: {
         type: "string",
-        default: "left",
+        default: "center",
       },
     },
 
