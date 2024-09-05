@@ -2,12 +2,13 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    "custom-blocks": "./js/custom-blocks.js", // エディタ用のエントリポイント
-    blocks: "./js/blocks.js", // フロントエンド用のエントリポイント
+    "custom-blocks": "./js/custom-blocks.js", // 既存のエントリーポイント
+    blocks: "./js/blocks.js", // 既存のエントリーポイント
+    "toolbar-text-resize": "./js/toolbar-text-resize.js", // 新しいエントリーポイント
   },
   output: {
-    path: path.resolve(__dirname, "dist"), // 出力ディレクトリ
-    filename: "[name].bundle.js", // 出力ファイル名
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].bundle.js",
   },
   module: {
     rules: [

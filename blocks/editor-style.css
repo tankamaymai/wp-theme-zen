@@ -1,0 +1,16 @@
+/* デフォルト（中サイズ） */
+p {
+  font-size: 1rem; /* ここでデフォルトのサイズを指定 */
+}
+
+.small-font {
+  font-size: 0.8rem;
+}
+
+.large-font {
+  font-size: 1.2rem;
+}
+
+.huge-font {
+  font-size: 1.5rem; /* 特大サイズのフォントサイズを指定 */
+}

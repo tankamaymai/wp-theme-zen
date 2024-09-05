@@ -94,6 +94,15 @@ function mytheme_enqueue_block_editor_assets()
         true
     );
 
+    // フォントサイズ変更のツールバー機能を追加するJavaScript
+    wp_enqueue_script(
+        'mytheme-toolbar-text-resize',
+        get_template_directory_uri() . '/dist/toolbar-text-resize.bundle.js',
+        array('wp-blocks', 'wp-element', 'wp-editor'),
+        filemtime(get_template_directory() . '/dist/toolbar-text-resize.bundle.js'),
+        true
+    );
+
     // カスタムブロックのCSS
     wp_enqueue_style(
         'mytheme-custom-blocks-style',
@@ -106,6 +115,7 @@ function mytheme_enqueue_block_editor_assets()
     wp_enqueue_style('font-awesome-editor', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
 }
 add_action('enqueue_block_editor_assets', 'mytheme_enqueue_block_editor_assets');
+
 
 function mytheme_enqueue_frontend_assets()
 {
