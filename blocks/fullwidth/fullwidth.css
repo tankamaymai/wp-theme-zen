@@ -23,3 +23,88 @@
     display: none;
   }
 }
+
+.fullwidth-block {
+  position: relative;
+  padding: 50px 0;
+}
+
+/* 区切り用のコンテナが上下に来るようにする */
+.separator-container {
+  position: relative;
+  width: 100%;
+  height: 70px;
+}
+
+/* 上下の区切り */
+.separator-top {
+  margin-bottom: -70px;
+}
+
+.separator-bottom {
+  margin-top: -70px;
+}
+
+/* 波の区切り */
+.separator-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.separator-wave::before,
+.separator-wave::after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 100% 50%;
+}
+
+.separator-wave::before {
+  width: 55%;
+  height: 109%;
+  background-color: #fff;
+  right: -1.5%;
+  top: 60%;
+}
+
+.separator-wave::after {
+  width: 55%;
+  height: 100%;
+  background-color: #2c3e50;
+  left: -1.5%;
+  top: 40%;
+}
+
+/* 斜めの区切り */
+.separator-diagonal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #2c3e50;
+  transform: skewY(6deg);
+  transform-origin: top right;
+}
+
+/* 三角の区切り */
+.separator-triangle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  background-color: #2c3e50;
+}
+
+/* InnerBlocks のコンテンツを前面に表示 */
+.fullwidth-block .block-content {
+  position: relative;
+  z-index: 1;
+  padding: 50px 0; /* 上下の余白を持たせる */
+}

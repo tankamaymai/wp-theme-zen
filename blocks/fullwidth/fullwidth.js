@@ -29,9 +29,14 @@
         type: "string",
         default: "show",
       },
+      separatorType: {
+        type: "string",
+        default: "none",
+      },
     },
     edit: function (props) {
       var fullWidth = props.attributes.fullWidth;
+      var separatorType = props.attributes.separatorType;
 
       var toggleFullWidth = function () {
         props.setAttributes({ fullWidth: !fullWidth });
@@ -58,38 +63,18 @@
           ),
           el(
             PanelBody,
-            { title: "レスポンシブ設定", initialOpen: false },
+            { title: "区切りタイプ", initialOpen: false },
             el(SelectControl, {
-              label: "デスクトップで表示",
-              value: props.attributes.displayOnDesktop,
+              label: "区切りタイプを選択",
+              value: separatorType,
               options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
+                { label: "なし", value: "none" },
+                { label: "波", value: "wave" },
+                { label: "三角", value: "triangle" },
+                { label: "斜め", value: "diagonal" },
               ],
               onChange: (value) => {
-                props.setAttributes({ displayOnDesktop: value });
-              },
-            }),
-            el(SelectControl, {
-              label: "タブレットで表示",
-              value: props.attributes.displayOnTablet,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnTablet: value });
-              },
-            }),
-            el(SelectControl, {
-              label: "モバイルで表示",
-              value: props.attributes.displayOnMobile,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnMobile: value });
+                props.setAttributes({ separatorType: value });
               },
             })
           )
@@ -109,16 +94,28 @@
               props.attributes.displayOnMobile === "hide"
                 ? "hide-on-mobile"
                 : "",
+              "separator-" + separatorType,
             ]
               .filter(Boolean)
               .join(" "),
           },
-          el(InnerBlocks)
+          el(
+            "div",
+            { className: "separator-container separator-top" },
+            el("div", { className: "separator " + separatorType })
+          ),
+          el("div", { className: "block-content" }, el(InnerBlocks)),
+          el(
+            "div",
+            { className: "separator-container separator-bottom" },
+            el("div", { className: "separator " + separatorType })
+          )
         )
       );
     },
     save: function (props) {
       var fullWidth = props.attributes.fullWidth;
+      var separatorType = props.attributes.separatorType;
 
       const classes = [
         "fullwidth-block",
@@ -126,6 +123,7 @@
         props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
         props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
         props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
+        "separator-" + separatorType,
       ]
         .filter(Boolean)
         .join(" ");
@@ -135,7 +133,17 @@
         {
           className: classes,
         },
-        el(InnerBlocks.Content)
+        el(
+          "div",
+          { className: "separator-container separator-top" },
+          el("div", { className: "separator " + separatorType })
+        ),
+        el("div", { className: "block-content" }, el(InnerBlocks.Content)),
+        el(
+          "div",
+          { className: "separator-container separator-bottom" },
+          el("div", { className: "separator " + separatorType })
+        )
       );
     },
   });

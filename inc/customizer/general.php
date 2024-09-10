@@ -36,7 +36,7 @@ function mytheme_customize_color_settings($wp_customize)
 {
     // 色設定セクション
     $wp_customize->add_section('mytheme_customize_color_settings', array(
-        'title' => __('カラー', 'mytheme'),
+        'title' => __('基本カラー', 'mytheme'),
         'panel' => 'mytheme_general_panel',
     ));
 
@@ -62,17 +62,6 @@ function mytheme_customize_color_settings($wp_customize)
         'settings' => 'mytheme_heading_color',
     )));
 
-    // 背景色
-    $wp_customize->add_setting('mytheme_background_color', array(
-        'default'   => '#eeeeee',
-        'transport' => 'refresh',
-    ));
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'mytheme_background_color', array(
-        'label'    => __('背景色', 'mytheme'),
-        'section'  => 'mytheme_customize_color_settings',
-        'settings' => 'mytheme_background_color',
-    )));
-
     // リンクカラー
     $wp_customize->add_setting('mytheme_link_color', array(
         'default'   => '#0000FF',
@@ -83,23 +72,36 @@ function mytheme_customize_color_settings($wp_customize)
         'section'  => 'mytheme_customize_color_settings',
         'settings' => 'mytheme_link_color',
     )));
+
+
+    // サイト全体の背景色
+    $wp_customize->add_setting('mytheme_background_color', array(
+        'default'   => '#ffffff',
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'mytheme_background_color', array(
+        'label'    => __('背景色', 'mytheme'),
+        'section'  => 'mytheme_customize_color_settings',
+        'settings' => 'mytheme_background_color',
+
+    )));
 }
 function mytheme_customize_container_settings($wp_customize)
 {
-    // コンテナ設定セクション
+    // コンテンツエリア設定セクション
     $wp_customize->add_section('mytheme_container_settings', array(
-        'title' => __('コンテナ', 'mytheme'),
+        'title' => __('コンテンツエリア', 'mytheme'),
         'panel' => 'mytheme_general_panel',
     ));
 
-    // 全体のコンテナ幅設定
+    // 全体のコンテンツエリア幅設定
     $wp_customize->add_setting('mytheme_container_width', array(
         'default' => '1200',
         'transport' => 'refresh',
         'sanitize_callback' => 'mytheme_sanitize_container_width',
     ));
     $wp_customize->add_control('mytheme_container_width', array(
-        'label' => __('コンテナ幅 (px または 100%)', 'mytheme'),
+        'label' => __('コンテンツエリア幅 (px または 100%)', 'mytheme'),
         'section' => 'mytheme_container_settings',
         'type' => 'select',
         'choices' => array(
@@ -110,14 +112,14 @@ function mytheme_customize_container_settings($wp_customize)
         ),
     ));
 
-    // トップページのコンテナ幅設定
+    // トップページのコンテンツエリア幅設定
     $wp_customize->add_setting('mytheme_front_page_container_width', array(
         'default' => '1200',
         'transport' => 'refresh',
         'sanitize_callback' => 'mytheme_sanitize_container_width',
     ));
     $wp_customize->add_control('mytheme_front_page_container_width', array(
-        'label' => __('トップページのコンテナ幅 (px または 100%)', 'mytheme'),
+        'label' => __('トップページのコンテンツエリア幅 (px または 100%)', 'mytheme'),
         'section' => 'mytheme_container_settings',
         'type' => 'select',
         'choices' => array(
@@ -128,14 +130,14 @@ function mytheme_customize_container_settings($wp_customize)
         ),
     ));
 
-    // 全体のコンテナ内側余白設定
+    // 全体のコンテンツエリア内側余白設定
     $wp_customize->add_setting('mytheme_container_padding', array(
         'default' => 'none',
         'transport' => 'refresh',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('mytheme_container_padding', array(
-        'label' => __('コンテナ内側余白', 'mytheme'),
+        'label' => __('コンテンツエリア内側余白', 'mytheme'),
         'section' => 'mytheme_container_settings',
         'type' => 'select',
         'choices' => array(
@@ -146,14 +148,14 @@ function mytheme_customize_container_settings($wp_customize)
         ),
     ));
 
-    // 全体のコンテナ外側余白設定
+    // 全体のコンテンツエリア外側余白設定
     $wp_customize->add_setting('mytheme_container_margin', array(
         'default' => 'none',
         'transport' => 'refresh',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('mytheme_container_margin', array(
-        'label' => __('コンテナ外側余白', 'mytheme'),
+        'label' => __('コンテンツエリア外側余白', 'mytheme'),
         'section' => 'mytheme_container_settings',
         'type' => 'select',
         'choices' => array(
@@ -164,14 +166,14 @@ function mytheme_customize_container_settings($wp_customize)
         ),
     ));
 
-    // トップページのコンテナ内側余白設定
+    // トップページのコンテンツエリア内側余白設定
     $wp_customize->add_setting('mytheme_front_page_container_padding', array(
         'default' => 'none',
         'transport' => 'refresh',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('mytheme_front_page_container_padding', array(
-        'label' => __('トップページのコンテナ内側余白', 'mytheme'),
+        'label' => __('トップページのコンテンツエリア内側余白', 'mytheme'),
         'section' => 'mytheme_container_settings',
         'type' => 'select',
         'choices' => array(
@@ -182,14 +184,14 @@ function mytheme_customize_container_settings($wp_customize)
         ),
     ));
 
-    // トップページのコンテナ外側余白設定
+    // トップページのコンテンツエリア外側余白設定
     $wp_customize->add_setting('mytheme_front_page_container_margin', array(
         'default' => 'none',
         'transport' => 'refresh',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('mytheme_front_page_container_margin', array(
-        'label' => __('トップページのコンテナ外側余白', 'mytheme'),
+        'label' => __('トップページのコンテンツエリア外側余白', 'mytheme'),
         'section' => 'mytheme_container_settings',
         'type' => 'select',
         'choices' => array(
@@ -198,6 +200,29 @@ function mytheme_customize_container_settings($wp_customize)
             'medium' => __('中', 'mytheme'),
             'large' => __('大', 'mytheme'),
         ),
+    ));
+
+    // コンテンツエリアの背景色
+    $wp_customize->add_setting('mytheme_content_area_background_color', array(
+        'default'   => '#ffffff',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'mytheme_content_area_background_color', array(
+        'label'    => __('コンテンツエリアの背景色', 'mytheme'),
+        'section'  => 'mytheme_container_settings',
+    )));
+
+    // コンテンツエリアの背景を透明にするオプション
+    $wp_customize->add_setting('mytheme_content_area_background_transparent', array(
+        'default'   => false,
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control('mytheme_content_area_background_transparent', array(
+        'label'    => __('コンテンツエリアの背景を透明にする', 'mytheme'),
+        'section'  => 'mytheme_container_settings',
+        'type'     => 'checkbox',
+        'description' => __('コンテンツエリアに背景メディアを使用している場合、このオプションを使用して背景色を透明にできます。', 'mytheme'),
     ));
 }
 
@@ -227,6 +252,17 @@ function mytheme_customize_container_width()
     $front_page_container_padding = get_theme_mod('mytheme_front_page_container_padding', 'none');
     $front_page_container_margin = get_theme_mod('mytheme_front_page_container_margin', 'none');
 
+
+
+    // コンテンツエリアの背景色を取得
+    $content_area_background_color = get_theme_mod('mytheme_content_area_background_color', '#ffffff');
+    $content_area_background_transparent = get_theme_mod('mytheme_content_area_background_transparent', false);
+
+    // コンテンツエリアの背景透明化オプションのチェック
+    if ($content_area_background_transparent) {
+        $content_area_background_color = 'transparent'; // 透明にする
+    }
+
     if ($container_width !== '100%') {
         $container_width .= 'px'; // 単位を追加
     }
@@ -243,7 +279,7 @@ function mytheme_customize_container_width()
     );
 
     $margin_css = array(
-        'none' => 'margin: 0;',
+        'none' => 'margin: 0 auto;',
         'small' => 'margin: 40px;',
         'medium' => 'margin: 60px;',
         'large' => 'margin: 80px;',
@@ -258,21 +294,25 @@ function mytheme_customize_container_width()
     $custom_css = "
         #primary {
             max-width: {$container_width};
+            background-color: {$content_area_background_color}; /* コンテンツエリアの背景色 */
             {$container_padding_css}
             {$container_margin_css}
         }
         body.home #primary {
             max-width: {$front_page_container_width};
+            background-color: {$content_area_background_color}; /* トップページのコンテンツエリアの背景色 */
             {$front_page_container_padding_css}
             {$front_page_container_margin_css}
         }
 
         @media (max-width: 768px) {
             #primary {
+                background-color: {$content_area_background_color}; /* コンテンツエリアの背景色 */
                 {$container_padding_css}
                 {$container_margin_css}
             }
             body.home #primary {
+                background-color: {$content_area_background_color}; /* トップページのコンテンツエリアの背景色 */
                 {$front_page_container_padding_css}
                 {$front_page_container_margin_css}
             }
@@ -280,10 +320,12 @@ function mytheme_customize_container_width()
 
         @media (max-width: 480px) {
             #primary {
+                background-color: {$content_area_background_color}; /* コンテンツエリアの背景色 */
                 {$container_padding_css}
                 {$container_margin_css}
             }
             body.home #primary {
+                background-color: {$content_area_background_color}; /* トップページのコンテンツエリアの背景色 */
                 {$front_page_container_padding_css}
                 {$front_page_container_margin_css}
             }
@@ -348,7 +390,7 @@ function mytheme_customize_background_section($wp_customize)
 {
     // 背景設定セクション
     $wp_customize->add_section('mytheme_background_settings', array(
-        'title' => __('背景メディア（非推奨）', 'mytheme'),
+        'title' => __('背景メディア', 'mytheme'),
         'panel' => 'mytheme_general_panel',
         'priority' => 300,
     ));
@@ -361,7 +403,7 @@ function mytheme_customize_background_section($wp_customize)
 
     $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'mytheme_background_media_control', array(
         'label' => __('背景画像または動画', 'mytheme'),
-        'description' => __('サイト全体に適用される背景画像またはビデオを設定できます。ただしサイトが重たくなることで表示速度が遅くなります。SEOにも影響しますのでおすすめ致しません。', 'mytheme'),
+        'description' => __('サイト全体に適用される背景画像またはビデオを設定できます。ただし動画を使用する場合、サイトが重たくなる他、SEOにも影響しますので注意が必要です。', 'mytheme'),
         'section' => 'mytheme_background_settings',
         'settings' => 'mytheme_background_media',
         'mime_type' => 'video,image'  // ビデオと画像ファイルのみを選択
@@ -375,7 +417,7 @@ add_action('customize_register', function ($wp_customize) {
     mytheme_customize_general_panel($wp_customize);  // パネルの設定
     mytheme_customize_fonts_section($wp_customize);  // フォントの設定
     mytheme_customize_color_settings($wp_customize); // 色設定
-    mytheme_customize_container_settings($wp_customize); // コンテナ設定
+    mytheme_customize_container_settings($wp_customize); // コンテンツエリア設定
     mytheme_customize_button_settings($wp_customize); // ボタン設定
     mytheme_customize_top_scroll_settings($wp_customize); // トップスクロールボタン設定
     mytheme_customize_background_section($wp_customize); // 背景設定
@@ -390,6 +432,10 @@ function mytheme_general_styles()
     $link_color = get_theme_mod('mytheme_link_color', '#0000FF');
     $button_bg_color = get_theme_mod('mytheme_button_background_color', '#0073aa');
     $button_text_color = get_theme_mod('mytheme_button_text_color', '#ffffff');
+
+    // サイト全体の背景色を取得
+    $background_color = get_theme_mod('mytheme_background_color', '#ffffff');
+
 
     // カスタム CSS の適用
     $custom_css = "

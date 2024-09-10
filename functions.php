@@ -85,14 +85,6 @@ add_action('wp_enqueue_scripts', 'mytheme_enqueue_scripts');
 
 function mytheme_enqueue_block_editor_assets()
 {
-    // カスタムブロックのJavaScript
-    wp_enqueue_script(
-        'mytheme-custom-blocks',
-        get_template_directory_uri() . '/dist/custom-blocks.bundle.js',
-        array('wp-blocks', 'wp-element', 'wp-editor'),
-        filemtime(get_template_directory() . '/dist/custom-blocks.bundle.js'),
-        true
-    );
 
     // フォントサイズ変更のツールバー機能を追加するJavaScript
     wp_enqueue_script(
@@ -100,6 +92,15 @@ function mytheme_enqueue_block_editor_assets()
         get_template_directory_uri() . '/dist/toolbar-text-resize.bundle.js',
         array('wp-blocks', 'wp-element', 'wp-editor'),
         filemtime(get_template_directory() . '/dist/toolbar-text-resize.bundle.js'),
+        true
+    );
+
+    // カスタムマージンとパディングの機能を追加するJavaScript
+    wp_enqueue_script(
+        'custom-block-margin-padding',
+        get_template_directory_uri() . '/dist/custom-block-margin-padding.bundle.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
+        filemtime(get_template_directory() . '/dist/custom-block-margin-padding.bundle.js'),
         true
     );
 
@@ -113,6 +114,15 @@ function mytheme_enqueue_block_editor_assets()
 
     // Font Awesome
     wp_enqueue_style('font-awesome-editor', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+    // テーマディレクトリのURLをJavaScriptに渡す
+    wp_localize_script(
+        'custom-block-margin-padding',
+        'myThemeData',
+        array(
+            'themeUrl' => get_template_directory_uri(), // テーマのURLを渡す
+        )
+    );
 }
 add_action('enqueue_block_editor_assets', 'mytheme_enqueue_block_editor_assets');
 
