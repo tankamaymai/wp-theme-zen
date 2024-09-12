@@ -60,7 +60,7 @@ function mytheme_customize_floating_button($wp_customize)
         'choices'  => array(
             'text'  => __('テキスト', 'mytheme'),
             'image' => __('画像', 'mytheme'),
-            'fullwidth_image' => __('バナー(全幅)', 'mytheme'), // 追加
+            'fullwidth_image' => __('バナー(全幅)768px以下で表示', 'mytheme'), // 追加
         ),
     ));
        // 画像（全幅）の推奨サイズ説明
@@ -68,7 +68,7 @@ function mytheme_customize_floating_button($wp_customize)
         'section'  => 'mytheme_floating_button_settings',
         'settings' => array(),
         'type'     => 'hidden',
-        'description' => __('バナー（全幅）の推奨サイズ：468 × 60px', 'mytheme'),
+        'description' => __('バナー（全幅）の推奨サイズ：940 × 120px', 'mytheme'),
         'active_callback' => function() use ($wp_customize) {
             return $wp_customize->get_setting('mytheme_floating_button_type')->value() === 'fullwidth_image';
         },
@@ -182,64 +182,66 @@ function mytheme_floating_button_styles()
         }
 
         $custom_css = "
-            .floating-button {
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            " . ($button_type !== 'fullwidth_image' ? $position_css : '') . "
+            z-index: 9999;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+    
+        .floating-button.text {
+            background-color: {$button_bg_color};
+            color: {$button_text_color};
+            padding: 10px 20px;
+            border-radius: 50px;
+        }
+    
+        .floating-button.image img {
+            max-width: 200px;
+            height: auto;
+            width: 100%;
+        }
+    
+        @media (max-width: 768px) {
+            .floating-button.fullwidth_image {
                 position: fixed;
-                bottom: 20px;
-                {$position_css}
-                z-index: 9999;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-            }
-
-            .floating-button.text {
-                background-color: {$button_bg_color};
-                color: {$button_text_color};
-                padding: 10px 20px;
-                border-radius: 50px;
-            }
-
-            .floating-button.image img {
-                max-width: 200px;
-                height: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
                 width: 100%;
             }
-
+    
             .floating-button.fullwidth_image img {
                 width: 100%;
                 height: auto;
+                display: block;
             }
-
-            " . ($display_button_pc ? "" : "
-            @media (min-width: 769px) {
-                .floating-button {
-                    display: none;
-                }
-            }") . "
-
-            " . ($display_button_sp ? "" : "
-            @media (max-width: 768px) {
-                .floating-button {
-                    display: none;
-                }
-            }") . "
-
-            @media (max-width: 768px) {
+        }
+    
+        @media (min-width: 769px) {
             .floating-button.fullwidth_image {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-        }
-
-        .floating-button.fullwidth_image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+                display: none;
             }
-        ";
-        wp_add_inline_style('mytheme-style', $custom_css);
+        }
+    
+        " . ($display_button_pc ? "" : "
+        @media (min-width: 769px) {
+            .floating-button {
+                display: none;
+            }
+        }") . "
+    
+        " . ($display_button_sp ? "" : "
+        @media (max-width: 768px) {
+            .floating-button {
+                display: none;
+            }
+        }") . "
+    ";
+    wp_add_inline_style('mytheme-style', $custom_css);
 
         // フローティングボタンのHTMLを追加
         add_action('wp_footer', function () use ($button_type, $button_text, $button_link, $button_image) {
