@@ -133,6 +133,44 @@ function mytheme_customize_header($wp_customize)
         'section'  => 'mytheme_main_header_section',
         'settings' => 'mytheme_hamburger_menu_color',
     )));
+      // スマホメニューボタンの下のテキスト設定
+      $wp_customize->add_setting('mytheme_hamburger_menu_text', array(
+        'default'   => '',
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control('mytheme_hamburger_menu_text', array(
+        'label'    => __('スマホメニューボタンの下のテキスト', 'mytheme'),
+        'section'  => 'mytheme_main_header_section',
+        'type'     => 'text',
+        'description' => __('5文字以内推奨', 'mytheme'),
+    ));
+
+    // スマホメニューボタンの下のテキストの色設定
+    $wp_customize->add_setting('mytheme_hamburger_menu_subtext_color', array(
+        'default'   => '#ffffff',
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'mytheme_hamburger_menu_subtext_color', array(
+        'label'    => __('スマホメニューボタンの下のテキストの色', 'mytheme'),
+        'section'  => 'mytheme_main_header_section',
+        'settings' => 'mytheme_hamburger_menu_subtext_color',
+    )));
+
+    // スマホメニューボタンの下のテキストのフォントサイズ設定
+    $wp_customize->add_setting('mytheme_hamburger_menu_subtext_font_size', array(
+        'default'   => '14',
+        'transport' => 'refresh',
+    ));
+    $wp_customize->add_control('mytheme_hamburger_menu_subtext_font_size', array(
+        'label'    => __('スマホメニューボタンの下のテキストのフォントサイズ（px）', 'mytheme'),
+        'section'  => 'mytheme_main_header_section',
+        'type'     => 'number',
+        'input_attrs' => array(
+            'min' => 10,
+            'max' => 30,
+            'step' => 1,
+        ),
+    ));
 
     // スマホメニューの背景色設定
     $wp_customize->add_setting('mytheme_hamburger_menu_background_color', array(
@@ -217,6 +255,8 @@ function mytheme_customize_header_styles()
     $header_bottom_visible_pc = get_theme_mod('mytheme_header_bottom_visible_pc', true);
     $header_bottom_visible_tablet = get_theme_mod('mytheme_header_bottom_visible_tablet', false);
     $header_bottom_visible_mobile = get_theme_mod('mytheme_header_bottom_visible_mobile', false);
+    $hamburger_menu_text = get_theme_mod('mytheme_hamburger_menu_text', '');
+    $hamburger_menu_class = !empty($hamburger_menu_text) ? 'has-subtext' : '';
 
     $custom_css = "
         #masthead {
@@ -280,6 +320,34 @@ function mytheme_customize_header_styles()
             #header-bottom {
                 display: " . ($header_bottom_visible_mobile ? 'flex' : 'none') . ";
             }
+        }
+
+        /* スマホメニューボタンの下のテキスト */
+        .hamburger-menu-text {
+    margin-top: 5px;
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+        }
+
+        .has-subtext.menu-icon {
+            display: block;
+            width: 27px;
+            height: 3px;
+            position: relative;
+            top: -11px;
+        }
+            .has-subtext.menu-icon::before{
+            width: 27px;
+            top: -10px;
+        }
+        .has-subtext.menu-icon::after{
+            width: 27px;
+            top: 10px;
         }
     ";
 
