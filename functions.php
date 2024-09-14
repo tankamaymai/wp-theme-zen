@@ -198,7 +198,6 @@ function mytheme_custom_header_widget_styles()
         }
         #header-top .header-widget-column {
             flex: 1;
-            min-width: 200px;
         }
         #header-top .header-widget-column-1 {
             text-align: left;
@@ -217,7 +216,7 @@ function mytheme_custom_header_widget_styles()
         }
         #header-bottom .header-widget-column {
             flex: 1;
-            min-width: 200px;
+            
         }
         #header-bottom .header-widget-column-1 {
             text-align: left;
