@@ -95,14 +95,15 @@ function mytheme_enqueue_block_editor_assets()
         true
     );
 
+    // 一時的に使用不可能にしている
     // カスタムマージンとパディングの機能を追加するJavaScript
-    wp_enqueue_script(
-        'custom-block-margin-padding',
-        get_template_directory_uri() . '/dist/custom-block-margin-padding.bundle.js',
-        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
-        filemtime(get_template_directory() . '/dist/custom-block-margin-padding.bundle.js'),
-        true
-    );
+    // wp_enqueue_script(
+    //     'custom-block-margin-padding',
+    //     get_template_directory_uri() . '/dist/custom-block-margin-padding.bundle.js',
+    //     array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
+    //     filemtime(get_template_directory() . '/dist/custom-block-margin-padding.bundle.js'),
+    //     true
+    // );
 
     // カスタムブロックのCSS
     wp_enqueue_style(
