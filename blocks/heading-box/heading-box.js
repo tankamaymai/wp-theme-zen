@@ -6,7 +6,7 @@
   var SelectControl = components.SelectControl;
   var ColorPalette = components.ColorPalette;
   var AlignmentToolbar = blockEditor.AlignmentToolbar;
-var BlockControls = blockEditor.BlockControls;
+  var BlockControls = blockEditor.BlockControls;
 
   const colors = [
     { name: "ZEN Black", color: "#333333" },
@@ -51,22 +51,6 @@ var BlockControls = blockEditor.BlockControls;
         type: "string",
         default: "#333333", // デフォルトのボーダー色（スタイル1とスタイル2で使用）
       },
-      displayOnDesktop: {
-        type: "string",
-        default: "show",
-      },
-      displayOnTablet: {
-        type: "string",
-        default: "show",
-      },
-      displayOnMobile: {
-        type: "string",
-        default: "show",
-      },
-      contentWidth: {
-        type: "string",
-        default: "100%",
-      },
       alignment: {
         type: "string",
         default: "left",
@@ -106,9 +90,6 @@ var BlockControls = blockEditor.BlockControls;
       const boxStyleClasses = [
         `heading-box`,
         boxStyle,
-        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
-        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
-        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
       ]
         .filter(Boolean)
         .join(" ");
@@ -171,58 +152,7 @@ var BlockControls = blockEditor.BlockControls;
               value: borderColor,
               onChange: onChangeBorderColor,
             })
-          ),
-          el(
-            PanelBody,
-            { title: "レスポンシブ設定", initialOpen: false },
-            el(SelectControl, {
-              label: "デスクトップで表示",
-              value: props.attributes.displayOnDesktop,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnDesktop: value });
-              },
-            }),
-            el(SelectControl, {
-              label: "タブレットで表示",
-              value: props.attributes.displayOnTablet,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnTablet: value });
-              },
-            }),
-            el(SelectControl, {
-              label: "モバイルで表示",
-              value: props.attributes.displayOnMobile,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnMobile: value });
-              },
-            })
-          ),
-          el(
-            PanelBody,
-            { title: "コンテンツ設定", initialOpen: false },
-            el(SelectControl, {
-              label: "コンテンツ幅",
-              value: props.attributes.contentWidth,
-              options: [
-                { label: "デフォルト (1100px)", value: "1100px" },
-                { label: "幅広 (1400px)", value: "1400px" },
-                { label: "全幅 (100%)", value: "100%" },
-              ],
-              onChange: (value) => props.setAttributes({ contentWidth: value }),
-            })
-          ),
+          )
         ),
         el(RichText, {
           tagName: "h2",
@@ -238,8 +168,6 @@ var BlockControls = blockEditor.BlockControls;
               boxStyle === "style2" || boxStyle === "style3"
                 ? borderColor
                 : "transparent",
-            maxWidth: props.attributes.contentWidth,
-            margin: "0 auto",
             textAlign: props.attributes.alignment,
           },
         }),
@@ -253,9 +181,7 @@ var BlockControls = blockEditor.BlockControls;
           placeholder: "説明を入力",
           style: {
             color: descriptionColor,
-            maxWidth: props.attributes.contentWidth,
             textAlign: props.attributes.alignment,
-            margin: "0 auto",
           },
         })
       );
@@ -271,9 +197,6 @@ var BlockControls = blockEditor.BlockControls;
       const boxStyleClasses = [
         `heading-box`,
         boxStyle,
-        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
-        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
-        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
       ]
         .filter(Boolean)
         .join(" ");
@@ -298,8 +221,6 @@ var BlockControls = blockEditor.BlockControls;
               boxStyle === "style2" || boxStyle === "style3"
                 ? borderColor
                 : "transparent",
-            maxWidth: props.attributes.contentWidth,
-            margin: "0 auto",
             textAlign: props.attributes.alignment,
           },
         }),
@@ -309,8 +230,6 @@ var BlockControls = blockEditor.BlockControls;
           value: props.attributes.description,
           style: {
             color: descriptionColor,
-            maxWidth: props.attributes.contentWidth,
-            margin: "0 auto",
             textAlign: props.attributes.alignment,
           },
         })

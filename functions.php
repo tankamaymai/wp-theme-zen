@@ -610,3 +610,12 @@ function close_meta_box_by_default()
 <?php
 }
 add_action('admin_footer', 'close_meta_box_by_default');
+
+
+// Add custom block setting fileコンテンツの幅の変更を読み込む　js読み込み必要に応じてCSSファイルも読み込む
+
+// Add custom block setting file
+add_action('enqueue_block_editor_assets', function() {
+	wp_enqueue_script('block-type', get_stylesheet_directory_uri().'/js/content-with.js', array(), "", true);
+    wp_enqueue_script('responsive', get_stylesheet_directory_uri().'/js/responsive.js', array(), "", true);
+});
