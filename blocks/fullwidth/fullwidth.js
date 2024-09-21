@@ -17,18 +17,6 @@
         type: "boolean",
         default: true,
       },
-      displayOnDesktop: {
-        type: "string",
-        default: "show",
-      },
-      displayOnTablet: {
-        type: "string",
-        default: "show",
-      },
-      displayOnMobile: {
-        type: "string",
-        default: "show",
-      },
       separatorType: {
         type: "string",
         default: "none",
@@ -85,15 +73,6 @@
             className: [
               "fullwidth-block",
               fullWidth ? "full-width" : "",
-              props.attributes.displayOnDesktop === "hide"
-                ? "hide-on-desktop"
-                : "",
-              props.attributes.displayOnTablet === "hide"
-                ? "hide-on-tablet"
-                : "",
-              props.attributes.displayOnMobile === "hide"
-                ? "hide-on-mobile"
-                : "",
               "separator-" + separatorType,
             ]
               .filter(Boolean)
@@ -120,9 +99,6 @@
       const classes = [
         "fullwidth-block",
         fullWidth ? "full-width" : "",
-        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
-        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
-        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
         "separator-" + separatorType,
       ]
         .filter(Boolean)

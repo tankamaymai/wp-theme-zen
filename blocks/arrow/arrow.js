@@ -39,18 +39,6 @@
         type: "number",
         default: 2,
       },
-      displayOnDesktop: {
-        type: "string",
-        default: "show",
-      },
-      displayOnTablet: {
-        type: "string",
-        default: "show",
-      },
-      displayOnMobile: {
-        type: "string",
-        default: "show",
-      },
       alignment: {
         type: "string",
         default: "left",
@@ -69,7 +57,6 @@
       var width = props.attributes.width;
       var height = props.attributes.height;
       var strokeWidth = props.attributes.strokeWidth;
-
 
       function onChangeDirection(newDirection) {
         props.setAttributes({ direction: newDirection });
@@ -129,7 +116,6 @@
               "M12 2L10.59 3.41 18.17 11H2V13H18.17L10.59 20.59L12 22L22 12Z";
         }
 
-
         return el(
           "svg",
           {
@@ -143,19 +129,6 @@
               stroke: color,
               strokeWidth: strokeWidth,
             },
-            className: [
-              props.attributes.displayOnDesktop === "hide"
-                ? "hide-on-desktop"
-                : "",
-              props.attributes.displayOnTablet === "hide"
-                ? "hide-on-tablet"
-                : "",
-              props.attributes.displayOnMobile === "hide"
-                ? "hide-on-mobile"
-                : "",
-            ]
-              .filter(Boolean)
-              .join(" "),
           },
           el("path", { d: pathData })
         );
@@ -226,66 +199,18 @@
               min: 1,
               max: 10,
             })
-          ),
-          el(
-            PanelBody,
-            { title: "レスポンシブ設定", initialOpen: false },
-            el(SelectControl, {
-              label: "デスクトップで表示",
-              value: props.attributes.displayOnDesktop,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnDesktop: value });
-              },
-            }),
-            el(SelectControl, {
-              label: "タブレットで表示",
-              value: props.attributes.displayOnTablet,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnTablet: value });
-              },
-            }),
-            el(SelectControl, {
-              label: "モバイルで表示",
-              value: props.attributes.displayOnMobile,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnMobile: value });
-              },
-            })
           )
         ),
         el(
           "div",
           blockProps,
-          {
-            className: "arrow-block",
-            style: {
-              textAlign: props.attributes.alignment,
-            },
-          },
           arrowSVG()
         )
       );
     },
     save: function (props) {
       var saveProps = useBlockProps.save({
-        className: [
-          "arrow-block",
-          props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
-          props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
-          props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
-        ].filter(Boolean).join(" "),
+        className: "arrow-block",
         style: {
           textAlign: props.attributes.alignment,
         },
@@ -327,24 +252,9 @@
             "M12 2L10.59 3.41 18.17 11H2V13H18.17L10.59 20.59L12 22L22 12Z";
       }
 
-      const classes = [
-        "arrow-block",
-        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
-        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
-        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
-      ]
-        .filter(Boolean)
-        .join(" ");
-
       return el(
         "div",
         saveProps,
-        {
-          className: classes,
-          style: {
-            textAlign: props.attributes.alignment,
-          },
-        },
         el(
           "svg",
           {

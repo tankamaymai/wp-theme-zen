@@ -7,7 +7,6 @@
   var ToggleControl = components.ToggleControl;
   var InspectorControls = blockEditor.InspectorControls;
   var PanelBody = components.PanelBody;
-  var SelectControl = components.SelectControl;
   var AlignmentToolbar = blockEditor.AlignmentToolbar;
   var BlockControls = blockEditor.BlockControls;
 
@@ -38,22 +37,6 @@
       alwaysOpen: {
         type: "boolean",
         default: false,
-      },
-      displayOnDesktop: {
-        type: "string",
-        default: "show",
-      },
-      displayOnTablet: {
-        type: "string",
-        default: "show",
-      },
-      displayOnMobile: {
-        type: "string",
-        default: "show",
-      },
-      contentWidth: {
-        type: "string",
-        default: "100%",
       },
       alignment: {
         type: "string",
@@ -118,65 +101,13 @@
               checked: alwaysOpen,
               onChange: toggleAlwaysOpen,
             })
-          ),
-          el(
-            PanelBody,
-            { title: "レスポンシブ設定", initialOpen: false },
-            el(SelectControl, {
-              label: "デスクトップで表示",
-              value: props.attributes.displayOnDesktop,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnDesktop: value });
-              },
-            }),
-            el(SelectControl, {
-              label: "タブレットで表示",
-              value: props.attributes.displayOnTablet,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnTablet: value });
-              },
-            }),
-            el(SelectControl, {
-              label: "モバイルで表示",
-              value: props.attributes.displayOnMobile,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnMobile: value });
-              },
-            })
-          ),
-          el(
-            PanelBody,
-            { title: "コンテンツ設定", initialOpen: false },
-            el(SelectControl, {
-              label: "コンテンツ幅",
-              value: props.attributes.contentWidth,
-              options: [
-                { label: "デフォルト (1100px)", value: "1100px" },
-                { label: "幅広 (1400px)", value: "1400px" },
-                { label: "全幅 (100%)", value: "100%" },
-              ],
-              onChange: (value) => props.setAttributes({ contentWidth: value }),
-            })
-          ),
+          )
         ),
         el(
           "div",
           {
             className: "faq-block",
             style: {
-              maxWidth: props.attributes.contentWidth,
               textAlign: props.attributes.alignment
             }
           },
@@ -185,7 +116,6 @@
               "div",
               { className: "faq-item", key: index,
                 style: {
-                  maxWidth: props.attributes.contentWidth,
                   textAlign: props.attributes.alignment
                 }
               },
@@ -231,21 +161,12 @@
       var questions = props.attributes.questions;
       var alwaysOpen = props.attributes.alwaysOpen;
 
-      const classes = [
-        "faq-block",
-        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
-        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
-        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
-      ]
-        .filter(Boolean)
-        .join(" ");
-
       return el(
         "div",
         {
-          className: classes, "data-always-open": alwaysOpen,
+          className: "faq-block",
+          "data-always-open": alwaysOpen,
           style: {
-            maxWidth: props.attributes.contentWidth,
             textAlign: props.attributes.alignment
           }
         },
@@ -254,7 +175,6 @@
             "div",
             { className: "faq-item", key: index,
               style: {
-                maxWidth: props.attributes.contentWidth,
                 textAlign: props.attributes.alignment
               }
              },

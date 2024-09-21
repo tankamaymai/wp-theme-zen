@@ -28,18 +28,6 @@
         type: "string",
         default: "solid",
       },
-      displayOnDesktop: {
-        type: "string",
-        default: "show",
-      },
-      displayOnTablet: {
-        type: "string",
-        default: "show",
-      },
-      displayOnMobile: {
-        type: "string",
-        default: "show",
-      },
     },
     edit: function (props) {
       var color = props.attributes.color;
@@ -101,43 +89,6 @@
               ],
               onChange: onChangeStyle,
             })
-          ),
-          el(
-            PanelBody,
-            { title: "レスポンシブ設定", initialOpen: false },
-            el(SelectControl, {
-              label: "デスクトップで表示",
-              value: props.attributes.displayOnDesktop,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnDesktop: value });
-              },
-            }),
-            el(SelectControl, {
-              label: "タブレットで表示",
-              value: props.attributes.displayOnTablet,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnTablet: value });
-              },
-            }),
-            el(SelectControl, {
-              label: "モバイルで表示",
-              value: props.attributes.displayOnMobile,
-              options: [
-                { label: "表示", value: "show" },
-                { label: "非表示", value: "hide" },
-              ],
-              onChange: (value) => {
-                props.setAttributes({ displayOnMobile: value });
-              },
-            })
           )
         ),
         el("hr", {
@@ -145,15 +96,6 @@
             borderTop: thickness + "px " + style + " " + color,
             width: width + "%",
           },
-          className: [
-            props.attributes.displayOnDesktop === "hide"
-              ? "hide-on-desktop"
-              : "",
-            props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
-            props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
-          ]
-            .filter(Boolean)
-            .join(" "),
         })
       );
     },
@@ -163,20 +105,11 @@
       var width = props.attributes.width;
       var style = props.attributes.style;
 
-      const classes = [
-        props.attributes.displayOnDesktop === "hide" ? "hide-on-desktop" : "",
-        props.attributes.displayOnTablet === "hide" ? "hide-on-tablet" : "",
-        props.attributes.displayOnMobile === "hide" ? "hide-on-mobile" : "",
-      ]
-        .filter(Boolean)
-        .join(" ");
-
       return el("hr", {
         style: {
           borderTop: thickness + "px " + style + " " + color,
           width: width + "%",
         },
-        className: classes,
       });
     },
   });
