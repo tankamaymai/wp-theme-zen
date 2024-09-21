@@ -17,7 +17,7 @@ function mytheme_customize_fonts_section($wp_customize)
         'panel' => 'mytheme_general_panel',
     ));
     $wp_customize->add_setting('mytheme_body_font', array(
-        'default' => 'default',
+        'default' => 'gothic',
         'transport' => 'refresh',
     ));
     $wp_customize->add_control('mytheme_body_font', array(
@@ -25,12 +25,12 @@ function mytheme_customize_fonts_section($wp_customize)
         'label' => __('本文フォント', 'mytheme'),
         'section' => 'mytheme_fonts',
         'choices' => array(
-            'default' => 'デフォルト',
-            'sans-serif' => 'Sans Serif',
-            'serif' => 'Serif',
+            'gothic' => 'ゴシック体 (Sans-serif)',
+            'mincho' => '明朝体 (Serif)',
         ),
     ));
 }
+
 
 function mytheme_customize_color_settings($wp_customize)
 {
@@ -425,6 +425,17 @@ add_action('customize_register', function ($wp_customize) {
 
 function mytheme_general_styles()
 {
+    // フォント設定の取得
+    $body_font = get_theme_mod('mytheme_body_font', 'default');
+
+    // 各フォントに対応するフォントファミリーを定義
+    $font_family = 'inherit'; // デフォルトフォント
+    if ($body_font === 'gothic') {
+        $font_family = '"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", sans-serif'; // ゴシック体
+    } elseif ($body_font === 'mincho') {
+        $font_family = '"ヒラギノ明朝 Pro W3", "Hiragino Mincho Pro", "游明朝", "Yu Mincho", "MS PMincho", serif'; // 明朝体
+    }
+
     // カスタムカラーの取得
     $text_color = get_theme_mod('mytheme_text_color', '#333333');
     $heading_color = get_theme_mod('mytheme_heading_color', '#333333');
@@ -433,15 +444,11 @@ function mytheme_general_styles()
     $button_bg_color = get_theme_mod('mytheme_button_background_color', '#0073aa');
     $button_text_color = get_theme_mod('mytheme_button_text_color', '#ffffff');
 
-    // サイト全体の背景色を取得
-    $background_color = get_theme_mod('mytheme_background_color', '#ffffff');
-
-
-    // カスタム CSS の適用
+    // サイト全体に適用されるフォントファミリーとCSSを作成
     $custom_css = "
-        body {
-            color: {$text_color};
-            background-color: {$background_color};
+        body, p, a, h1, h2, h3, h4, h5, h6, div, span, li, ul, ol, blockquote, input, button {
+            font-family: {$font_family}; /* フォントファミリーを全要素に適用 */
+            
         }
         a {
             color: {$link_color};
@@ -452,6 +459,10 @@ function mytheme_general_styles()
         }
         h1, h2, h3, h4, h5, h6 {
             color: {$heading_color};
+        }
+        body {
+            background-color: {$background_color};
+            color: {$text_color};
         }
     ";
 
