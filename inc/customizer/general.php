@@ -418,8 +418,8 @@ add_action('customize_register', function ($wp_customize) {
     mytheme_customize_fonts_section($wp_customize);  // フォントの設定
     mytheme_customize_color_settings($wp_customize); // 色設定
     mytheme_customize_container_settings($wp_customize); // コンテンツエリア設定
-    mytheme_customize_button_settings($wp_customize); // ボタン設定
-    mytheme_customize_top_scroll_settings($wp_customize); // トップスクロールボタン設定
+    // mytheme_customize_button_settings($wp_customize); // ボタン設定
+    // mytheme_customize_top_scroll_settings($wp_customize); // トップスクロールボタン設定
     mytheme_customize_background_section($wp_customize); // 背景設定
 });
 
@@ -446,7 +446,7 @@ function mytheme_general_styles()
 
     // サイト全体に適用されるフォントファミリーとCSSを作成
     $custom_css = "
-        body, p, a, h1, h2, h3, h4, h5, h6, div, span, li, ul, ol, blockquote, input, button {
+        body, p, a, h1, h2, h3, h4, h5, h6, div, span, li, ul, ol {
             font-family: {$font_family}; /* フォントファミリーを全要素に適用 */
             
         }
