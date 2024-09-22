@@ -39,50 +39,49 @@
         type: "number",
         default: 2,
       },
-      alignment: {
+      textAlign: {
         type: "string",
-        default: "left",
+        default: "center",
       },
+    },
+    supports: {
+      align: true,
+      textAlign: true,
     },
     edit: function (props) {
       var blockProps = useBlockProps({
         className: "arrow-block",
-        style: {
-          textAlign: props.attributes.alignment,
-        },
+        style: { textAlign: props.attributes.textAlign },
       });
-      var direction = props.attributes.direction;
-      var type = props.attributes.type;
-      var color = props.attributes.color;
-      var width = props.attributes.width;
-      var height = props.attributes.height;
-      var strokeWidth = props.attributes.strokeWidth;
+      var { attributes, setAttributes } = props;
+      var { direction, type, color, width, height, strokeWidth, textAlign } = attributes;
 
       function onChangeDirection(newDirection) {
-        props.setAttributes({ direction: newDirection });
+        setAttributes({ direction: newDirection });
       }
 
       function onChangeType(newType) {
-        props.setAttributes({ type: newType });
+        setAttributes({ type: newType });
       }
 
       function onChangeColor(newColor) {
-        props.setAttributes({ color: newColor });
+        setAttributes({ color: newColor });
       }
 
       function onChangeWidth(newWidth) {
-        props.setAttributes({ width: Number(newWidth) });
+        setAttributes({ width: Number(newWidth) });
       }
 
       function onChangeHeight(newHeight) {
-        props.setAttributes({ height: Number(newHeight) });
+        setAttributes({ height: Number(newHeight) });
       }
 
       function onChangeStrokeWidth(newStrokeWidth) {
-        props.setAttributes({ strokeWidth: Number(newStrokeWidth) });
+        setAttributes({ strokeWidth: Number(newStrokeWidth) });
       }
-      function onChangeAlignment(newAlignment) {
-        props.setAttributes({ alignment: newAlignment === undefined ? "center" : newAlignment });
+
+      function onChangeTextAlign(newTextAlign) {
+        setAttributes({ textAlign: newTextAlign });
       }
 
       var arrowSVG = function () {
@@ -97,13 +96,12 @@
           case "right":
             rotation = "rotate(90deg)";
             break;
-          // 'down' is the default and does not need rotation
         }
 
         var pathData;
         switch (type) {
           case "triangle":
-            pathData = "M12 0L24 24L0 24Z"; // 調整された三角形のパス
+            pathData = "M12 0L24 24L0 24Z";
             break;
           case "line":
             pathData = "M2 12L22 12M22 12L18 8M22 12L18 16";
@@ -112,8 +110,7 @@
             pathData = "M2 12L22 12M22 12L18 8M22 12L18 16M2 12L6 8M2 12L6 16";
             break;
           default:
-            pathData =
-              "M12 2L10.59 3.41 18.17 11H2V13H18.17L10.59 20.59L12 22L22 12Z";
+            pathData = "M12 2L10.59 3.41 18.17 11H2V13H18.17L10.59 20.59L12 22L22 12Z";
         }
 
         return el(
@@ -141,8 +138,8 @@
           BlockControls,
           null,
           el(AlignmentToolbar, {
-            value: props.attributes.alignment,
-            onChange: onChangeAlignment,
+            value: textAlign,
+            onChange: onChangeTextAlign,
           })
         ),
         el(
@@ -211,16 +208,9 @@
     save: function (props) {
       var saveProps = useBlockProps.save({
         className: "arrow-block",
-        style: {
-          textAlign: props.attributes.alignment,
-        },
+        style: { textAlign: props.attributes.textAlign },
       });
-      var direction = props.attributes.direction;
-      var type = props.attributes.type;
-      var color = props.attributes.color;
-      var width = props.attributes.width;
-      var height = props.attributes.height;
-      var strokeWidth = props.attributes.strokeWidth;
+      var { direction, type, color, width, height, strokeWidth } = props.attributes;
 
       var rotation = "rotate(0deg)";
       switch (direction) {
@@ -233,13 +223,12 @@
         case "right":
           rotation = "rotate(90deg)";
           break;
-        // 'down' is the default and does not need rotation
       }
 
       var pathData;
       switch (type) {
         case "triangle":
-          pathData = "M12 0L24 24L0 24Z"; // 調整された三角形のパス
+          pathData = "M12 0L24 24L0 24Z";
           break;
         case "line":
           pathData = "M2 12L22 12M22 12L18 8M22 12L18 16";
@@ -248,8 +237,7 @@
           pathData = "M2 12L22 12M22 12L18 8M22 12L18 16M2 12L6 8M2 12L6 16";
           break;
         default:
-          pathData =
-            "M12 2L10.59 3.41 18.17 11H2V13H18.17L10.59 20.59L12 22L22 12Z";
+          pathData = "M12 2L10.59 3.41 18.17 11H2V13H18.17L10.59 20.59L12 22L22 12Z";
       }
 
       return el(
