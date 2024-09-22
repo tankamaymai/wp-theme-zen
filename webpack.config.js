@@ -5,6 +5,8 @@ module.exports = {
     blocks: "./js/blocks.js",
     "toolbar-text-resize": "./js/toolbar-text-resize.js",
     "custom-block-margin-padding": "./js/custom-block-margin-padding.js",
+    "responsive": "./js/responsive.js",
+    "content-with": "./js/content-with.js", 
   },
   output: {
     path: path.resolve(__dirname, "dist"),

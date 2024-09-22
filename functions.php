@@ -85,6 +85,24 @@ add_action('wp_enqueue_scripts', 'mytheme_enqueue_scripts');
 
 function mytheme_enqueue_block_editor_assets()
 {
+    // コンテンツ幅の変更
+      // @content-with.js の読み込み
+      wp_enqueue_script(
+        'block-type',
+        get_template_directory_uri() . '/dist/content-with.bundle.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-compose'),
+        filemtime(get_template_directory() . '/dist/content-with.bundle.js'),
+        true
+    );
+
+    // @responsive.js の読み込み
+    wp_enqueue_script(
+        'responsive',
+        get_template_directory_uri() . '/dist/responsive.bundle.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-compose'),
+        filemtime(get_template_directory() . '/dist/responsive.bundle.js'),
+        true
+    );
 
     // フォントサイズ変更のツールバー機能を追加するJavaScript
     wp_enqueue_script(
@@ -612,10 +630,6 @@ function close_meta_box_by_default()
 add_action('admin_footer', 'close_meta_box_by_default');
 
 
-// Add custom block setting fileコンテンツの幅の変更を読み込む　js読み込み必要に応じてCSSファイルも読み込む
 
-// Add custom block setting file
-add_action('enqueue_block_editor_assets', function() {
-	wp_enqueue_script('block-type', get_stylesheet_directory_uri().'/js/content-with.js', array(), "", true);
-    wp_enqueue_script('responsive', get_stylesheet_directory_uri().'/js/responsive.js', array(), "", true);
-});
+
+

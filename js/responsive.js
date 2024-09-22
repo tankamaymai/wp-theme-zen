@@ -9,32 +9,31 @@
     var subscribe = wp.data.subscribe;
 
     // ブロックの属性を拡張
-function addResponsiveAttributes(settings, name) {
-    if (typeof settings.attributes !== 'undefined') {
-        settings.attributes = Object.assign(settings.attributes, {
-            displayOnDesktop: {
-                type: 'string',
-                default: 'show'
-            },
-            displayOnTablet: {
-                type: 'string',
-                default: 'show'
-            },
-            displayOnMobile: {
-                type: 'string',
-                default: 'show'
-            }
-        });
+    function addResponsiveAttributes(settings, name) {
+        if (typeof settings.attributes !== 'undefined') {
+            settings.attributes = Object.assign(settings.attributes, {
+                displayOnDesktop: {
+                    type: 'string',
+                    default: 'show'
+                },
+                displayOnTablet: {
+                    type: 'string',
+                    default: 'show'
+                },
+                displayOnMobile: {
+                    type: 'string',
+                    default: 'show'
+                }
+            });
+        }
+        return settings;
     }
-    return settings;
-}
 
-wp.hooks.addFilter(
-    'blocks.registerBlockType',
-    'my-plugin/add-responsive-attributes',
-    addResponsiveAttributes
-);
-
+    wp.hooks.addFilter(
+        'blocks.registerBlockType',
+        'my-plugin/add-responsive-attributes',
+        addResponsiveAttributes
+    );
 
     var responsiveControls = wp.compose.createHigherOrderComponent(function (BlockEdit) {
         return function (props) {
@@ -42,29 +41,29 @@ wp.hooks.addFilter(
             var setAttributes = props.setAttributes;
 
             // クラス名を更新する関数
-        const updateClassName = (newAttributes) => {
-            let newClassName = className ? className.split(' ') : [];
-            
-            ['Desktop', 'Tablet', 'Mobile'].forEach(device => {
-                const hideClass = `hide-on-${device.toLowerCase()}`;
-                if (newAttributes[`displayOn${device}`] === 'hide') {
-                    if (!newClassName.includes(hideClass)) {
-                        newClassName.push(hideClass);
+            const updateClassName = (newAttributes) => {
+                let newClassName = className ? className.split(' ') : [];
+
+                ['Desktop', 'Tablet', 'Mobile'].forEach(device => {
+                    const hideClass = `hide-on-${device.toLowerCase()}`;
+                    if (newAttributes[`displayOn${device}`] === 'hide') {
+                        if (!newClassName.includes(hideClass)) {
+                            newClassName.push(hideClass);
+                        }
+                    } else {
+                        newClassName = newClassName.filter(c => c !== hideClass);
                     }
-                } else {
-                    newClassName = newClassName.filter(c => c !== hideClass);
-                }
-            });
+                });
 
-            props.setAttributes({ className: newClassName.join(' ') });
-        };
+                props.setAttributes({ className: newClassName.join(' ') });
+            };
 
-        // 表示設定が変更されたときの処理
-        const onChangeDisplay = (device, newValue) => {
-            const newAttributes = { ...attributes, [`displayOn${device}`]: newValue };
-            setAttributes(newAttributes);
-            updateClassName(newAttributes);
-        };
+            // 表示設定が変更されたときの処理
+            const onChangeDisplay = (device, newValue) => {
+                const newAttributes = { ...attributes, [`displayOn${device}`]: newValue };
+                setAttributes(newAttributes);
+                updateClassName(newAttributes);
+            };
 
             var deviceType = useSelect(function (select) {
                 const { __experimentalGetPreviewDeviceType } = select('core/edit-post');
@@ -100,7 +99,14 @@ wp.hooks.addFilter(
 
             var responsiveSettings = el(
                 PanelBody,
-                { title: 'レスポンシブ設定', initialOpen: false },
+                { title: el(Fragment, {}, 
+                    el('img', {
+                        src: myThemeData.themeUrl + "/assets/icon.png",
+                        alt: "ZEN",
+                        style: { width: "18px", height: "18px", marginRight: "5px" }
+                    }),
+                    'レスポンシブ設定'
+                ), initialOpen: false },
                 el(SelectControl, {
                     label: 'デスクトップで表示',
                     value: attributes.displayOnDesktop || 'show',
