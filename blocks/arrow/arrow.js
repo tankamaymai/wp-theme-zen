@@ -1,14 +1,15 @@
-(function (blocks, element, blockEditor, components) {
+(function (blocks, element, blockEditor, components, data) {
   var el = element.createElement;
   var Fragment = element.Fragment;
   var InspectorControls = blockEditor.InspectorControls;
+  var BlockControls = blockEditor.BlockControls;
+  var AlignmentToolbar = blockEditor.AlignmentToolbar;
   var PanelBody = components.PanelBody;
   var SelectControl = components.SelectControl;
   var ColorPalette = components.ColorPalette;
   var RangeControl = components.RangeControl;
-  var AlignmentToolbar = blockEditor.AlignmentToolbar;
-  var BlockControls = blockEditor.BlockControls;
   var useBlockProps = blockEditor.useBlockProps;
+  var useSelect = data.useSelect;
 
   blocks.registerBlockType("zen/arrow", {
     title: "矢印",
@@ -44,17 +45,15 @@
         default: "center",
       },
     },
-    supports: {
-      align: true,
-      textAlign: true,
-    },
     edit: function (props) {
-      var blockProps = useBlockProps({
-        className: "arrow-block",
-        style: { textAlign: props.attributes.textAlign },
-      });
+      var blockProps = useBlockProps();
       var { attributes, setAttributes } = props;
       var { direction, type, color, width, height, strokeWidth, textAlign } = attributes;
+
+      // コンテンツ幅の設定値を取得
+      var contentWidth = useSelect(function(select) {
+        return select('core/editor').getEditorSettings().maxWidth;
+      }, []);
 
       function onChangeDirection(newDirection) {
         setAttributes({ direction: newDirection });
@@ -133,7 +132,7 @@
 
       return el(
         Fragment,
-        {},
+        null,
         el(
           BlockControls,
           null,
@@ -144,73 +143,78 @@
         ),
         el(
           InspectorControls,
-          {},
+          null,
           el(
             PanelBody,
-            { title: "設定", initialOpen: true },
+            { title: "矢印の設定" },
             el(SelectControl, {
               label: "方向",
               value: direction,
               options: [
+                { label: "上", value: "up" },
                 { label: "下", value: "down" },
                 { label: "左", value: "left" },
-                { label: "上", value: "up" },
                 { label: "右", value: "right" },
               ],
               onChange: onChangeDirection,
             }),
             el(SelectControl, {
-              label: "種類",
+              label: "タイプ",
               value: type,
               options: [
-                { label: "標準", value: "standard" },
                 { label: "三角形", value: "triangle" },
                 { label: "線", value: "line" },
-                { label: "ダブル", value: "double" },
+                { label: "二重線", value: "double" },
+                { label: "標準", value: "default" },
               ],
               onChange: onChangeType,
             }),
-            el("p", {}, "色"),
             el(ColorPalette, {
+              label: "色",
               value: color,
               onChange: onChangeColor,
             }),
-            el("p", {}, "幅 (px)"),
             el(RangeControl, {
+              label: "幅",
               value: width,
               onChange: onChangeWidth,
-              min: 1,
-              max: 100,
+              min: 20,
+              max: 500,
             }),
-            el("p", {}, "高さ (px)"),
             el(RangeControl, {
+              label: "高さ",
               value: height,
               onChange: onChangeHeight,
-              min: 1,
-              max: 100,
+              min: 20,
+              max: 500,
             }),
-            el("p", {}, "線幅 (px)"),
             el(RangeControl, {
+              label: "線の太さ",
               value: strokeWidth,
               onChange: onChangeStrokeWidth,
               min: 1,
-              max: 10,
+              max: 20,
             })
           )
         ),
         el(
           "div",
-          blockProps,
+          {
+            ...blockProps,
+            className: `arrow-block has-text-align-${textAlign}`,
+            style: { 
+              maxWidth: contentWidth ? contentWidth : '100%',
+              width: '100%'
+            },
+          },
           arrowSVG()
         )
       );
     },
     save: function (props) {
-      var saveProps = useBlockProps.save({
-        className: "arrow-block",
-        style: { textAlign: props.attributes.textAlign },
-      });
-      var { direction, type, color, width, height, strokeWidth } = props.attributes;
+      var blockProps = useBlockProps.save();
+      var { attributes } = props;
+      var { direction, type, color, width, height, strokeWidth, textAlign } = attributes;
 
       var rotation = "rotate(0deg)";
       switch (direction) {
@@ -242,7 +246,11 @@
 
       return el(
         "div",
-        saveProps,
+        {
+          ...blockProps,
+          className: `arrow-block has-text-align-${textAlign}`,
+          style: { width: '100%' },
+        },
         el(
           "svg",
           {
@@ -262,9 +270,4 @@
       );
     },
   });
-})(
-  window.wp.blocks,
-  window.wp.element,
-  window.wp.blockEditor,
-  window.wp.components
-);
+})(window.wp.blocks, window.wp.element, window.wp.blockEditor, window.wp.components, window.wp.data);
