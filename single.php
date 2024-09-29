@@ -4,6 +4,9 @@ get_header();
 // ブログ記事ページのサイドバー表示設定を取得
 $display_sidebar = get_theme_mod('mytheme_display_sidebar_post', true);
 ?>
+<script>
+    window.mythemeHasSidebar = <?php echo json_encode($display_sidebar); ?>;
+</script>
 
 <div id="primary" class="content-area">
     <main id="main" class="site-main">

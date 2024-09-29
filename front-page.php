@@ -5,6 +5,7 @@ get_header();
 $display_sidebar = get_theme_mod('mytheme_display_sidebar_front_page', true);
 ?>
 
+
 <div id="main-visual">
     <?php
     // スライダー関数が存在する場合に実行
