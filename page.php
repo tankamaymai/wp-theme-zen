@@ -4,6 +4,9 @@ get_header();
 // 固定ページのサイドバー表示設定を取得
 $display_sidebar = get_theme_mod('mytheme_display_sidebar_page', true);
 ?>
+<script>
+    window.mythemeHasSidebar = <?php echo json_encode($display_sidebar); ?>;
+</script>
 <div id="content" class="site-content">
     <div id="primary" class="content-area">
         <main id="main" class="site-main">

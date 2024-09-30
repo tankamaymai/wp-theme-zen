@@ -203,7 +203,6 @@
             ...blockProps,
             className: `arrow-block has-text-align-${textAlign}`,
             style: { 
-              maxWidth: contentWidth ? contentWidth : '100%',
               width: '100%'
             },
           },

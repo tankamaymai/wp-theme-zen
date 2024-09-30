@@ -100,11 +100,6 @@
             var responsiveSettings = el(
                 PanelBody,
                 { title: el(Fragment, {}, 
-                    el('img', {
-                        src: myThemeData.themeUrl + "/assets/icon.png",
-                        alt: "ZEN",
-                        style: { width: "18px", height: "18px", marginRight: "5px" }
-                    }),
                     'レスポンシブ設定'
                 ), initialOpen: false },
                 el(SelectControl, {

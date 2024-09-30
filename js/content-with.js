@@ -63,15 +63,26 @@ wp.hooks.addFilter(
 const applyContentWidthStyle = (extraProps, blockType, attributes) => {
     if (attributes.contentWidth) {
         if (attributes.contentWidth === '100%') {
-            extraProps.style = { 
-                ...extraProps.style,
-                width: '100vw',
-                marginLeft: 'calc(50% - 50vw)',
-                marginRight: 'calc(50% - 50vw)',
-                paddingLeft: 'calc(50vw - 50%)',
-                paddingRight: 'calc(50vw - 50%)',
-                boxSizing: 'border-box'
-            };
+            // サイドバーの有無を確認
+            const hasSidebar = window.mythemeHasSidebar !== undefined ? window.mythemeHasSidebar : true;
+            
+            if (hasSidebar) {
+                extraProps.style = { 
+                    ...extraProps.style,
+                    width: '100%',
+                    boxSizing: 'border-box'
+                };
+            } else {
+                extraProps.style = { 
+                    ...extraProps.style,
+                    width: '100vw',
+                    marginLeft: 'calc(50% - 50vw)',
+                    marginRight: 'calc(50% - 50vw)',
+                    paddingLeft: 'calc(50vw - 50%)',
+                    paddingRight: 'calc(50vw - 50%)',
+                    boxSizing: 'border-box'
+                };
+            }
         } else {
             extraProps.style = { 
                 ...extraProps.style, 
