@@ -78,28 +78,23 @@
                     'link_after' => '</span>'
                 )); ?>
             </nav>
-            <div class="header-cta-buttons"
-                data-count="<?php echo esc_attr(get_theme_mod('mytheme_cta_button_count', 1)); ?>">
-                <?php
-                $cta_button_count = get_theme_mod('mytheme_cta_button_count', 1);
-                for ($i = 1; $i <= $cta_button_count; $i++):
-                    $button_text = get_theme_mod("mytheme_cta_button_text_$i");
-                    $button_link = get_theme_mod("mytheme_cta_button_link_$i");
-                    $button_background_color = get_theme_mod("mytheme_cta_button_background_color_$i", '#ff6600');
-                    $button_text_color = get_theme_mod("mytheme_cta_button_text_color_$i", '#ffffff');
-                    $button_icon = get_theme_mod("mytheme_cta_button_icon_$i");
-
-                    if ($button_text && $button_link): ?>
-                        <a href="<?php echo esc_url($button_link); ?>" class="cta-button cta-button-<?php echo $i; ?>" style="
-        background-color: <?php echo esc_attr($button_background_color); ?>;
-        color: <?php echo esc_attr($button_text_color); ?>;">
-                            <?php if ($button_icon): ?>
-                                <i class="<?php echo esc_attr($button_icon); ?>" aria-hidden="true"></i>
-                            <?php endif; ?>
-                            <?php echo esc_html($button_text); ?>
-                        </a>
-                    <?php endif;
-                endfor; ?>
+            <div class="header-cta-buttons">
+                <?php for ($i = 1; $i <= get_theme_mod('mytheme_cta_button_count', 1); $i++): ?>
+                    <?php
+                    $icon_only = get_theme_mod("mytheme_cta_button_icon_only_$i", false);
+                    $icon = get_theme_mod("mytheme_cta_button_icon_$i", '');
+                    $text = get_theme_mod("mytheme_cta_button_text_$i", '');
+                    $link = get_theme_mod("mytheme_cta_button_link_$i", '');
+                    ?>
+                    <a href="<?php echo esc_url($link); ?>" class="cta-button cta-button-<?php echo $i; ?>">
+                        <?php if ($icon): ?>
+                            <span class="cta-button-icon"><i class="<?php echo esc_attr($icon); ?>"></i></span>
+                        <?php endif; ?>
+                        <?php if (!$icon_only): ?>
+                            <span class="cta-button-text"><?php echo esc_html($text); ?></span>
+                        <?php endif; ?>
+                    </a>
+                <?php endfor; ?>
             </div>
 
 
@@ -111,7 +106,7 @@
             $menu_text = get_theme_mod('mytheme_hamburger_menu_text', '');
             $menu_class = !empty($menu_text) ? 'has-subtext' : '';
             ?>
-           <button id="menu-toggle" class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+            <button id="menu-toggle" class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
                 <span class="menu-icon <?php echo esc_attr($menu_class); ?>"></span>
                 <span class="screen-reader-text"><?php _e('メニュー', 'mytheme'); ?></span>
                 <?php

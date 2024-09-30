@@ -117,6 +117,26 @@ function mytheme_customize_register_cta($wp_customize)
             )
         ));
 
+        // ボタンテキストサイズの設定を追加
+        $wp_customize->add_setting("mytheme_cta_button_text_size_$i", array(
+            'default' => '16',
+            'sanitize_callback' => 'absint',
+        ));
+
+        $wp_customize->add_control("mytheme_cta_button_text_size_$i", array(
+            'label' => __("CTAボタン $i のテキストサイズ (px)", 'mytheme'),
+            'section' => 'mytheme_cta_buttons',
+            'type' => 'number',
+            'input_attrs' => array(
+                'min' => 8,
+                'max' => 30,
+                'step' => 1,
+            ),
+            'active_callback' => function () use ($i) {
+                return get_theme_mod('mytheme_cta_button_count', 1) >= $i;
+            },
+        ));
+
         // ボタンアイコンの設定
         $wp_customize->add_setting("mytheme_cta_button_icon_$i", array(
             'default' => $default_icons[$i],
@@ -140,6 +160,21 @@ function mytheme_customize_register_cta($wp_customize)
                 },
             )
         ));
+
+        // アイコンのみ表示オプションを追加
+        $wp_customize->add_setting("mytheme_cta_button_icon_only_$i", array(
+            'default' => false,
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+        $wp_customize->add_control("mytheme_cta_button_icon_only_$i", array(
+            'label' => __("CTAボタン $i をアイコンのみで表示", 'mytheme'),
+            'section' => 'mytheme_cta_buttons',
+            'type' => 'checkbox',
+            'active_callback' => function () use ($i) {
+                return get_theme_mod('mytheme_cta_button_count', 1) >= $i;
+            },
+        ));
+
         // ボタンの表示設定（PC、タブレット、モバイル）
         $wp_customize->add_setting("mytheme_cta_button_visible_pc_$i", array(
             'default' => true,
@@ -201,7 +236,6 @@ function mytheme_customizer_defaults()
 }
 add_action('after_setup_theme', 'mytheme_customizer_defaults');
 
-
 function mytheme_customize_cta_styles()
 {
     $cta_button_count = get_theme_mod('mytheme_cta_button_count', 1);
@@ -211,19 +245,38 @@ function mytheme_customize_cta_styles()
         $button_visible_pc = get_theme_mod("mytheme_cta_button_visible_pc_$i", true);
         $button_visible_tablet = get_theme_mod("mytheme_cta_button_visible_tablet_$i", false);
         $button_visible_mobile = get_theme_mod("mytheme_cta_button_visible_mobile_$i", false);
+        $icon_only = get_theme_mod("mytheme_cta_button_icon_only_$i", false);
+        $background_color = get_theme_mod("mytheme_cta_button_background_color_$i", '#ff6600');
+        $text_color = get_theme_mod("mytheme_cta_button_text_color_$i", '#ffffff');
+        $text_size = get_theme_mod("mytheme_cta_button_text_size_$i", '16');
 
         $custom_css .= "
             .header-cta-buttons .cta-button.cta-button-$i {
                 display: " . ($button_visible_pc ? 'flex' : 'none') . ";
+                align-items: center;
+                justify-content: center;
+                background-color: $background_color;
+                color: $text_color;
+                font-size: {$text_size}px;
+                " . ($icon_only ? 'height: 100%;' : '') . "
+            }
+            .header-cta-buttons .cta-button.cta-button-$i .cta-button-icon {
+                display: " . ($icon_only || !empty(get_theme_mod("mytheme_cta_button_icon_$i", '')) ? 'inline-block' : 'none') . ";
+                " . ($icon_only ? 'height: 100%; display: flex; align-items: center; justify-content: center;' : '') . "
+            }
+            .header-cta-buttons .cta-button.cta-button-$i .cta-button-text {
+                display: " . ($icon_only ? 'none' : 'inline-block') . ";
             }
             @media (max-width: 768px) {
                 .header-cta-buttons .cta-button.cta-button-$i {
                     display: " . ($button_visible_tablet ? 'flex' : 'none') . ";
+                    width: 70px;
                 }
             }
             @media (max-width: 480px) {
                 .header-cta-buttons .cta-button.cta-button-$i {
                     display: " . ($button_visible_mobile ? 'flex' : 'none') . ";
+                    width: 70px;
                 }
             }
         ";
