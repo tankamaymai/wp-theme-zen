@@ -70,6 +70,31 @@ function mytheme_register_fullwidth_block()
 
 add_action('init', 'mytheme_register_fullwidth_block');
 
+function mytheme_register_accordion_block()
+{
+    wp_register_script(
+        'accordion-block',
+        get_template_directory_uri() . '/blocks/accordion/accordion.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
+        '1.0.0',
+        true
+    );
+
+    wp_register_style(
+        'accordion-block-style',
+        get_template_directory_uri() . '/blocks/accordion/accordion.css',
+        array(),
+        '1.0.0'
+    );
+
+    register_block_type('mytheme/accordion', array(
+        'editor_script' => 'accordion-block',
+        'editor_style'  => 'accordion-block-style',
+        'style'         => 'accordion-block-style',
+    ));
+}
+
+add_action('init', 'mytheme_register_accordion_block');
 function mytheme_register_faq_block()
 {
     wp_register_script(
