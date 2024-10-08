@@ -1,0 +1,78 @@
+.accordion-item {
+  transition: all 0.3s ease-in-out;
+}
+
+.accordion-question {
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1em;
+  color: #fff;
+  padding: 10px 20px;
+  background: #333;
+  border-bottom: 1px solid #ccc;
+}
+
+.accordion-question span {
+  flex: 1;
+}
+
+.accordion-answer {
+  transition: max-height 0.3s ease-in-out;
+  color: #666;
+  background: #fff;
+  padding: 20px;
+  min-height: 100px;
+}
+
+/* エディタ内のスタイル */
+.editor-styles-wrapper .accordion-answer {
+  display: block !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* フロントエンドのスタイル */
+.accordion-answer {
+  display: none;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.accordion-item.active .accordion-answer,
+.accordion-block[data-always-open="true"] .accordion-answer {
+  display: block;
+  max-height: 1000px; /* 大きな値に設定してスムーズなアニメーションを実現 */
+}
+
+.accordion-item.active .accordion-question:after,
+  .accordion-block[data-always-open="true"] .accordion-question:after {
+  content: "▲";
+  font-size: 0.8em;
+  color: #fff;
+}
+
+.accordion-question:after {
+  content: "▼";
+  margin-left: 10px;
+  font-size: 0.8em;
+  color: #fff;
+}
+
+.accordion-block .components-button {
+  margin-bottom: 20px;
+}
+
+.accordion-block .components-button.has-icon {
+  padding: 0;
+}
+
+.accordion-item.active,
+.accordion-block[data-always-open="true"] .accordion-item {
+  background-color: #f0f8ff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+
