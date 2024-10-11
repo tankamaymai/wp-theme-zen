@@ -140,10 +140,19 @@
                 newItems[index].question = value;
                 setAttributes({ faqItems: newItems });
             };
+            var updateInnerBlocks = function (innerBlocks, index) {
+                var newItems = faqItems.slice();
+                newItems[index].innerBlocks = innerBlocks;
+                setAttributes({ faqItems: newItems });
+            };
 
             var addItem = function () {
                 var newItems = faqItems.slice();
-                newItems.push({ id: Date.now().toString(), question: '', content: '' });
+                newItems.push({ 
+                    id: Date.now().toString(), 
+                    question: '', 
+                    innerBlocks: [] // 空のinnerBlocksを追加
+                });
                 setAttributes({ faqItems: newItems });
             };
 
@@ -419,11 +428,19 @@
                                         className: "faq-answer",
                                         "data-faq-answer-id": `${uniqueId}-answer-${index}`
                                     },
-                                        el(InnerBlocks, {
-                                            allowedBlocks: null,
-                                            templateLock: false,
-                                            renderAppender: () => el(InnerBlocks.ButtonBlockAppender),
-                                        })
+                                    el(InnerBlocks, {
+                                        allowedBlocks: null,
+                                        templateLock: false,
+                                        template: [
+                                            ['core/paragraph', { placeholder: '回答を入力' }]
+                                        ],
+                                        renderAppender: () => el(InnerBlocks.ButtonBlockAppender),
+                                        value: item.innerBlocks, // 既存のinnerBlocksを渡す
+                                        onChange: (newInnerBlocks) => updateInnerBlocks(newInnerBlocks, index),
+                                        __experimentalProps: {
+                                            'data-faq-answer-id': `${uniqueId}-answer-${index}`
+                                        }
+                                    })
                                     )
                                 ),
                                 el(Button, {
@@ -533,7 +550,11 @@
                                     className: "faq-answer",
                                     "data-faq-answer-id": `${uniqueId}-answer-${index}`
                                 },
-                                    el(InnerBlocks.Content)
+                                el(InnerBlocks.Content, {
+                                    value: item.innerBlocks,
+                                    'data-faq-answer-inner-blocks-id': `${uniqueId}-answer-inner-blocks-${index}`
+                                })
+                                    
                                 )
                             )
                         );
