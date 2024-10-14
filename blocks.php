@@ -95,31 +95,34 @@ function mytheme_register_accordion_block()
 }
 
 add_action('init', 'mytheme_register_accordion_block');
-function mytheme_register_faq_block()
-{
-    wp_register_script(
-        'faq-block',
-        get_template_directory_uri() . '/blocks/faq/faq.js',
-        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
-        '1.0.0',
-        true
-    );
 
-    wp_register_style(
-        'faq-block-style',
-        get_template_directory_uri() . '/blocks/faq/faq.css',
-        array(),
-        '1.0.0'
-    );
+// FAQブロックは一旦非表示
 
-    register_block_type('mytheme/faq', array(
-        'editor_script' => 'faq-block',
-        'editor_style'  => 'faq-block-style',
-        'style'         => 'faq-block-style',
-    ));
-}
+// function mytheme_register_faq_block()
+// {
+//     wp_register_script(
+//         'faq-block',
+//         get_template_directory_uri() . '/blocks/faq/faq.js',
+//         array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
+//         '1.0.0',
+//         true
+//     );
 
-add_action('init', 'mytheme_register_faq_block');
+//     wp_register_style(
+//         'faq-block-style',
+//         get_template_directory_uri() . '/blocks/faq/faq.css',
+//         array(),
+//         '1.0.0'
+//     );
+
+//     register_block_type('mytheme/faq', array(
+//         'editor_script' => 'faq-block',
+//         'editor_style'  => 'faq-block-style',
+//         'style'         => 'faq-block-style',
+//     ));
+// }
+
+// add_action('init', 'mytheme_register_faq_block');
 
 function mytheme_register_heading_box_block()
 {
