@@ -1,6 +1,23 @@
 <?php
 function mytheme_customize_main_visual($wp_customize)
 {
+    // ロゴサイズの設定
+$wp_customize->add_setting('mytheme_logo_width', array(
+    'default' => '200',
+    'transport' => 'refresh',
+    'sanitize_callback' => 'absint', // 整数値のサニタイズ
+));
+
+$wp_customize->add_control('mytheme_logo_width', array(
+    'label' => __('ロゴの幅 (px)', 'mytheme'),
+    'section' => 'title_tagline', // 既存の「サイト基本情報」セクションに追加
+    'type' => 'number',
+    'input_attrs' => array(
+        'min' => 50,
+        'max' => 500,
+        'step' => 1,
+    ),
+));
     // スライダー設定セクションの追加
     $wp_customize->add_section('mytheme_slider_settings', array(
         'title' => __('スライダー設定', 'mytheme'),
