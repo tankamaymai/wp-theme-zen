@@ -270,13 +270,15 @@ function mytheme_customize_cta_styles()
             @media (max-width: 768px) {
                 .header-cta-buttons .cta-button.cta-button-$i {
                     display: " . ($button_visible_tablet ? 'flex' : 'none') . ";
-                    width: 70px;
+                    width: 100%;
+                    min-width: 70px;
                 }
             }
             @media (max-width: 480px) {
                 .header-cta-buttons .cta-button.cta-button-$i {
                     display: " . ($button_visible_mobile ? 'flex' : 'none') . ";
-                    width: 70px;
+                    width: 100%;
+                    min-width: 70px;
                 }
             }
         ";
