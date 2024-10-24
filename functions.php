@@ -632,4 +632,27 @@ add_action('admin_footer', 'close_meta_box_by_default');
 
 
 
+// レスポンシブロゴのスタイルを追加
+function mytheme_responsive_logo_style() {
+    $logo_width = get_theme_mod('mytheme_logo_width', '200');
+    $logo_width_tablet = get_theme_mod('mytheme_logo_width_tablet', '150');
+    $logo_width_mobile = get_theme_mod('mytheme_logo_width_mobile', '100');
 
+    $custom_css = "
+        .site-logo {
+            max-width: {$logo_width}px;
+        }
+        @media (max-width: 1024px) {
+            .site-logo {
+                max-width: {$logo_width_tablet}px;
+            }
+        }
+        @media (max-width: 768px) {
+            .site-logo {
+                max-width: {$logo_width_mobile}px;
+            }
+        }
+    ";
+    wp_add_inline_style('mytheme-style', $custom_css);
+}
+add_action('wp_enqueue_scripts', 'mytheme_responsive_logo_style');
