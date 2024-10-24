@@ -260,42 +260,28 @@ function mytheme_customize_cta_styles()
                 font-size: {$text_size}px;
                 " . ($icon_only ? 'height: 100%;' : '') . "
             }
-
             .header-cta-buttons .cta-button.cta-button-$i .cta-button-icon {
                 display: " . ($icon_only || !empty(get_theme_mod("mytheme_cta_button_icon_$i", '')) ? 'inline-block' : 'none') . ";
                 " . ($icon_only ? 'height: 100%; display: flex; align-items: center; justify-content: center;' : '') . "
             }
             .header-cta-buttons .cta-button.cta-button-$i .cta-button-text {
                 display: " . ($icon_only ? 'none' : 'inline-block') . ";
-                 width: 100%;
-                max-width: 70px;
             }
             @media (max-width: 768px) {
                 .header-cta-buttons .cta-button.cta-button-$i {
                     display: " . ($button_visible_tablet ? 'flex' : 'none') . ";
-                    width: 100%;
-                    min-width: 70px;
+                    width: 70px;
                 }
             }
             @media (max-width: 480px) {
                 .header-cta-buttons .cta-button.cta-button-$i {
                     display: " . ($button_visible_mobile ? 'flex' : 'none') . ";
-                    width: 100%;
-                    min-width: 70px;
-                     " . ($cta_button_count == 3 ? 'min-width: 45px;' : '') . "
+                    width: 70px;
                 }
             }
         ";
     }
-    // // CTAボタンが3つの場合、親要素にフレックスボックスを適用
-    // if ($cta_button_count == 3) {
-    //     $custom_css .= "
-    //         .header-cta-buttons {
-    //             display: flex;
-    //             justify-content: space-between;
-    //         }
-    //     ";
-    // }
+
     wp_add_inline_style('mytheme-style', $custom_css);
 }
 add_action('wp_enqueue_scripts', 'mytheme_customize_cta_styles');
