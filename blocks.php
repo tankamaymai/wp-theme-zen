@@ -70,31 +70,59 @@ function mytheme_register_fullwidth_block()
 
 add_action('init', 'mytheme_register_fullwidth_block');
 
-function mytheme_register_faq_block()
+function mytheme_register_accordion_block()
 {
     wp_register_script(
-        'faq-block',
-        get_template_directory_uri() . '/blocks/faq/faq.js',
+        'accordion-block',
+        get_template_directory_uri() . '/blocks/accordion/accordion.js',
         array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
         '1.0.0',
         true
     );
 
     wp_register_style(
-        'faq-block-style',
-        get_template_directory_uri() . '/blocks/faq/faq.css',
+        'accordion-block-style',
+        get_template_directory_uri() . '/blocks/accordion/accordion.css',
         array(),
         '1.0.0'
     );
 
-    register_block_type('mytheme/faq', array(
-        'editor_script' => 'faq-block',
-        'editor_style'  => 'faq-block-style',
-        'style'         => 'faq-block-style',
+    register_block_type('mytheme/accordion', array(
+        'editor_script' => 'accordion-block',
+        'editor_style'  => 'accordion-block-style',
+        'style'         => 'accordion-block-style',
     ));
 }
 
-add_action('init', 'mytheme_register_faq_block');
+add_action('init', 'mytheme_register_accordion_block');
+
+// FAQブロックは一旦非表示
+
+// function mytheme_register_faq_block()
+// {
+//     wp_register_script(
+//         'faq-block',
+//         get_template_directory_uri() . '/blocks/faq/faq.js',
+//         array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
+//         '1.0.0',
+//         true
+//     );
+
+//     wp_register_style(
+//         'faq-block-style',
+//         get_template_directory_uri() . '/blocks/faq/faq.css',
+//         array(),
+//         '1.0.0'
+//     );
+
+//     register_block_type('mytheme/faq', array(
+//         'editor_script' => 'faq-block',
+//         'editor_style'  => 'faq-block-style',
+//         'style'         => 'faq-block-style',
+//     ));
+// }
+
+// add_action('init', 'mytheme_register_faq_block');
 
 function mytheme_register_heading_box_block()
 {
