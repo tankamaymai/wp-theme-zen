@@ -1,6 +1,7 @@
 <?php
 function mytheme_customize_main_visual($wp_customize)
 {
+
 // ロゴサイズの設定
 $wp_customize->add_setting('mytheme_logo_width', array(
     'default' => '200',
@@ -90,8 +91,6 @@ $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo
         'step' => 1,
     ),
 )));
-
-
 
     // スライダー設定セクションの追加
     $wp_customize->add_section('mytheme_slider_settings', array(
