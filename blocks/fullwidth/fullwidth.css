@@ -10,19 +10,20 @@
   padding: 50px 0;
 }
 
+/* 区切り用のコンテナが上下に来るようにする */
 .separator-container {
   position: relative;
   width: 100%;
-  height: 100px;
-  overflow: hidden;
+  height: 70px;
 }
 
+/* 上下の区切り */
 .separator-top {
-  margin-bottom: -1px;
+  margin-bottom: -70px;
 }
 
 .separator-bottom {
-  margin-top: -1px;
+  margin-top: -70px;
 }
 
 /* 波の区切り */
@@ -87,21 +88,4 @@
   position: relative;
   z-index: 1;
   padding: 50px 0; /* 上下の余白を持たせる */
-}
-
-.separator-svg {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  fill: currentColor;
-}
-
-.separator-top .separator-svg {
-  top: 100%;
-  transform: rotate(180deg);
-}
-
-.separator-bottom .separator-svg {
-  bottom: 100%;
 }

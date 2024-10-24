@@ -61,9 +61,9 @@
         $custom_logo_id = get_theme_mod('custom_logo');
         $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
         ?>
-        <div class="site-logo" style="display: flex; align-items: center;">
-            <a href="<?php echo esc_url(home_url('/')); ?>" rel="home" style="display: inline-block; width: 100%;">
-                <img src="<?php echo esc_url($logo[0]); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" style="width: 100%; height: auto; display: block; object-fit: contain;">
+        <div class="site-logo" style="max-width: <?php echo esc_attr($logo_width); ?>px;">
+            <a href="<?php echo esc_url(home_url('/')); ?>" rel="home">
+                <img src="<?php echo esc_url($logo[0]); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" style="width: 100%; height: auto;">
             </a>
         </div>
     <?php } else { ?>
