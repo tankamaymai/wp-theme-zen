@@ -1,24 +1,41 @@
 <?php
 function mytheme_customize_main_visual($wp_customize)
 {
-
-
 // ロゴサイズの設定
 $wp_customize->add_setting('mytheme_logo_width', array(
     'default' => '200',
     'transport' => 'refresh',
-    'sanitize_callback' => 'absint', // 整数値のサニタイズ
+    'sanitize_callback' => 'absint',
 ));
 
-$wp_customize->add_control('mytheme_logo_width', array(
+$wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo_width', array(
     'label' => __('ロゴの幅 (px)', 'mytheme'),
-    'section' => 'title_tagline', // 既存の「サイト基本情報」セクションに追加
+    'section' => 'title_tagline',
+    'settings' => 'mytheme_logo_width',
     'type' => 'number',
     'input_attrs' => array(
         'min' => 50,
         'max' => 500,
         'step' => 1,
     ),
+)));
+
+$wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo_width_range', array(
+    'label' => __('ロゴの幅 ', 'mytheme'),
+    'section' => 'title_tagline',
+    'settings' => 'mytheme_logo_width',
+    'type' => 'range',
+    'input_attrs' => array(
+        'min' => 50,
+        'max' => 500,
+        'step' => 1,
+    ),
+)));
+// タブレット用ロゴサイズの設定
+$wp_customize->add_setting('mytheme_logo_width_tablet', array(
+    'default' => '150',
+    'transport' => 'refresh',
+    'sanitize_callback' => 'absint',
 ));
 
 $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo_width_tablet', array(
@@ -73,6 +90,8 @@ $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo
         'step' => 1,
     ),
 )));
+
+
 
     // スライダー設定セクションの追加
     $wp_customize->add_section('mytheme_slider_settings', array(
