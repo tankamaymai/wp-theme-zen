@@ -5,6 +5,7 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="http://gmpg.org/xfn/11">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <?php wp_head(); ?>
 </head>
 
@@ -54,25 +55,26 @@
         style="
     <?php echo get_theme_mod('mytheme_main_header_section_background_color') ? 'background-color: ' . get_theme_mod('mytheme_main_header_section_background_color') . ';' : ''; ?>
     <?php echo get_theme_mod('mytheme_main_header_section_text_color') ? 'color: ' . get_theme_mod('mytheme_main_header_section_text_color') . ';' : ''; ?>">
-     <div class="site-branding">
-    <?php
-    $logo_width = get_theme_mod('mytheme_logo_width', '200');
-    if (has_custom_logo()) {
-        $custom_logo_id = get_theme_mod('custom_logo');
-        $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
-        ?>
-        <div class="site-logo" style="display: flex; align-items: center;">
-            <a href="<?php echo esc_url(home_url('/')); ?>" rel="home" style="display: inline-block; width: 100%;">
-                <img src="<?php echo esc_url($logo[0]); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" style="width: 100%; height: auto; display: block; object-fit: contain;">
-            </a>
+        <div class="site-branding">
+            <?php
+            $logo_width = get_theme_mod('mytheme_logo_width', '200');
+            if (has_custom_logo()) {
+                $custom_logo_id = get_theme_mod('custom_logo');
+                $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
+                ?>
+                <div class="site-logo" style="display: flex; align-items: center;">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" rel="home" style="display: inline-block; width: 100%;">
+                        <img src="<?php echo esc_url($logo[0]); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>"
+                            style="width: 100%; height: auto; display: block; object-fit: contain;">
+                    </a>
+                </div>
+            <?php } else { ?>
+                <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"
+                        style="<?php echo get_theme_mod('mytheme_main_header_section_text_color') ? 'color: ' . get_theme_mod('mytheme_main_header_section_text_color') . ';' : ''; ?>"><?php bloginfo('name'); ?></a>
+                </h1>
+            <?php } ?>
+            <p class="site-description"><?php bloginfo('description'); ?></p>
         </div>
-    <?php } else { ?>
-        <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"
-                style="<?php echo get_theme_mod('mytheme_main_header_section_text_color') ? 'color: ' . get_theme_mod('mytheme_main_header_section_text_color') . ';' : ''; ?>"><?php bloginfo('name'); ?></a>
-        </h1>
-    <?php } ?>
-    <p class="site-description"><?php bloginfo('description'); ?></p>
-</div>
         <div class="site-menu">
 
             <!-- PC用ナビゲーション -->

@@ -67,7 +67,7 @@ function mytheme_enqueue_styles()
     wp_enqueue_script('swiper-script', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11', true);
 
     // Font Awesome
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css', array(), null, 'all');
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
 
     // 他のスタイルシート
     wp_enqueue_style('normalize-style', get_template_directory_uri() . '/css/normalize.css');
@@ -132,7 +132,7 @@ function mytheme_enqueue_block_editor_assets()
     );
 
     // Font Awesome
-    wp_enqueue_style('font-awesome-editor', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css', array(), null, 'all');
+    wp_enqueue_style('font-awesome-editor', '');
 
     // テーマディレクトリのURLをJavaScriptに渡す
     wp_localize_script(
