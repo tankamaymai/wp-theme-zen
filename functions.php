@@ -67,7 +67,7 @@ function mytheme_enqueue_styles()
     wp_enqueue_script('swiper-script', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), '11', true);
 
     // Font Awesome
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css', array(), null, 'all');
 
     // 他のスタイルシート
     wp_enqueue_style('normalize-style', get_template_directory_uri() . '/css/normalize.css');
@@ -132,7 +132,7 @@ function mytheme_enqueue_block_editor_assets()
     );
 
     // Font Awesome
-    wp_enqueue_style('font-awesome-editor', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+    wp_enqueue_style('font-awesome-editor', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css', array(), null, 'all');
 
     // テーマディレクトリのURLをJavaScriptに渡す
     wp_localize_script(
@@ -550,7 +550,7 @@ add_action('wp_enqueue_scripts', 'enqueue_custom_css_js');
 // アイコンピッカーの読み込み
 function mytheme_enqueue_icon_picker_scripts()
 {
-    wp_enqueue_style('fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+    wp_enqueue_style('fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css', array(), null, 'all');
     wp_enqueue_script('icon-picker', get_template_directory_uri() . '/js/icon-picker.js', array('jquery', 'customize-controls'), '1.0', true);
     wp_enqueue_style('icon-picker', get_template_directory_uri() . '/css/icon-picker.css');
 }
@@ -630,6 +630,32 @@ function close_meta_box_by_default()
 add_action('admin_footer', 'close_meta_box_by_default');
 
 
+
+
+// レスポンシブロゴのスタイルを追加
+function mytheme_responsive_logo_style() {
+    $logo_width = get_theme_mod('mytheme_logo_width', '200');
+    $logo_width_tablet = get_theme_mod('mytheme_logo_width_tablet', '150');
+    $logo_width_mobile = get_theme_mod('mytheme_logo_width_mobile', '100');
+
+    $custom_css = "
+        .site-logo {
+            max-width: {$logo_width}px;
+        }
+        @media (max-width: 1024px) {
+            .site-logo {
+                max-width: {$logo_width_tablet}px;
+            }
+        }
+        @media (max-width: 768px) {
+            .site-logo {
+                max-width: {$logo_width_mobile}px;
+            }
+        }
+    ";
+    wp_add_inline_style('mytheme-style', $custom_css);
+}
+add_action('wp_enqueue_scripts', 'mytheme_responsive_logo_style');
 
 
 
