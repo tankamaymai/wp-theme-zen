@@ -2,11 +2,12 @@
   "name": "wp-theme-zen",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
-    "start": "webpack --mode development --watch"
+    "start": "webpack --mode development --watch",
+    "build-blocks": "wp-scripts build",
+   "start-blocks": "wp-scripts start"
   },
   "keywords": [],
   "author": "",

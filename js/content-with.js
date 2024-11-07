@@ -9,7 +9,7 @@ function addContentWidthAttribute(settings, name) {
         settings.attributes = Object.assign(settings.attributes, {
             contentWidth: {
                 type: 'string',
-                default: '1100px'
+                default: ''
             }
         });
     }

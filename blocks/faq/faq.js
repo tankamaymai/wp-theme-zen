@@ -432,7 +432,8 @@
                                         allowedBlocks: null,
                                         templateLock: false,
                                         template: [
-                                            ['core/paragraph', { placeholder: '回答を入力' }]
+                                            ['mytheme/faq-child'],
+
                                         ],
                                         renderAppender: () => el(InnerBlocks.ButtonBlockAppender),
                                         value: item.innerBlocks, // 既存のinnerBlocksを渡す
@@ -570,3 +571,4 @@
     window.wp.components,
     window.wp.data
 );
+
