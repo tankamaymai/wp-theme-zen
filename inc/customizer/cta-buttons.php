@@ -136,6 +136,24 @@ function mytheme_customize_register_cta($wp_customize)
                 return get_theme_mod('mytheme_cta_button_count', 1) >= $i;
             },
         ));
+        // スマートフォン用のボタンテキストサイズの設定を追加
+    $wp_customize->add_setting("mytheme_cta_button_text_size_mobile_$i", array(
+        'default' => '12',
+        'sanitize_callback' => 'absint',
+    ));
+
+    $wp_customize->add_control("mytheme_cta_button_text_size_mobile_$i", array(
+        'label' => __("CTAボタン $i のテキストサイズ (SP用, px)", 'mytheme'),
+        'section' => 'mytheme_cta_buttons',
+        'type' => 'number',
+        'input_attrs' => array(
+            'min' => 8,
+            'max' => 30,
+        ),
+        'active_callback' => function () use ($i) {
+            return get_theme_mod('mytheme_cta_button_count', 1) >= $i;
+        },
+    ));
 
         // ボタンアイコンの設定
         $wp_customize->add_setting("mytheme_cta_button_icon_$i", array(
@@ -249,12 +267,15 @@ function mytheme_customize_cta_styles()
         $background_color = get_theme_mod("mytheme_cta_button_background_color_$i", '#ff6600');
         $text_color = get_theme_mod("mytheme_cta_button_text_color_$i", '#ffffff');
         $text_size = get_theme_mod("mytheme_cta_button_text_size_$i", '16');
+        $text_size_mobile = get_theme_mod("mytheme_cta_button_text_size_mobile_$i", '12');
 
         $custom_css .= "
             .header-cta-buttons .cta-button.cta-button-$i {
                 display: " . ($button_visible_pc ? 'flex' : 'none') . ";
                 align-items: center;
                 justify-content: center;
+                max-width: 180px;
+                width: 100%;
                 background-color: $background_color;
                 color: $text_color;
                 font-size: {$text_size}px;
@@ -268,13 +289,13 @@ function mytheme_customize_cta_styles()
             .header-cta-buttons .cta-button.cta-button-$i .cta-button-text {
                 display: " . ($icon_only ? 'none' : 'inline-block') . ";
                  width: 100%;
-                max-width: 70px;
             }
             @media (max-width: 768px) {
                 .header-cta-buttons .cta-button.cta-button-$i {
                     display: " . ($button_visible_tablet ? 'flex' : 'none') . ";
                     width: 100%;
                     min-width: 70px;
+                    font-size: {$text_size_mobile}px;
                 }
             }
             @media (max-width: 480px) {

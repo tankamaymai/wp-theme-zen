@@ -1,0 +1,20 @@
+{
+    "apiVersion": 2,
+    "name": "mytheme/faq-child",
+    "title": "FAQ子ブロック",
+    "category": "widgets",
+    "icon": "smiley",
+    "description": "FAQ子ブロック",
+    "textdomain": "mytheme",
+    "attributes": {
+        "content": {
+            "type": "string",
+            "source": "html",
+            "selector": "div"
+        }
+    },
+    "supports": {
+        "html": false
+    },
+    "editorScript": "file:./index.js"
+}

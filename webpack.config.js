@@ -1,8 +1,11 @@
+let defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const path = require("path");
 
 module.exports = {
+  ...defaultConfig,
   entry: {
     blocks: "./js/blocks.js",
+    newBlocks: "./src/index.js",
     "toolbar-text-resize": "./js/toolbar-text-resize.js",
     "custom-block-margin-padding": "./js/custom-block-margin-padding.js",
     "responsive": "./js/responsive.js",
