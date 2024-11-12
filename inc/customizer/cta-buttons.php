@@ -20,6 +20,7 @@ function mytheme_customize_register_cta($wp_customize)
         'section' => 'mytheme_cta_buttons',
         'type' => 'select',
         'choices' => array(
+            0 => __('なし', 'mytheme'),
             1 => __('1', 'mytheme'),
             2 => __('2', 'mytheme'),
             3 => __('3', 'mytheme'),
@@ -257,8 +258,34 @@ add_action('after_setup_theme', 'mytheme_customizer_defaults');
 function mytheme_customize_cta_styles()
 {
     $cta_button_count = get_theme_mod('mytheme_cta_button_count', 1);
+    $button_width = 180; // 1つのボタンの基本幅
+    $button_margin = 10; // ボタン間の余白
+    $total_width = $cta_button_count * ($button_width + $button_margin); // 全体の幅を計算
     $custom_css = "";
+ // CTAボタンの表示/非表示の制御
+ $custom_css .= "
+        .header-cta-buttons {
+            display: " . ($cta_button_count > 0 ? 'flex' : 'none') . ";
+            " . ($cta_button_count > 0 ? "
+                width: {$total_width}px;
+                max-width: 100%;
+                justify-content: space-between;
+                gap: {$button_margin}px;
+            " : "") . "
+        }
+    ";
+      // レスポンシブ対応
+      $custom_css .= "
+      @media (max-width: 768px) {
+          .header-cta-buttons {
+              width: 100%;
+              justify-content: " . ($cta_button_count > 1 ? 'end' : 'end') . ";
+              gap: 0px;
 
+          }
+      }
+  ";
+// 既存のCTAボタンのスタイル設定
     for ($i = 1; $i <= $cta_button_count; $i++) {
         $button_visible_pc = get_theme_mod("mytheme_cta_button_visible_pc_$i", true);
         $button_visible_tablet = get_theme_mod("mytheme_cta_button_visible_tablet_$i", false);
