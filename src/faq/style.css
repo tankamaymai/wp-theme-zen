@@ -1,0 +1,75 @@
+.add-faq-button {
+    margin-top: 20px;
+    width: 50%;
+    justify-content: center;
+    display: flex;
+
+}
+
+
+.faq-item {
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 10px;
+}
+
+.faq-question-wrapper {
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.1em;
+    padding: 10px;
+    column-gap: 20px;
+}
+.faq-answer-wrapper {
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.1em;
+    padding: 10px;
+    column-gap: 20px;
+}
+
+
+.faq-question {
+    flex: 1;
+}
+.faq-answer {
+    flex: 1;
+}
+
+/* フロントエンドのスタイル */
+
+
+.faq-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+}
+
+
+.faq-icon-circle {
+    border-radius: 50%;
+}
+
+.faq-icon-rounded {
+    border-radius: 5px;
+}
+
+
+.faq-block .components-button {
+    margin-top: 10px;
+}
+
+.faq-block .components-button.has-icon {
+    padding: 0;
+}
+
+.faq-list {
+    padding-left: 0;
+    list-style: none;
+}

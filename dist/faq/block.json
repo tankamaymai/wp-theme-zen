@@ -1,0 +1,28 @@
+{
+  "apiVersion": 2,
+  "name": "mytheme/faq",
+  "title": "FAQブロック",
+  "category": "zen",
+  "icon": "editor-help",
+  "description": "FAQブロック",
+  "textdomain": "mytheme",
+  "attributes": {
+    "faqItems": {
+      "type": "array",
+      "default": []
+    },
+    "content": {
+      "type": "string",
+      "source": "html",
+      "selector": "div"
+    },
+    "style": {
+      "type": "string",
+      "default": "simple"
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js"
+}
