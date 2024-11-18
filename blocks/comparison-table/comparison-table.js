@@ -108,6 +108,7 @@
                 { label: "カラー付き", value: "colored-style" },
               ],
               onChange: onStyleChange,
+              __nextHasNoMarginBottom: true,
             })
           )
         ),

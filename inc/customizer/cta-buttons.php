@@ -321,7 +321,7 @@ function mytheme_customize_cta_styles()
                 .header-cta-buttons .cta-button.cta-button-$i {
                     display: " . ($button_visible_tablet ? 'flex' : 'none') . ";
                     width: 100%;
-                    min-width: 70px;
+                    max-width: 70px;
                     font-size: {$text_size_mobile}px;
                 }
             }
@@ -329,8 +329,8 @@ function mytheme_customize_cta_styles()
                 .header-cta-buttons .cta-button.cta-button-$i {
                     display: " . ($button_visible_mobile ? 'flex' : 'none') . ";
                     width: 100%;
-                    min-width: 70px;
-                     " . ($cta_button_count == 3 ? 'min-width: 45px;' : '') . "
+                    max-width: 70px;
+                     " . ($cta_button_count == 3 ? 'max-width: 70px;' : '') . "
                 }
             }
         ";

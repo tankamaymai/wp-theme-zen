@@ -86,6 +86,7 @@ registerBlockType(metadata.name, {
                                         { label: __('破線', 'mytheme'), value: 'dashed' },
                                     ]}
                                     onChange={(value) => setAttributes({ dividerStyle: value })}
+                                    __nextHasNoMarginBottom={true}
                                 />
                                 <div className="components-base-control">
                                     <span>{__('区切り線の色', 'mytheme')}</span>

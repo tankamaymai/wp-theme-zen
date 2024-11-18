@@ -127,6 +127,7 @@
                 { label: "スタイル3", value: "style3" },
               ],
               onChange: onChangeBoxStyle,
+              __nextHasNoMarginBottom: true,
             }),
             el("p", {}, "背景色"),
             el(ColorPalette, {
