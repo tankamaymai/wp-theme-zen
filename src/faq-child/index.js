@@ -11,6 +11,7 @@ if (!wp.blocks.getBlockType('mytheme/faq-child')) {
         icon: 'editor-help',
         supports: {
             html: false,
+            inserter: false
         },
         attributes: {
             question: {
@@ -115,6 +116,7 @@ if (!wp.blocks.getBlockType('mytheme/faq-child')) {
                                     { label: __('ボックス', 'mytheme'), value: 'box' },
                                 ]}
                                 onChange={(value) => setAttributes({ style: value })}
+                                __nextHasNoMarginBottom={true}
                             />
                             {style === 'divider' && (
                                 <>
@@ -127,12 +129,14 @@ if (!wp.blocks.getBlockType('mytheme/faq-child')) {
                                             { label: __('破線', 'mytheme'), value: 'dashed' },
                                         ]}
                                         onChange={(value) => setAttributes({ dividerStyle: value })}
+                                        __nextHasNoMarginBottom={true}
                                     />
                                     <div className="components-base-control">
                                         <span>{__('区切り線の色', 'mytheme')}</span>
                                         <ColorPalette
                                             value={attributes.dividerColor}
                                             onChange={(value) => setAttributes({ dividerColor: value })}
+                                            __nextHasNoMarginBottom={true}
                                         />
                                     </div>
                                     <RangeControl
@@ -187,6 +191,7 @@ if (!wp.blocks.getBlockType('mytheme/faq-child')) {
                                     { label: __('角丸', 'mytheme'), value: 'rounded' }
                                 ]}
                                 onChange={(value) => setAttributes({ iconStyle: value })}
+                                __nextHasNoMarginBottom={true}
                             />
                             {attributes.iconStyle === 'rounded' && (
                                 <RangeControl

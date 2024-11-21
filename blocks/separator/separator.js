@@ -88,6 +88,7 @@
                 { label: "点線", value: "dotted" },
               ],
               onChange: onChangeStyle,
+              __nextHasNoMarginBottom: true,
             })
           )
         ),

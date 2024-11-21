@@ -64,6 +64,7 @@
               onChange: (value) => {
                 props.setAttributes({ separatorType: value });
               },
+              __nextHasNoMarginBottom: true,
             })
           )
         ),

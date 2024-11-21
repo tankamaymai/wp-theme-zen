@@ -182,6 +182,7 @@
                             onChange: function (value) {
                                 setAttributes({ style: value });
                             },
+                            __nextHasNoMarginBottom: true,
                         }),
                         style === "divider" && el(
                             Fragment,
@@ -197,6 +198,7 @@
                                 onChange: function (value) {
                                     setAttributes({ dividerStyle: value });
                                 },
+                                __nextHasNoMarginBottom: true,
                             }),
                             el("span", null, "区切り線の色"),
                             el(ColorPalette, {
@@ -258,6 +260,7 @@
                             onChange: function (value) {
                                 setAttributes({ iconStyle: value });
                             },
+                            __nextHasNoMarginBottom: true,
                         }),
                         el(RangeControl, {
                             label: "アイコンのサイズ",

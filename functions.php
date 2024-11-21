@@ -96,13 +96,51 @@ function mytheme_enqueue_block_editor_assets()
     );
 
     // @responsive.js の読み込み
+    // wp_enqueue_script(
+    //     'responsive',
+    //     get_template_directory_uri() . '/dist/responsive.bundle.js',
+    //     array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-compose'),
+    //     filemtime(get_template_directory() . '/dist/responsive.bundle.js'),
+    //     true
+    // );
+    // @responsive.js の読み込み
     wp_enqueue_script(
-        'responsive',
+        'responsive-controls',
         get_template_directory_uri() . '/dist/responsive.bundle.js',
-        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-compose'),
+        array(
+            'wp-blocks',
+            'wp-element',
+            'wp-editor',
+            'wp-components',
+            'wp-data',
+            'wp-compose',
+            'wp-i18n',
+            'wp-hooks',
+            'wp-block-editor'
+        ),
         filemtime(get_template_directory() . '/dist/responsive.bundle.js'),
         true
     );
+
+     // 一時的に使用不可能にしている
+    // カスタムマージンとパディングの機能を追加するJavaScript
+    // wp_enqueue_script(
+    //     'custom-block-margin-padding',
+    //     get_template_directory_uri() . '/dist/custom-block-margin-padding.bundle.js',
+    //     array(
+    //         'wp-blocks',
+    //         'wp-element',
+    //         'wp-editor',
+    //         'wp-components',
+    //         'wp-compose',
+    //         'wp-hooks',
+    //         'wp-block-editor',  // 追加
+    //         'wp-i18n'  // 追加
+    //     ),
+    //     filemtime(get_template_directory() . '/dist/custom-block-margin-padding.bundle.js'),
+    //     true
+    // );
+
 
     // フォントサイズ変更のツールバー機能を追加するJavaScript
     wp_enqueue_script(
@@ -112,16 +150,6 @@ function mytheme_enqueue_block_editor_assets()
         filemtime(get_template_directory() . '/dist/toolbar-text-resize.bundle.js'),
         true
     );
-
-    // 一時的に使用不可能にしている
-    // カスタムマージンとパディングの機能を追加するJavaScript
-    // wp_enqueue_script(
-    //     'custom-block-margin-padding',
-    //     get_template_directory_uri() . '/dist/custom-block-margin-padding.bundle.js',
-    //     array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components'),
-    //     filemtime(get_template_directory() . '/dist/custom-block-margin-padding.bundle.js'),
-    //     true
-    // );
 
     // カスタムブロックのCSS
     wp_enqueue_style(
@@ -142,6 +170,20 @@ function mytheme_enqueue_block_editor_assets()
             'themeUrl' => get_template_directory_uri(), // テーマのURLを渡す
         )
     );
+    wp_localize_script(
+        'responsive-controls',
+        'myThemeData',
+        array(
+            'themeUrl' => get_template_directory_uri(), // テーマのURLを渡す
+        )
+    );
+    wp_localize_script(
+        'block-type',
+        'myThemeData',
+        array(
+            'themeUrl' => get_template_directory_uri(), // テーマのURLを渡す
+        )
+    );
 }
 add_action('enqueue_block_editor_assets', 'mytheme_enqueue_block_editor_assets');
 
@@ -151,9 +193,9 @@ function mytheme_enqueue_frontend_assets()
     // フロントエンド用のスクリプトとスタイル
     wp_enqueue_script(
         'mytheme-blocks-frontend',
-        get_template_directory_uri() . '/dist/blocks.bundle.js',
+        get_template_directory_uri() . '/dist/newBlocks.bundle.js',
         array(),
-        filemtime(get_template_directory() . '/dist/blocks.bundle.js'),
+        filemtime(get_template_directory() . '/dist/newBlocks.bundle.js'),
         true
     );
 

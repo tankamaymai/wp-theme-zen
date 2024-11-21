@@ -103,6 +103,7 @@
                 { label: "上下線", value: "lines-style" },
               ],
               onChange: onStyleChange,
+              __nextHasNoMarginBottom: true,
             })
           ),
         ),
