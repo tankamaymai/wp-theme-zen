@@ -51,10 +51,18 @@
     <?php endif; ?>
 
     <!-- メインヘッダー -->
-    <header id="masthead" class="site-header"
-        style="
-    <?php echo get_theme_mod('mytheme_main_header_section_background_color') ? 'background-color: ' . get_theme_mod('mytheme_main_header_section_background_color') . ';' : ''; ?>
-    <?php echo get_theme_mod('mytheme_main_header_section_text_color') ? 'color: ' . get_theme_mod('mytheme_main_header_section_text_color') . ';' : ''; ?>">
+    <header id="masthead" class="site-header <?php echo get_theme_mod('mytheme_main_header_transparent') ? 'header-transparent' : ''; ?>"
+    style="<?php
+        // 透過設定が有効かどうかをチェック
+        if (!get_theme_mod('mytheme_header_transparency')) {
+            // 透過が無効な場合はRGBAの透過を1に設定
+            echo 'background-color: ' . hex2rgba(get_theme_mod('mytheme_main_header_section_background_color', '#333333'), 1) . ';';
+        }
+        // テキスト色の設定
+        if (get_theme_mod('mytheme_main_header_section_text_color')) {
+            echo ' color: ' . get_theme_mod('mytheme_main_header_section_text_color') . ';';
+        }
+    ?>">
         <div class="site-branding">
             <?php
             $logo_width = get_theme_mod('mytheme_logo_width', '200');
@@ -69,8 +77,12 @@
                     </a>
                 </div>
             <?php } else { ?>
-                <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"
-                        style="<?php echo get_theme_mod('mytheme_main_header_section_text_color') ? 'color: ' . get_theme_mod('mytheme_main_header_section_text_color') . ';' : ''; ?>"><?php bloginfo('name'); ?></a>
+                <h1 class="site-title">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" rel="home" style="<?php
+                       echo get_theme_mod('mytheme_main_header_section_text_color') ? 'color: ' . get_theme_mod('mytheme_main_header_section_text_color') . ';' : '';
+                       ?>">
+                        <?php bloginfo('name'); ?>
+                    </a>
                 </h1>
             <?php } ?>
             <p class="site-description"><?php bloginfo('description'); ?></p>
@@ -89,26 +101,26 @@
                     'link_after' => '</span>'
                 )); ?>
 
-              
+
             </nav>
             <div class="header-cta-buttons">
-                    <?php for ($i = 1; $i <= get_theme_mod('mytheme_cta_button_count', 1); $i++): ?>
-                        <?php
-                        $icon_only = get_theme_mod("mytheme_cta_button_icon_only_$i", false);
-                        $icon = get_theme_mod("mytheme_cta_button_icon_$i", '');
-                        $text = get_theme_mod("mytheme_cta_button_text_$i", '');
-                        $link = get_theme_mod("mytheme_cta_button_link_$i", '');
-                        ?>
-                        <a href="<?php echo esc_url($link); ?>" class="cta-button cta-button-<?php echo $i; ?>">
-                            <?php if ($icon): ?>
-                                <span class="cta-button-icon"><i class="<?php echo esc_attr($icon); ?>"></i></span>
-                            <?php endif; ?>
-                            <?php if (!$icon_only): ?>
-                                <span class="cta-button-text"><?php echo esc_html($text); ?></span>
-                            <?php endif; ?>
-                        </a>
-                    <?php endfor; ?>
-                </div>
+                <?php for ($i = 1; $i <= get_theme_mod('mytheme_cta_button_count', 1); $i++): ?>
+                    <?php
+                    $icon_only = get_theme_mod("mytheme_cta_button_icon_only_$i", false);
+                    $icon = get_theme_mod("mytheme_cta_button_icon_$i", '');
+                    $text = get_theme_mod("mytheme_cta_button_text_$i", '');
+                    $link = get_theme_mod("mytheme_cta_button_link_$i", '');
+                    ?>
+                    <a href="<?php echo esc_url($link); ?>" class="cta-button cta-button-<?php echo $i; ?>">
+                        <?php if ($icon): ?>
+                            <span class="cta-button-icon"><i class="<?php echo esc_attr($icon); ?>"></i></span>
+                        <?php endif; ?>
+                        <?php if (!$icon_only): ?>
+                            <span class="cta-button-text"><?php echo esc_html($text); ?></span>
+                        <?php endif; ?>
+                    </a>
+                <?php endfor; ?>
+            </div>
 
 
 

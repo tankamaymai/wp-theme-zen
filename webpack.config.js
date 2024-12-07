@@ -4,13 +4,16 @@ const path = require('path');
 module.exports = {
   ...defaultConfig,
   entry: {
-    blocks: "./js/blocks.jsx",
+    blocks: "./js/blocks.js",
     newBlocks: "./src/index.js",  // FAQブロック用のエントリーポイント
     "toolbar-text-resize": "./js/toolbar-text-resize.jsx",
     "custom-block-margin-padding": "./js/custom-block-margin-padding.jsx",  // パスを修正
     "responsive": "./js/responsive.jsx",
     "content-with": "./js/content-with.jsx",
-    "icon-picker": "./js/icon-picker.jsx",
+    "icon-picker": "./js/icon-picker.js",
+    "menu-toggle": "./js/menu-toggle.jsx",
+    "sticky-header": "./js/sticky-header.js",
+    "script": "./js/script.js",
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

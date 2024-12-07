@@ -177,6 +177,7 @@ function mytheme_register_faq_child_block()
 add_action('init', 'mytheme_register_faq_child_block');
 
 
+
 function mytheme_register_heading_box_block()
 {
     wp_register_script(

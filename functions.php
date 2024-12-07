@@ -73,13 +73,14 @@ function mytheme_enqueue_styles()
     wp_enqueue_style('normalize-style', get_template_directory_uri() . '/css/normalize.css');
     wp_enqueue_style('mytheme-style', get_stylesheet_uri());
     wp_enqueue_script('mytheme-script', get_template_directory_uri() . '/js/script.js', array('jquery'), '1.0.0', true);
+  
 }
 
 add_action('wp_enqueue_scripts', 'mytheme_enqueue_styles');
 
 function mytheme_enqueue_scripts()
 {
-    wp_enqueue_script('menu-toggle', get_template_directory_uri() . '/js/menu-toggle.js', array(), '1.0.0', true);
+    wp_enqueue_script('menu-toggle', get_template_directory_uri() . '/js/menu-toggle.jsx', array(), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'mytheme_enqueue_scripts');
 
@@ -95,14 +96,7 @@ function mytheme_enqueue_block_editor_assets()
         true
     );
 
-    // @responsive.js の読み込み
-    // wp_enqueue_script(
-    //     'responsive',
-    //     get_template_directory_uri() . '/dist/responsive.bundle.js',
-    //     array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-compose'),
-    //     filemtime(get_template_directory() . '/dist/responsive.bundle.js'),
-    //     true
-    // );
+
     // @responsive.js の読み込み
     wp_enqueue_script(
         'responsive-controls',
@@ -124,22 +118,22 @@ function mytheme_enqueue_block_editor_assets()
 
      // 一時的に使用不可能にしている
     // カスタムマージンとパディングの機能を追加するJavaScript
-    // wp_enqueue_script(
-    //     'custom-block-margin-padding',
-    //     get_template_directory_uri() . '/dist/custom-block-margin-padding.bundle.js',
-    //     array(
-    //         'wp-blocks',
-    //         'wp-element',
-    //         'wp-editor',
-    //         'wp-components',
-    //         'wp-compose',
-    //         'wp-hooks',
-    //         'wp-block-editor',  // 追加
-    //         'wp-i18n'  // 追加
-    //     ),
-    //     filemtime(get_template_directory() . '/dist/custom-block-margin-padding.bundle.js'),
-    //     true
-    // );
+    wp_enqueue_script(
+        'custom-block-margin-padding',
+        get_template_directory_uri() . '/dist/custom-block-margin-padding.bundle.js',
+        array(
+            'wp-blocks',
+            'wp-element',
+            'wp-editor',
+            'wp-components',
+            'wp-compose',
+            'wp-hooks',
+            'wp-block-editor',  // 追加
+            'wp-i18n'  // 追加
+        ),
+        filemtime(get_template_directory() . '/dist/custom-block-margin-padding.bundle.js'),
+        true
+    );
 
 
     // フォントサイズ変更のツールバー機能を追加するJavaScript
@@ -150,6 +144,9 @@ function mytheme_enqueue_block_editor_assets()
         filemtime(get_template_directory() . '/dist/toolbar-text-resize.bundle.js'),
         true
     );
+
+
+
 
     // カスタムブロックのCSS
     wp_enqueue_style(
@@ -194,7 +191,16 @@ function mytheme_enqueue_frontend_assets()
     wp_enqueue_script(
         'mytheme-blocks-frontend',
         get_template_directory_uri() . '/dist/newBlocks.bundle.js',
-        array(),
+        array(
+            'wp-blocks',
+            'wp-element',
+            'wp-editor',
+            'wp-components',
+            'wp-compose',
+            'wp-hooks',
+            'wp-block-editor',  // 追加
+            'wp-i18n'  // 追加
+        ),
         filemtime(get_template_directory() . '/dist/newBlocks.bundle.js'),
         true
     );
@@ -684,12 +690,12 @@ function mytheme_responsive_logo_style() {
         .site-logo {
             max-width: {$logo_width}px;
         }
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
             .site-logo {
                 max-width: {$logo_width_tablet}px;
             }
         }
-        @media (max-width: 768px) {
+        @media (max-width: 550px) {
             .site-logo {
                 max-width: {$logo_width_mobile}px;
             }
@@ -700,4 +706,73 @@ function mytheme_responsive_logo_style() {
 add_action('wp_enqueue_scripts', 'mytheme_responsive_logo_style');
 
 
+// レスポンシブサイトタイトルのスタイルを追加
+function mytheme_responsive_site_title_style() {
+    $site_title_font_size = get_theme_mod('mytheme_site_title_font_size', '24');
+    $site_title_font_size_tablet = get_theme_mod('mytheme_site_title_font_size_tablet', '18');
+    $site_title_font_size_mobile = get_theme_mod('mytheme_site_title_font_size_mobile', '14');
 
+    $custom_css = "
+        .site-title a {
+            font-size: {$site_title_font_size}px;
+        }
+        @media (max-width: 768px) {
+            .site-title a  {
+                font-size: {$site_title_font_size_tablet}px;
+            }
+        }
+        @media (max-width: 550px) {
+            .site-title a {
+                font-size: {$site_title_font_size_mobile}px;
+            }
+        }
+    ";
+    wp_add_inline_style('mytheme-style', $custom_css);
+}
+add_action('wp_enqueue_scripts', 'mytheme_responsive_site_title_style');
+
+
+
+function mytheme_sticky_header_scripts() {
+    // PCとSPでの追従ヘッダーの有効/無効を確認
+    $sticky_enabled_pc = get_theme_mod('mytheme_sticky_header_enabled_pc', true);
+    $sticky_enabled_sp = get_theme_mod('mytheme_sticky_header_enabled_sp', false);
+    
+    if ($sticky_enabled_pc || $sticky_enabled_sp) {
+        
+        $custom_css = "
+            #masthead {
+                transition: all 0.3s ease;
+            }
+            @media (min-width: 769px) {
+                #masthead.sticky {
+                    position: " . ($sticky_enabled_pc ? 'fixed' : 'relative') . ";
+                }
+            }
+            @media (max-width: 768px) {
+                #masthead.sticky {
+                    position: " . ($sticky_enabled_sp ? 'fixed' : 'relative') . ";
+                }
+            }
+            #masthead.sticky {
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
+                animation: slideDown 0.3s ease;
+            }
+            @keyframes slideDown {
+                from { transform: translateY(-100%); }
+                to { transform: translateY(0); }
+            }
+            body.has-sticky-header {
+                padding-top: var(--header-height);
+            }
+        ";
+        wp_add_inline_style('mytheme-style', $custom_css);
+
+       
+    }
+    wp_enqueue_script('mytheme-sticky-header', get_template_directory_uri() . '/dist/sticky-header.bundle.js', array('jquery'), filemtime(get_template_directory() . '/dist/sticky-header.bundle.js'), true);
+}
+add_action('wp_enqueue_scripts', 'mytheme_sticky_header_scripts');

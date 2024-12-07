@@ -18,6 +18,9 @@ $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo
         'max' => 500,
         'step' => 1,
     ),
+    'active_callback' => function() {
+        return has_custom_logo();
+    },
 )));
 
 $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo_width_range', array(
@@ -30,6 +33,9 @@ $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo
         'max' => 500,
         'step' => 1,
     ),
+    'active_callback' => function() {
+        return has_custom_logo();
+    },
 )));
 // タブレット用ロゴサイズの設定
 $wp_customize->add_setting('mytheme_logo_width_tablet', array(
@@ -48,6 +54,9 @@ $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo
         'max' => 500,
         'step' => 1,
     ),
+    'active_callback' => function() {
+        return has_custom_logo();
+    },
 )));
 $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo_width_range_tablet', array(
     'label' => __('ロゴの幅 (タブレット)', 'mytheme'),
@@ -59,6 +68,9 @@ $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo
         'max' => 500,
         'step' => 1,
     ),
+    'active_callback' => function() {
+        return has_custom_logo();
+    },
 )));
 
 // スマートフォン用ロゴサイズの設定
@@ -78,6 +90,9 @@ $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo
         'max' => 500,
         'step' => 1,
     ),
+    'active_callback' => function() {
+        return has_custom_logo();
+    },
 )));
 $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo_width_range_mobile', array(
     'label' => __('ロゴの幅 (スマートフォン)', 'mytheme'),
@@ -89,9 +104,127 @@ $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_logo
         'max' => 500,
         'step' => 1,
     ),
+    'active_callback' => function() {
+        return has_custom_logo();
+    },
 )));
 
+// サイトタイトルのフォントサイズ設定
+$wp_customize->add_setting('mytheme_site_title_font_size', array(
+    'default' => '24',
+    'transport' => 'refresh',
+    'sanitize_callback' => 'absint',
+));
 
+// 数値入力用のコントロール
+$wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_site_title_font_size', array(
+    'label' => __('サイトタイトルの文字サイズ (px)', 'mytheme'),
+    'section' => 'title_tagline',
+    'settings' => 'mytheme_site_title_font_size',
+    'type' => 'number',
+    'input_attrs' => array(
+        'min' => 10,
+        'max' => 500,
+        'step' => 1,
+    ),
+    'active_callback' => function() {
+        return !has_custom_logo();  
+    },
+)));
+
+// スライダー用のコントロール
+$wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_site_title_font_size_range', array(
+    'label' => __('サイトタイトルの文字サイズ', 'mytheme'),
+    'section' => 'title_tagline',
+    'settings' => 'mytheme_site_title_font_size',
+    'type' => 'range',
+    'input_attrs' => array(
+        'min' => 10,
+        'max' => 500,
+        'step' => 1,
+    ),
+    'active_callback' => function() {
+        return !has_custom_logo();
+    },
+)));
+
+// タブレット用サイトタイトルのフォントサイズ設定
+$wp_customize->add_setting('mytheme_site_title_font_size_tablet', array(
+    'default' => '20',
+    'transport' => 'refresh',
+    'sanitize_callback' => 'absint',
+));
+
+// タブレット用数値入力コントロール
+$wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_site_title_font_size_tablet', array(
+    'label' => __('サイトタイトルの文字サイズ (タブレット, px)', 'mytheme'),
+    'section' => 'title_tagline',
+    'settings' => 'mytheme_site_title_font_size_tablet',
+    'type' => 'number',
+    'input_attrs' => array(
+        'min' => 10,
+        'max' => 200,
+        'step' => 1,
+    ),
+    'active_callback' => function() {
+        return !has_custom_logo();
+    },
+)));
+
+// タブレット用スライダーコントロール
+$wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_site_title_font_size_range_tablet', array(
+    'label' => __('サイトタイトルの文字サイズ (タブレット)', 'mytheme'),
+    'section' => 'title_tagline',
+    'settings' => 'mytheme_site_title_font_size_tablet',
+    'type' => 'range',
+    'input_attrs' => array(
+        'min' => 10,
+        'max' => 200,
+        'step' => 1,
+    ),
+    'active_callback' => function() {
+        return !has_custom_logo();
+    },
+)));
+
+// スマートフォン用サイトタイトルのフォントサイズ設定
+$wp_customize->add_setting('mytheme_site_title_font_size_mobile', array(
+    'default' => '16',
+    'transport' => 'refresh',
+    'sanitize_callback' => 'absint',
+));
+
+// スマートフォン用数値入力コントロール
+$wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_site_title_font_size_mobile', array(
+    'label' => __('サイトタイトルの文字サイズ (スマートフォン, px)', 'mytheme'),
+    'section' => 'title_tagline',
+    'settings' => 'mytheme_site_title_font_size_mobile',
+    'type' => 'number',
+    'input_attrs' => array(
+        'min' => 10,
+        'max' => 500,
+        'step' => 1,
+    ),
+    'active_callback' => function() {
+        return !has_custom_logo();
+    },
+)));
+
+// スマートフォン用スライダーコントロール
+$wp_customize->add_control(new WP_Customize_Control($wp_customize, 'mytheme_site_title_font_size_range_mobile', array(
+    'label' => __('サイトタイトルの文字サイズ (スマートフォン)', 'mytheme'),
+    'section' => 'title_tagline',
+    'settings' => 'mytheme_site_title_font_size_mobile',
+    'type' => 'range',
+    'input_attrs' => array(
+        'min' => 10,
+        'max' => 200,
+        'step' => 1,
+    ),
+    'active_callback' => function() {
+        return !has_custom_logo();
+    },
+)));
 
     // スライダー設定セクションの追加
     $wp_customize->add_section('mytheme_slider_settings', array(

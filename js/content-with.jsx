@@ -90,7 +90,7 @@ const applyContentWidthStyle = (extraProps, blockType, attributes) => {
             extraProps.style = { 
                 ...extraProps.style, 
                 maxWidth: attributes.contentWidth, 
-                margin: '0 auto' 
+                width: '100%',
             };
         }
     }
