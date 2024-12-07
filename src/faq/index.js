@@ -63,81 +63,179 @@ registerBlockType(metadata.name, {
 
         return (
             <>
-                <InspectorControls>
-                    <PanelBody title={__('スタイル設定', 'mytheme')}>
-                        <SelectControl
-                            label={__('スタイル', 'mytheme')}
-                            value={style}
-                            options={[
-                                { label: __('シンプル', 'mytheme'), value: 'simple' },
-                                { label: __('区切り線', 'mytheme'), value: 'divider' },
-                                { label: __('ボックス', 'mytheme'), value: 'box' },
-                            ]}
-                            onChange={(value) => setAttributes({ style: value })}
-                        />
-                        {style === 'divider' && (
-                            <>
-                                <SelectControl
-                                    label={__('区切り線のスタイル', 'mytheme')}
-                                    value={attributes.dividerStyle}
-                                    options={[
-                                        { label: __('実線', 'mytheme'), value: 'solid' },
-                                        { label: __('点線', 'mytheme'), value: 'dotted' },
-                                        { label: __('破線', 'mytheme'), value: 'dashed' },
-                                    ]}
-                                    onChange={(value) => setAttributes({ dividerStyle: value })}
-                                    __nextHasNoMarginBottom={true}
-                                />
-                                <div className="components-base-control">
-                                    <span>{__('区切り線の色', 'mytheme')}</span>
-                                    <ColorPalette
-                                        value={attributes.dividerColor}
-                                        onChange={(value) => setAttributes({ dividerColor: value })}
+              <InspectorControls>
+                        <PanelBody title={__('スタイル設定', 'mytheme')}>
+                            <SelectControl
+                                label={__('スタイル', 'mytheme')}
+                                value={style}
+                                options={[
+                                    { label: __('シンプル', 'mytheme'), value: 'simple' },
+                                    { label: __('区切り線', 'mytheme'), value: 'divider' },
+                                    { label: __('ボックス', 'mytheme'), value: 'box' },
+                                ]}
+                                onChange={(value) => setAttributes({ style: value })}
+                                __nextHasNoMarginBottom={true}
+                            />
+                            {style === 'divider' && (
+                                <>
+                                    <SelectControl
+                                        label={__('区切り線のスタイル', 'mytheme')}
+                                        value={attributes.dividerStyle}
+                                        options={[
+                                            { label: __('実線', 'mytheme'), value: 'solid' },
+                                            { label: __('点線', 'mytheme'), value: 'dotted' },
+                                            { label: __('破線', 'mytheme'), value: 'dashed' },
+                                        ]}
+                                        onChange={(value) => setAttributes({ dividerStyle: value })}
+                                        __nextHasNoMarginBottom={true}
                                     />
-                                </div>
-                                <RangeControl
-                                    label={__('区切り線の太さ', 'mytheme')}
-                                    value={attributes.dividerWidth}
-                                    onChange={(value) => setAttributes({ dividerWidth: value })}
-                                    min={1}
-                                    max={10}
-                                />
-                            </>
-                        )}
-                        {style === 'box' && (
-                            <>
-                                <div className="components-base-control">
-                                    <span>{__('ボックスの色', 'mytheme')}</span>
-                                    <ColorPalette
-                                        value={attributes.boxColor}
-                                        onChange={(value) => setAttributes({ boxColor: value })}
+                                    <div className="components-base-control">
+                                        <span>{__('区切り線の色', 'mytheme')}</span>
+                                        <ColorPalette
+                                            value={attributes.dividerColor}
+                                            onChange={(value) => setAttributes({ dividerColor: value })}
+                                            __nextHasNoMarginBottom={true}
+                                        />
+                                    </div>
+                                    <RangeControl
+                                        label={__('区切り線の太さ', 'mytheme')}
+                                        value={attributes.dividerWidth}
+                                        onChange={(value) => setAttributes({ dividerWidth: value })}
+                                        min={1}
+                                        max={10}
                                     />
-                                </div>
+                                </>
+                            )}
+                            {style === 'box' && (
+                                <>
+                                    <div className="components-base-control">
+                                        <span>{__('ボックスの色', 'mytheme')}</span>
+                                        <ColorPalette
+                                            value={attributes.boxColor}
+                                            onChange={(value) => setAttributes({ boxColor: value })}
+                                        />
+                                    </div>
+                                    <RangeControl
+                                        label={__('ボックスの枠線の太さ', 'mytheme')}
+                                        value={attributes.boxBorderWidth}
+                                        onChange={(value) => setAttributes({ boxBorderWidth: value })}
+                                        min={0}
+                                        max={10}
+                                    />
+                                    <div className="components-base-control">
+                                        <span>{__('ボックスの枠線の色', 'mytheme')}</span>
+                                        <ColorPalette
+                                            value={attributes.boxBorderColor}
+                                            onChange={(value) => setAttributes({ boxBorderColor: value })}
+                                        />
+                                    </div>
+                                    <RangeControl
+                                        label={__('ボックスの角の丸み', 'mytheme')}
+                                        value={attributes.boxBorderRadius}
+                                        onChange={(value) => setAttributes({ boxBorderRadius: value })}
+                                        min={0}
+                                        max={50}
+                                    />
+                                </>
+                            )}
+                        </PanelBody>
+                        <PanelBody title={__('アイコン設定', 'mytheme')}>
+                            <SelectControl
+                                label={__('アイコンスタイル', 'mytheme')}
+                                value={attributes.iconStyle}
+                                options={[
+                                    { label: __('四角', 'mytheme'), value: 'square' },
+                                    { label: __('丸', 'mytheme'), value: 'circle' },
+                                    { label: __('角丸', 'mytheme'), value: 'rounded' }
+                                ]}
+                                onChange={(value) => setAttributes({ iconStyle: value })}
+                                __nextHasNoMarginBottom={true}
+                            />
+                            {attributes.iconStyle === 'rounded' && (
                                 <RangeControl
-                                    label={__('ボックスの枠線の太さ', 'mytheme')}
-                                    value={attributes.boxBorderWidth}
-                                    onChange={(value) => setAttributes({ boxBorderWidth: value })}
+                                    label={__('アイコンの角の丸み', 'mytheme')}
+                                    value={attributes.iconBorderRadius}
+                                    onChange={(value) => setAttributes({ iconBorderRadius: value })}
                                     min={0}
-                                    max={10}
+                                    max={20}
                                 />
-                                <div className="components-base-control">
-                                    <span>{__('ボックスの枠線の色', 'mytheme')}</span>
-                                    <ColorPalette
-                                        value={attributes.boxBorderColor}
-                                        onChange={(value) => setAttributes({ boxBorderColor: value })}
-                                    />
-                                </div>
-                                <RangeControl
-                                    label={__('ボックスの角の丸み', 'mytheme')}
-                                    value={attributes.boxBorderRadius}
-                                    onChange={(value) => setAttributes({ boxBorderRadius: value })}
-                                    min={0}
-                                    max={50}
+                            )}
+                            <RangeControl
+                                label={__('アイコンサイズ', 'mytheme')}
+                                value={attributes.iconSize}
+                                onChange={(value) => setAttributes({ iconSize: value })}
+                                min={20}
+                                max={50}
+                            />
+                            <RangeControl
+                                label={__('アイコン枠線の太さ', 'mytheme')}
+                                value={attributes.iconBorderWidth}
+                                onChange={(value) => setAttributes({ iconBorderWidth: value })}
+                                min={0}
+                                max={5}
+                            />
+                            <RangeControl
+                                label={__('アイコンの文字サイズ', 'mytheme')}
+                                value={attributes.iconFontSize}
+                                onChange={(value) => setAttributes({ iconFontSize: value })}
+                                min={12}
+                                max={30}
+                            />
+                            <div className="components-base-control">
+                                <span>{__('アイコンの色', 'mytheme')}</span>
+                                <ColorPalette
+                                    value={attributes.iconColor}
+                                    onChange={(value) => setAttributes({ iconColor: value })}
                                 />
-                            </>
-                        )}
-                    </PanelBody>
-                </InspectorControls>
+                            </div>
+                            <div className="components-base-control">
+                                <span>{__('アイコンの背景色', 'mytheme')}</span>
+                                <ColorPalette
+                                    value={attributes.iconBackgroundColor}
+                                    onChange={(value) => setAttributes({ iconBackgroundColor: value })}
+                                />
+                            </div>
+                            <div className="components-base-control">
+                                <span>{__('アイコンの枠線の色', 'mytheme')}</span>
+                                <ColorPalette
+                                    value={attributes.iconBorderColor}
+                                    onChange={(value) => setAttributes({ iconBorderColor: value })}
+                                />
+                            </div>
+                        </PanelBody>
+                        <PanelBody title={__('質問設定', 'mytheme')}>
+                            <div className="components-base-control">
+                                <span>{__('背景色', 'mytheme')}</span>
+                                <ColorPalette
+                                    value={attributes.questionBackgroundColor}
+                                    onChange={(value) => setAttributes({ questionBackgroundColor: value })}
+                                />
+                            </div>
+                            <div className="components-base-control">
+                                <span>{__('文字色', 'mytheme')}</span>
+                                <ColorPalette
+                                    value={attributes.questionTextColor}
+                                    onChange={(value) => setAttributes({ questionTextColor: value })}
+                                />
+                            </div>
+                        </PanelBody>
+                        <PanelBody title={__('回答設定', 'mytheme')}>
+                            <div className="components-base-control">
+                                <span>{__('背景色', 'mytheme')}</span>
+                                <ColorPalette
+                                    value={attributes.answerBackgroundColor}
+                                    onChange={(value) => setAttributes({ answerBackgroundColor: value })}
+                                />
+                            </div>
+                            <div className="components-base-control">
+                                <span>{__('文字色', 'mytheme')}</span>
+                                <ColorPalette
+                                    value={attributes.answerTextColor}
+                                    onChange={(value) => setAttributes({ answerTextColor: value })}
+                                />
+                            </div>
+                        </PanelBody>
+                    </InspectorControls>
                 <div 
                     {...blockProps} 
                     className={`faq-block style-${style}`}
