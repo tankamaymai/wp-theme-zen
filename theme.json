@@ -1,0 +1,163 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 2,
+	"settings": {
+		"appearanceTools": true,
+		"layout": {
+			"contentSize": "900px"
+		},
+		"color": {
+			"palette": [
+				{
+					"name": "Primary",
+					"slug": "primary",
+					"color": "#0073aa"
+				},
+				{
+					"name": "Secondary",
+					"slug": "secondary",
+					"color": "#23282d"
+				},
+				{
+					"name": "Accent",
+					"slug": "accent",
+					"color": "#ff5733"
+				},
+				{
+					"name": "Highlight",
+					"slug": "highlight",
+					"color": "#ffd700"
+				}
+			],
+			"custom": true,
+			"defaultPalette": false
+		},
+		"typography": {
+			"fontSizes": [
+				{
+					"name": "Small",
+					"slug": "small",
+					"size": "12px"
+				},
+				{
+					"name": "Normal",
+					"slug": "normal",
+					"size": "16px"
+				},
+				{
+					"name": "Large",
+					"slug": "large",
+					"size": "24px"
+				}
+			],
+			"customFontSize": true
+		}
+	},
+	"styles": {
+		"color": {
+			"text": "#333333",
+			"background": "#ffffff",
+			"link": "#0073aa",
+			"link:hover": "#005177"
+		},
+		"typography": {
+			"fontFamily": "Arial, sans-serif",
+			"fontSize": "16px",
+			"lineHeight": "1.6"
+		},
+		"blocks": {
+			"core/paragraph": {
+				"color": {
+					"text": "var(--wp--preset--color--primary)"
+				},
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--normal)"
+				}
+			},
+			"core/heading": {
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--large)"
+				}
+			},
+			"mytheme/faq": {
+				"color": {
+					"text": "var(--wp--preset--color--primary)",
+					"background": "var(--wp--preset--color--secondary)"
+				},
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--normal)"
+				},
+				"spacing": {
+					"padding": {
+						"top": "20px",
+						"bottom": "20px",
+						"left": "20px",
+						"right": "20px"
+					},
+					"margin": {
+						"top": "20px",
+						"bottom": "20px"
+					}
+				}
+			},
+			"mytheme/accordion": {
+				"color": {
+					"text": "var(--wp--preset--color--primary)",
+					"background": "var(--wp--preset--color--secondary)"
+				},
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--normal)"
+				},
+				"spacing": {
+					"padding": {
+						"top": "15px",
+						"bottom": "15px",
+						"left": "15px",
+						"right": "15px"
+					},
+					"margin": {
+						"top": "10px",
+						"bottom": "10px"
+					}
+				}
+			},
+			"mytheme/comparison-table": {
+				"color": {
+					"text": "var(--wp--preset--color--primary)",
+					"background": "var(--wp--preset--color--secondary)"
+				},
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--normal)"
+				},
+				"spacing": {
+					"padding": {
+						"top": "10px",
+						"bottom": "10px",
+						"left": "10px",
+						"right": "10px"
+					},
+					"margin": {
+						"top": "20px",
+						"bottom": "20px"
+					}
+				}
+			},
+			"mytheme/design-heading": {
+				"color": {
+					"text": "var(--wp--preset--color--primary)",
+					"background": "transparent"
+				},
+				"typography": {
+					"fontSize": "var(--wp--preset--font-size--large)",
+					"fontWeight": "bold"
+				},
+				"spacing": {
+					"margin": {
+						"top": "30px",
+						"bottom": "20px"
+					}
+				}
+			}
+		}
+	}
+}

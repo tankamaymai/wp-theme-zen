@@ -75,4 +75,12 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
+.accordion {
+  color: var(--wp--preset--color--text);
+  background-color: var(--wp--preset--color--background);
+  padding: var(--wp--spacing--padding--top) var(--wp--spacing--padding--right) var(--wp--spacing--padding--bottom) var(--wp--spacing--padding--left);
+  margin: var(--wp--spacing--margin--top) var(--wp--spacing--margin--bottom);
+  font-size: var(--wp--preset--font-size--normal);
+}
+
 
