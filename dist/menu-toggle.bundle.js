@@ -1,1 +1,2 @@
 document.addEventListener("DOMContentLoaded",(function(){var e=document.getElementById("menu-toggle"),t=document.getElementById("mobile-nav");e&&e.addEventListener("click",(function(){var n="true"===e.getAttribute("aria-expanded")||!1;e.setAttribute("aria-expanded",!n),t.classList.toggle("toggled-on"),document.body.classList.toggle("menu-open")}))}));
+//# sourceMappingURL=menu-toggle.bundle.js.map
